@@ -375,18 +375,96 @@
     border-top: 1px solid rgba(255,255,255,0.1);
   }
 
+  /* === SCROLL & NAV === */
+  html { scroll-behavior: smooth; }
+
+  .section-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+    padding: 10px 48px;
+    display: flex; gap: 8px; flex-wrap: wrap;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .section-nav a {
+    font-size: 11px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: var(--gray-400); text-decoration: none;
+    padding: 4px 12px; border-radius: 4px;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+  .section-nav a:hover {
+    color: var(--blue); background: var(--blue-pale);
+  }
+
+  /* === TABLE SCROLL WRAPPER === */
+  .table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 -4px;
+    padding: 0 4px;
+  }
+  .table-scroll table { min-width: 700px; }
+
+  /* === SECTION INTRO === */
+  .section-intro {
+    font-size: 14px; color: var(--gray-600);
+    line-height: 1.7; margin-bottom: 24px;
+    max-width: 860px;
+  }
+
   /* === RESPONSIVE === */
+
+  /* Tablet */
   @media (max-width: 1100px) {
     .kpi-strip { grid-template-columns: repeat(3, 1fr); }
     .tier-grid { grid-template-columns: 1fr; }
     .chart-row { grid-template-columns: 1fr; }
     .stress-grid { grid-template-columns: repeat(2, 1fr); }
+    .section-nav { padding: 10px 24px; }
+    .header { padding: 24px 24px 20px; }
+    .content { padding: 24px 24px 40px; }
+    .footer { padding: 20px 24px; }
+    .narrative-panel { padding: 24px; }
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .header h1 { font-size: 22px; }
+    .header .subtitle { font-size: 13px; }
+    .header-top { flex-direction: column; gap: 8px; }
+    .kpi-strip { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .kpi-value { font-size: 26px; }
+    .kpi-card { padding: 14px 16px; }
+    .section-header { font-size: 18px; }
+    .stress-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .stress-value { font-size: 28px; }
+    .tier-card-header h3 { font-size: 14px; }
+    .tier-narrative { font-size: 11px; }
+    .narrative-panel h2 { font-size: 20px; }
+    .narrative-panel p { font-size: 13px; }
+    .narrative-panel .stat-inline { font-size: 15px; }
+    .section-nav { padding: 8px 16px; gap: 4px; }
+    .section-nav a { font-size: 10px; padding: 3px 8px; }
+  }
+
+  /* Small mobile */
+  @media (max-width: 480px) {
+    .header { padding: 16px 16px 14px; }
+    .header h1 { font-size: 18px; }
+    .content { padding: 16px 16px 32px; }
+    .kpi-strip { grid-template-columns: 1fr 1fr; }
+    .stress-grid { grid-template-columns: 1fr; }
+    .chart-card { padding: 16px; }
+    .narrative-panel { padding: 16px; margin: 20px 0; }
   }
 
   @media print {
     body { background: white; }
     .content { padding: 20px; }
     .narrative-panel { break-inside: avoid; }
+    .section-nav { display: none; }
   }
 </style>
 </head>
@@ -405,6 +483,16 @@
     PFC / G2G Advisory &nbsp;|&nbsp; GDS Sector Investment Analysis &nbsp;|&nbsp; March 2026 &nbsp;|&nbsp; Source: Amadeus FY2025 Filing, S&P Capital IQ, McKinsey estimates
   </div>
 </div>
+
+<!-- SECTION NAV -->
+<nav class="section-nav">
+  <a href="#composition">Composition</a>
+  <a href="#tiers">Quality Tiers</a>
+  <a href="#attributes">Attribute Matrix</a>
+  <a href="#sotp">SOTP Valuation</a>
+  <a href="#stress">Stress Test</a>
+  <a href="#thesis">Investment Thesis</a>
+</nav>
 
 <!-- CONTENT -->
 <div class="content">
@@ -442,8 +530,9 @@
   </div>
 
   <!-- CHARTS ROW 1: Revenue & EBIT Split -->
-  <h2 class="section-header">Revenue & Profit Composition</h2>
+  <h2 class="section-header" id="composition">Revenue & Profit Composition</h2>
   <p class="section-sub">Four business lines with materially different quality characteristics — the doughnut tells the portfolio story at a glance</p>
+  <p class="section-intro">Amadeus reports two segments — Air Distribution and IT Solutions — but this masks a critical divergence in revenue quality. We decompose IT Solutions further into Air IT (the Altéa PSS platform), Hospitality IT (TravelClick, iHotelier, HotSOS), and Payments/New Businesses. Each line has fundamentally different switching costs, cyclicality, contract structure, and exposure to AI-driven disintermediation. The doughnut charts below show how the revenue and EBIT mix shifts when you look through the reporting segments to the economic reality.</p>
 
   <div class="chart-row">
     <div class="chart-card">
@@ -472,8 +561,9 @@
   </div>
 
   <!-- TIER ANALYSIS -->
-  <h2 class="section-header">Quality Tier Deep Dive</h2>
+  <h2 class="section-header" id="tiers">Quality Tier Deep Dive</h2>
   <p class="section-sub">Each segment scored on five durability dimensions — the investment case hinges on which tier you weight most</p>
+  <p class="section-intro">We classify each business line into one of three quality tiers based on its structural durability under an AI disruption scenario. The key question for each segment: if agentic AI travel planners capture 20-30% of booking flows over the next decade, does this segment's revenue survive intact? The answer varies dramatically — from "completely immune" (Air IT) to "directly in the firing line" (Air Distribution). The tier you weight most in your valuation determines whether Amadeus at €68 is cheap, fair, or expensive.</p>
 
   <div class="tier-grid">
     <!-- TIER 1 -->
@@ -538,9 +628,13 @@
   </div>
 
   <!-- ATTRIBUTE COMPARISON TABLE -->
+  <h2 class="section-header" id="attributes">Segment Quality Attribute Matrix</h2>
+  <p class="section-sub">Side-by-side comparison across six durability dimensions</p>
+  <p class="section-intro">The matrix below lays out each segment against six dimensions that drive long-term earnings durability: revenue model type, cyclicality exposure, customer switching costs, vulnerability to AI disintermediation, forward contract visibility, and margin trajectory. The star ratings in the final column represent our composite quality assessment. Note the stark contrast: Air IT scores 5/5 (fortress-grade infrastructure with no AI exposure), while Air Distribution scores 2/5 (transactional toll revenue with high cyclicality and direct AI exposure).</p>
   <div class="chart-card full" style="margin-bottom:32px">
-    <div class="chart-title">Segment Quality Attribute Matrix</div>
+    <div class="chart-title">Detailed Scoring</div>
     <div class="chart-subtitle">Detailed scoring across six durability dimensions</div>
+    <div class="table-scroll">
     <table class="attr-table">
       <thead>
         <tr>
@@ -597,16 +691,19 @@
         </tr>
       </tbody>
     </table>
+    </div>
   </div>
 
   <!-- SUM OF THE PARTS -->
-  <h2 class="section-header">Sum-of-the-Parts Valuation</h2>
+  <h2 class="section-header" id="sotp">Sum-of-the-Parts Valuation</h2>
   <p class="section-sub">What you're actually buying at €68/share — each tier deserves a different multiple</p>
+  <p class="section-intro">A blended-multiple approach misvalues Amadeus because it averages across segments of wildly different quality. The SOTP below assigns each tier a multiple commensurate with its durability: 25-30x EBIT for the fortress (comparable to best-in-class infrastructure SaaS), 20-25x for the durable growth segments (scaling platforms with structural tailwinds), and 12-15x for the exposed distribution segment (reflecting terminal uncertainty). The waterfall chart decomposes the midpoint equity value of €85/share into its component building blocks, making the implied bet on each tier visible.</p>
 
   <div class="chart-row">
     <div class="chart-card">
       <div class="chart-title">SOTP by Quality Tier</div>
       <div class="chart-subtitle">EV multiples reflect durability: Fortress 25–30x, Durable 20–25x, Exposed 12–15x EBIT</div>
+      <div class="table-scroll">
       <table class="sotp-table">
         <thead>
           <tr>
@@ -683,18 +780,20 @@
           </tr>
         </tbody>
       </table>
+      </div>
     </div>
 
     <div class="chart-card">
       <div class="chart-title">SOTP Waterfall: What Makes Up €85/share?</div>
       <div class="chart-subtitle">Midpoint SOTP vs current price of €68. Fortress alone = €47/share.</div>
-      <div class="chart-container"><canvas id="sotpWaterfall"></canvas></div>
+      <div class="chart-container" style="height:320px"><canvas id="sotpWaterfall"></canvas></div>
     </div>
   </div>
 
   <!-- STRESS TEST -->
-  <h2 class="section-header">Stress Test: Air Distribution Erosion Scenarios</h2>
+  <h2 class="section-header" id="stress">Stress Test: Air Distribution Erosion Scenarios</h2>
   <p class="section-sub">What if the exposed segment declines? The fortress provides a valuation floor.</p>
+  <p class="section-intro">The critical investor question: how much downside protection does the fortress provide? Below we stress-test the SOTP by progressively impairing Air Distribution EBIT from 0% (current) to 100% (complete wipeout). We also compress the exit multiple on impaired earnings — a declining business doesn't deserve 13.5x; we step it down to 10x at -50% and 4x at -100%. The green/red dots on the curve show where the implied price sits relative to today's €68 market price. The dashed red line marks the current price. Note that even in the extreme scenario where Air Distribution goes to zero, the fortress and durable tiers alone support €60/share — just 12% below the current market.</p>
 
   <div class="stress-grid">
     <div class="stress-card green">
@@ -728,7 +827,7 @@
   </div>
 
   <!-- APOLLO NARRATIVE -->
-  <div class="narrative-panel">
+  <div class="narrative-panel" id="thesis">
     <h2>The Investment Case in Full</h2>
 
     <p>Start with what you own. At €68 per share, you are paying €30.2bn of market capitalisation — €32.4bn enterprise value — for a business generating €1,919m of EBIT across four segments of materially different quality. The question is not whether Amadeus is a good business. It is. The question is whether the market is paying you for the risk embedded in the revenue mix.</p>
@@ -960,18 +1059,32 @@ new Chart(document.getElementById('qualityRadar'), {
               return '€' + values[ctx.dataIndex].toFixed(1) + '/share';
             }
           }
-        },
-        annotation: {
-          annotations: {
-            currentPrice: {
-              type: 'line', yMin: 68, yMax: 68,
-              borderColor: '#DC2626', borderWidth: 2, borderDash: [6, 3],
-              label: { content: 'Current: €68', enabled: true, position: 'end' }
-            }
-          }
         }
       }
-    }
+    },
+    plugins: [{
+      id: 'waterfallPriceLine',
+      afterDraw: (chart) => {
+        const ctx = chart.ctx;
+        const yScale = chart.scales.y;
+        const xScale = chart.scales.x;
+        const y = yScale.getPixelForValue(68);
+        if (y < yScale.top || y > yScale.bottom) return;
+        ctx.save();
+        ctx.beginPath();
+        ctx.setLineDash([6, 4]);
+        ctx.strokeStyle = '#DC2626';
+        ctx.lineWidth = 2;
+        ctx.moveTo(xScale.left, y);
+        ctx.lineTo(xScale.right, y);
+        ctx.stroke();
+        ctx.fillStyle = '#DC2626';
+        ctx.font = 'bold 11px Calibri, sans-serif';
+        ctx.textAlign = 'right';
+        ctx.fillText('Current: €68', xScale.right - 8, y - 8);
+        ctx.restore();
+      }
+    }]
   });
 })();
 
