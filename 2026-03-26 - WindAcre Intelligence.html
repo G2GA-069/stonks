@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WindAcre Partnership — Intelligence & Portfolio Pattern Analysis</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
+:root {
+  --bg: #060810; --surface: #0c0e18; --surface2: #12141f; --surface3: #181a28;
+  --border: #1e2035; --border-bright: #2a2d45;
+  --gold: #c9a84c; --gold-dim: #8a6e2e; --gold-bright: #e8c96a;
+  --ibm-blue: #4a90d9; --pfc-amber: #d4860b; --fih-teal: #2ea88a; --ams-green: #4caf50;
+  --wa-purple: #9370db; --red: #d44; --red-soft: #c44040; --green: #4a9;
+  --text: #d8d8e8; --text-dim: #888898; --text-faint: #555568; --text-bright: #f0f0ff;
+  --tci-red: #e05555;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.6; }
+body::before { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events:none; z-index:1000; opacity:0.4; }
+.container { max-width: 1480px; margin: 0 auto; padding: 0 32px; }
+.masthead { border-bottom:1px solid var(--border-bright); background:linear-gradient(180deg,#0a0c14,var(--bg)); position:relative; }
+.masthead::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--wa-purple) 30%,#b090e0 50%,var(--wa-purple) 70%,transparent); }
+.masthead-inner { max-width:1480px; margin:0 auto; padding:28px 32px 24px; }
+.classification { font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.25em; color:var(--red); text-transform:uppercase; margin-bottom:10px; }
+.masthead h1 { font-family:'Playfair Display',serif; font-size:34px; font-weight:700; color:var(--text-bright); }
+.masthead h1 span { color:var(--wa-purple); }
+.masthead .subtitle { font-size:14px; color:var(--text-dim); margin-top:6px; font-weight:300; }
+.masthead .meta-row { display:flex; gap:32px; margin-top:16px; padding-top:14px; border-top:1px solid var(--border); font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--text-faint); letter-spacing:0.08em; text-transform:uppercase; }
+.section { padding:36px 0; border-bottom:1px solid var(--border); }
+.section:last-child { border-bottom:none; }
+.section-label { font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.3em; text-transform:uppercase; color:var(--wa-purple); margin-bottom:8px; }
+.section h2 { font-family:'Playfair Display',serif; font-size:24px; color:var(--text-bright); margin-bottom:4px; }
+.section .section-sub { font-size:13px; color:var(--text-dim); margin-bottom:24px; font-style:italic; max-width:900px; }
+.card { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:18px; }
+.card-label { font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:8px; }
+.card-val { font-family:'IBM Plex Mono',monospace; font-size:26px; font-weight:700; color:var(--text-bright); }
+.card-body { font-size:11px; color:var(--text-dim); line-height:1.7; margin-top:6px; }
+.card-body strong { color:var(--text); }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
+.grid-4 { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:16px; }
+.table-wrap { background:var(--surface); border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+table.ct { width:100%; border-collapse:collapse; font-size:12px; }
+table.ct thead th { font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; padding:12px 14px; text-align:left; border-bottom:2px solid var(--border-bright); color:var(--text-faint); background:var(--surface); }
+table.ct tbody td { padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top; line-height:1.55; }
+table.ct tbody tr:hover td { background:rgba(255,255,255,0.015); }
+table.ct td:first-child { font-weight:600; color:var(--text-bright); font-size:11px; }
+.badge { display:inline-flex; align-items:center; gap:5px; padding:2px 8px; border-radius:3px; font-family:'IBM Plex Mono',monospace; font-size:9px; font-weight:600; letter-spacing:0.05em; text-transform:uppercase; }
+.badge-5 { background:rgba(76,175,80,0.15); color:#6fcf6f; border:1px solid rgba(76,175,80,0.25); }
+.badge-4 { background:rgba(74,144,217,0.15); color:#7ab8f0; border:1px solid rgba(74,144,217,0.25); }
+.badge-3 { background:rgba(212,160,11,0.15); color:#d4a00b; border:1px solid rgba(212,160,11,0.25); }
+.badge-2 { background:rgba(212,68,68,0.15); color:#e06060; border:1px solid rgba(212,68,68,0.25); }
+.synth { background:var(--surface2); border:1px solid var(--gold-dim); border-radius:8px; padding:24px 28px; margin-top:20px; }
+.synth h3 { font-family:'Playfair Display',serif; font-size:18px; color:var(--gold); margin-bottom:12px; }
+.synth p { color:var(--text); line-height:1.7; margin-bottom:10px; }
+.synth p:last-child { margin-bottom:0; }
+.lineage-node { display:flex; align-items:center; gap:12px; padding:14px 16px; background:var(--surface); border:1px solid var(--border); border-radius:8px; margin-bottom:8px; position:relative; }
+.lineage-node::before { content:''; position:absolute; left:-20px; top:50%; width:20px; height:2px; }
+.lineage-dot { width:12px; height:12px; border-radius:50%; flex-shrink:0; }
+.lineage-name { font-weight:700; font-size:13px; color:var(--text-bright); }
+.lineage-detail { font-size:11px; color:var(--text-dim); }
+.timeline-bar { display:flex; height:24px; border-radius:4px; overflow:hidden; margin:4px 0; }
+.timeline-seg { display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-size:8px; font-weight:600; color:#000; letter-spacing:0.05em; }
+.footnotes { padding:24px 0 40px; font-size:10px; color:var(--text-faint); line-height:1.7; font-family:'IBM Plex Mono',monospace; }
+@media (max-width:1100px) { .grid-2,.grid-3,.grid-4 { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+<div class="masthead-inner">
+  <div class="classification">Confidential — Background Intelligence — Not for Distribution</div>
+  <h1><span>WindAcre</span> Partnership — Intelligence Dossier</h1>
+  <div class="subtitle">The firm, the people, the portfolio. Every holding mapped against the monopoly framework. Companion to: The Monopoly Pattern dashboard.</div>
+  <div class="meta-row">
+    <span>Joe Barry · Application to Tintern Capital</span>
+    <span>March 2026</span>
+    <span>SEC CIK: 0001599383 · Houston, Texas</span>
+  </div>
+</div>
+</div>
+
+<div class="container">
+
+<!-- ========== SECTION 1: THE FIRM ========== -->
+<div class="section">
+<div class="section-label">§ 1.0</div>
+<h2>The Firm</h2>
+<div class="section-sub">WindAcre Partnership LLC — the institutional expression of a philosophy that runs from Christopher Hohn through Snehal Amin to Andrew Lundstrom.</div>
+
+<div class="grid-4" style="margin-bottom:16px;">
+  <div class="card"><div class="card-label" style="color:var(--wa-purple)">Founded</div><div class="card-val">2013</div><div class="card-body">Fee-paying clients from Feb 2014. Advisory to proprietary capital from Oct 2013.</div></div>
+  <div class="card"><div class="card-label" style="color:var(--wa-purple)">AUM (13F, Q2 2024)</div><div class="card-val">$7.6B</div><div class="card-body">Form ADV regulatory AUM: ~$408M. Discrepancy suggests majority is Amin's proprietary/family capital.</div></div>
+  <div class="card"><div class="card-label" style="color:var(--wa-purple)">Positions</div><div class="card-val">11–13</div><div class="card-body">Concentrated. Top 3 = ~52% of portfolio. Annual turnover: ~8% (12.5-year avg hold).</div></div>
+  <div class="card"><div class="card-label" style="color:var(--wa-purple)">Clients</div><div class="card-val">~3</div><div class="card-body">~67% non-US persons. Pooled investment vehicles. Minimal external capital relative to 13F size.</div></div>
+</div>
+
+<div class="grid-2">
+  <div class="card">
+    <div class="card-label" style="color:var(--wa-purple)">Structure & Operations</div>
+    <div class="card-body">
+      <strong>Legal:</strong> Delaware LLC. SEC-registered investment adviser (#801-78978).<br>
+      <strong>Office:</strong> 2200 Post Oak Blvd, Suite 1580, Houston TX 77056.<br>
+      <strong>Staff:</strong> ~25 employees. 6–7 investment professionals. Minimal operational overhead.<br>
+      <strong>Strategy:</strong> Concentrated, long-only equity. No leverage. No short selling. Public equities exclusively.<br>
+      <strong>Fees:</strong> Asset-based + incentive allocation (performance). Exact rates per fund series/share class.<br>
+      <strong>Regulatory:</strong> Clean. No disciplinary actions. No complaints on file.
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-label" style="color:var(--wa-purple)">The AUM Puzzle</div>
+    <div class="card-body">
+      Form ADV declares ~$408M in regulatory AUM. 13F filings show $7.6B in US equity positions. The discrepancy (~$7.2B) is almost certainly <strong>Snehal Amin's personal and family capital</strong>, managed alongside but not counted as fee-paying advisory assets. This is consistent with TCI/Hohn lineage — Christopher Hohn manages ~$40B+ of his own capital through TCI alongside external LPs. Amin appears to have replicated this model: a small number of external clients (~3) alongside a massive proprietary book. <strong>Andrew's compensation was likely based on economics from the ~$400M–$2B fee-paying portion</strong>, not the full $7.6B. This is why the dossier's seed capital estimate ($5–15M personal savings) is more realistic than a naive fee calculation on $7.6B would suggest.
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ========== SECTION 2: THE LINEAGE ========== -->
+<div class="section">
+<div class="section-label">§ 2.0</div>
+<h2>The TCI Lineage — Three Generations of Concentrated Investors</h2>
+<div class="section-sub">From Hohn to Amin to Lundstrom: a direct intellectual transmission spanning 23 years and three funds.</div>
+
+<div style="display:grid; grid-template-columns:60px 1fr; gap:0; margin-bottom:20px;">
+  <!-- Generation 0: Hohn -->
+  <div style="display:flex; flex-direction:column; align-items:center; padding-top:20px;">
+    <div style="width:3px; background:var(--tci-red); flex:1;"></div>
+  </div>
+  <div>
+    <div class="lineage-node" style="border-left:3px solid var(--tci-red);">
+      <div>
+        <div class="lineage-name">Christopher Hohn · TCI Fund Management</div>
+        <div class="lineage-detail" style="margin-top:4px;">
+          Founded 2003. ~$77B AUM (2026). ~$70B net gains since inception. The most concentrated activist investor of his generation. CSX proxy fight (2008) — won 4 board seats. Endowed Children's Investment Fund Foundation with $2B. Euro Hedge Fund of the Year 2004, 2005, 2013. <strong style="color:var(--tci-red)">GENERATION ZERO — THE SOURCE.</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gen 1a: Degorce -->
+  <div style="display:flex; flex-direction:column; align-items:center;">
+    <div style="width:3px; background:var(--wa-purple); flex:1;"></div>
+  </div>
+  <div>
+    <div class="lineage-node" style="border-left:3px solid var(--wa-purple); margin-left:30px;">
+      <div>
+        <div class="lineage-name">Patrick Degorce · Thelème Partners (2009)</div>
+        <div class="lineage-detail" style="margin-top:4px;">
+          TCI co-founder. Left March 2009. Founded Thelème Partners (London). Global long/short equity, non-activist. Raised £446M in 2010. <strong>Snehal Amin was co-founder. Rishi Sunak (future UK PM) also joined.</strong> Thelème was the bridge between TCI and WindAcre.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gen 1b: Amin -->
+  <div style="display:flex; flex-direction:column; align-items:center;">
+    <div style="width:3px; background:var(--wa-purple); flex:1;"></div>
+  </div>
+  <div>
+    <div class="lineage-node" style="border-left:3px solid var(--wa-purple); margin-left:60px;">
+      <div>
+        <div class="lineage-name">Snehal Rajnikant Amin · WindAcre Partnership (2013)</div>
+        <div class="lineage-detail" style="margin-top:4px;">
+          <strong>Education:</strong> University of Michigan (undergrad) → Stanford GSB MBA (1998–2000).<br>
+          <strong>Goldman Sachs:</strong> VP, Merchant Banking Division. Worked alongside Rishi Sunak.<br>
+          <strong>TCI:</strong> Founding Partner (2003–2009). Oversaw Americas strategy. Co-led CSX proxy fight with 3G Capital.<br>
+          <strong>Thelème:</strong> Co-founder & Co-PM (2009–2013). Left to found WindAcre.<br>
+          <strong>WindAcre:</strong> CEO, Managing Member, >75% ownership (2013–present).<br>
+          <strong style="color:var(--wa-purple)">GENERATION ONE — THE TEACHER.</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gen 2: Lundstrom -->
+  <div style="display:flex; flex-direction:column; align-items:center;">
+    <div style="width:3px; background:var(--gold); flex:1;"></div>
+  </div>
+  <div>
+    <div class="lineage-node" style="border-left:3px solid var(--gold); margin-left:90px;">
+      <div>
+        <div class="lineage-name">Andrew James Lundstrom · Tintern Services Ltd (2026)</div>
+        <div class="lineage-detail" style="margin-top:4px;">
+          <strong>Education:</strong> Amherst College, BA Philosophy, Magna Cum Laude, Phi Beta Kappa (2009).<br>
+          <strong>Fidelity:</strong> Research Associate / Intern (2007–2008, during Amherst).<br>
+          <strong>Route One Investment Co:</strong> Analyst (2011–2013). San Francisco-based value fund.<br>
+          <strong>WindAcre:</strong> Analyst → Partner (2013–2024). 11 years. Rose from founding-year hire to senior partner.<br>
+          <strong>Tintern:</strong> Sole director & PSC. Incorporated 11 March 2026. Non-compete expired. London W1K 3NB.<br>
+          <strong style="color:var(--gold)">GENERATION TWO — THE HEIR.</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex; flex-direction:column; align-items:center;">
+    <div style="width:3px; background:transparent; flex:1;"></div>
+  </div>
+  <div></div>
+</div>
+
+<div class="synth">
+  <h3>The Rishi Sunak Connection</h3>
+  <p>Snehal Amin and Rishi Sunak were contemporaries at Stanford GSB (1998–2000), colleagues at Goldman Sachs Merchant Banking, and co-founders of Thelème Partners (2009). Sunak left Thelème for politics in 2015, eventually becoming UK Prime Minister (2022–2024). Amin left for WindAcre in 2013. The two men share identical intellectual formation: Goldman → Stanford → concentrated equity investing. The significance for Joe: <strong>Tintern is launching in London. Andrew's professional lineage connects directly to the highest levels of UK financial and political establishment through Amin → Sunak.</strong> This is not a provincial fund. This is the TCI tree — the most elite concentrated investor network in Europe.</p>
+</div>
+</div>
+
+<!-- ========== SECTION 3: PORTFOLIO — ANDREW'S ERA ========== -->
+<div class="section">
+<div class="section-label">§ 3.0</div>
+<h2>The Portfolio Andrew Built (2013–2024)</h2>
+<div class="section-sub">Every US-listed holding during Andrew Lundstrom's 11 years at WindAcre, mapped against the monopoly thesis. PFC (India-listed) excluded from 13F but confirmed via case study.</div>
+
+<div class="table-wrap">
+<table class="ct">
+<thead>
+<tr>
+  <th style="width:160px">Holding</th>
+  <th style="width:80px">Held</th>
+  <th style="width:90px">Peak Alloc.</th>
+  <th style="width:100px">Monopoly Type</th>
+  <th>What Makes It a Monopoly</th>
+  <th style="width:130px">Amadeus Parallel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong style="color:#e06060">Nielsen (NLSN)</strong><br><span style="font-size:10px;color:var(--text-faint)">Q1 2015 – Q4 2022</span></td>
+  <td>7.75 yr</td>
+  <td>27.3% of co.</td>
+  <td><span class="badge badge-5">★★★★★</span></td>
+  <td>THE monopoly in TV audience measurement. Currency of $70B TV ad market. Every upfront negotiation, network valuation, and ad buy depended on Nielsen ratings. No alternative at scale. WindAcre accumulated 27.3% — largest shareholder — to block Elliott/Brookfield's $28/share bid, arguing intrinsic value was $40–80. Eventually joined consortium with $500M equity commitment in private holdco.</td>
+  <td><strong>Measurement infrastructure = booking infrastructure.</strong> Both are the invisible standard an entire industry depends on. Identical thesis.</td>
+</tr>
+<tr>
+  <td><strong style="color:var(--ibm-blue)">Fidelity National Financial (FNF)</strong><br><span style="font-size:10px;color:var(--text-faint)">Q1 2015 – present</span></td>
+  <td>9+ yr</td>
+  <td>11% ($812M)</td>
+  <td><span class="badge badge-4">★★★★☆</span></td>
+  <td>#1 US title insurance company. Top 4 control ~85% of market. Legally required for every mortgaged property transaction. Century-old title plant databases create impossible-to-replicate data moat. State-by-state licensing barriers. Also owns F&G Annuities — a conglomerate with the title monopoly buried inside.</td>
+  <td><strong>Legal mandate + conglomerate.</strong> Title insurance = required service, like PSS for airline ops. FNF wraps it in an annuities business, obscuring value. Same SOTP problem.</td>
+</tr>
+<tr>
+  <td><strong style="color:var(--pfc-amber)">Moody's Corp (MCO)</strong><br><span style="font-size:10px;color:var(--text-faint)">~2015 – present</span></td>
+  <td>9+ yr</td>
+  <td>9% ($685M)</td>
+  <td><span class="badge badge-5">★★★★★</span></td>
+  <td>Credit rating duopoly (Moody's + S&P = ~80% revenue share). NRSRO regulatory designation creates government-mandated moat. Every bond issuance, structured product, and sovereign rating requires their assessment. Issuer-pays model = guaranteed demand. 55%+ EBITDA margins. Zero customer churn — issuers cannot avoid the rating agencies.</td>
+  <td><strong>Regulatory monopoly.</strong> Like PFC (government mandate) and Amadeus (industry standard). Service is mission-critical and alternatives are structurally blocked by regulation.</td>
+</tr>
+<tr>
+  <td><strong style="color:var(--ams-green)">TransDigm Group (TDG)</strong><br><span style="font-size:10px;color:var(--text-faint)">Q4 2018 – present</span></td>
+  <td>5.5+ yr</td>
+  <td>9% ($652M)</td>
+  <td><span class="badge badge-5">★★★★★</span></td>
+  <td>~90% sole-source aerospace components. Parts designed into specific aircraft platforms (737, F-35) with no qualified alternative. Switching requires full FAA recertification (18–36 months, $10M+). Each of ~200 product lines is a micro-monopoly. 45%+ EBITDA margins. Pentagon has investigated pricing multiple times — found no alternative. Moat is regulatory and physical.</td>
+  <td><strong>Sole-source lock-in = PSS lock-in.</strong> Both mission-critical systems where switching requires revalidation no customer will risk. Both have pricing power customers complain about but cannot escape.</td>
+</tr>
+<tr>
+  <td><strong>Alphabet / Google (GOOGL)</strong><br><span style="font-size:10px;color:var(--text-faint)">Q4 2019 – present</span></td>
+  <td>4.5+ yr</td>
+  <td>23% ($1.76B)</td>
+  <td><span class="badge badge-4">★★★★☆</span></td>
+  <td>~90% global search. ~30% digital advertising. YouTube dominant video. Maps has no competitor. Android 72% of smartphones. DOJ antitrust is the key risk — but even a breakup creates individually valuable monopolies. Each product is a standalone monopoly; together they form an ecosystem with network effects that compound.</td>
+  <td><strong>Platform monopoly with conglomerate structure.</strong> Google's multiple monopolies bundled together mirror Amadeus — dominant core (Search = PSS) with adjacent segments that confuse the valuation.</td>
+</tr>
+<tr>
+  <td><strong>Amazon (AMZN)</strong><br><span style="font-size:10px;color:var(--text-faint)">Q4 2019 – present</span></td>
+  <td>4.5+ yr</td>
+  <td>18% ($1.39B)</td>
+  <td><span class="badge badge-4">★★★★☆</span></td>
+  <td>AWS: ~32% cloud (switching costs rival mainframe). Marketplace: ~40% US e-commerce. Logistics: private delivery network rivalling USPS/UPS/FedEx. Prime: 200M+ subscribers. Conglomerate discount applies — AWS alone worth $1.5–2T bundled with lower-margin retail.</td>
+  <td><strong>AWS = PSS.</strong> Mission-critical cloud infrastructure with existential switching costs. Amazon's conglomerate (AWS + retail + logistics) creates the same SOTP discount as Amadeus.</td>
+</tr>
+<tr>
+  <td><strong>ASML Holding</strong><br><span style="font-size:10px;color:var(--text-faint)">~2023 – Q3 2024</span></td>
+  <td>~1.5 yr</td>
+  <td>9% ($687M)</td>
+  <td><span class="badge badge-5">★★★★★</span></td>
+  <td>THE monopoly in EUV lithography — the machines that print advanced semiconductors. ASML is the only company on earth that makes EUV systems ($300M+ each). TSMC, Samsung, Intel all depend on ASML exclusively. No alternative exists or is being developed. Dutch government export controls make it a geopolitical chokepoint.</td>
+  <td><strong>Sole-source infrastructure monopoly.</strong> Like TransDigm but at semiconductor scale. ASML makes the machines; Amadeus makes the booking system. Both are the only option.</td>
+</tr>
+<tr>
+  <td><strong>TSMC (TSM)</strong><br><span style="font-size:10px;color:var(--text-faint)">~2023 – present</span></td>
+  <td>~1.5 yr</td>
+  <td>7% ($535M)</td>
+  <td><span class="badge badge-5">★★★★★</span></td>
+  <td>~90% of advanced semiconductor manufacturing (<7nm). Apple, NVIDIA, AMD, Qualcomm all depend exclusively on TSMC. $20B+ per fab barrier to entry. Intel and Samsung have failed to match yields. The most critical monopoly in the global economy.</td>
+  <td><strong>Manufacturing monopoly.</strong> TSMC's capex moat (impossible to replicate) parallels Amadeus's switching cost moat (impossible to migrate). Different mechanism, same result.</td>
+</tr>
+<tr>
+  <td><strong style="color:var(--fih-teal)">Expedia Group (EXPE)</strong><br><span style="font-size:10px;color:var(--text-faint)">Q2 2024 (Andrew's final quarter)</span></td>
+  <td>new</td>
+  <td>5% ($364M)</td>
+  <td><span class="badge badge-3">★★★☆☆</span></td>
+  <td>One of two dominant OTAs (with Booking Holdings). ~65% combined online travel booking market. Network effects and Google ad spend create barriers. Expedia is the DOWNSTREAM customer of Amadeus — uses GDS/PSS infrastructure to distribute travel inventory.</td>
+  <td><strong>Direct supply chain connection.</strong> Expedia sits on top of Amadeus's infrastructure. WindAcre bought the traffic in Andrew's final quarter. The toll road underneath (PSS) is the stronger monopoly.</td>
+</tr>
+<tr>
+  <td><strong>SAP SE</strong><br><span style="font-size:10px;color:var(--text-faint)">~2024</span></td>
+  <td><1 yr</td>
+  <td>5% ($381M)</td>
+  <td><span class="badge badge-5">★★★★★</span></td>
+  <td>ERP monopoly: runs back-office ops of ~87% of Fortune 500. Switching takes 2–5 years, costs $50–500M. S/4HANA migration forces reinvestment in SAP (not departure). Lock-in structurally identical to IBM mainframe — decades of accumulated business logic and existential migration risk.</td>
+  <td><strong>Closest direct parallel.</strong> SAP lock-in ≈ Amadeus PSS lock-in ≈ IBM mainframe lock-in. All three: mission-critical enterprise software where switching takes years and risks operational failure.</td>
+</tr>
+<tr style="background:rgba(212,134,11,0.04)">
+  <td><strong style="color:var(--pfc-amber)">PFC (India)</strong><br><span style="font-size:10px;color:var(--text-faint)">FY2015 – H1 2024</span></td>
+  <td>9 yr</td>
+  <td>N/A (not in 13F)</td>
+  <td><span class="badge badge-5">★★★★★</span></td>
+  <td>India's largest government-backed power infrastructure NBFC. AAA-rated at sovereign parity. No private institution matches funding cost. 20% ROE, never negative. Government mandate = absolute regulatory moat. ~$69B loan book. 550 employees managing the largest infrastructure lending franchise in the world.</td>
+  <td><strong>Government-mandated monopoly.</strong> PFC's moat (sovereign backing, AAA funding) parallels Amadeus PSS (industry standard, switching costs). Both are mispriced because the market misclassifies them (PSU discount / travel stock discount).</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- ========== SECTION 4: THE PATTERN ACROSS ALL HOLDINGS ========== -->
+<div class="section">
+<div class="section-label">§ 4.0</div>
+<h2>The Expanded Monopoly Matrix — 15 Investments Compared</h2>
+<div class="section-sub">The original four (IBM, PFC, FIH, Amadeus) plus every major WindAcre holding during Andrew's tenure, scored on the same framework.</div>
+
+<div class="table-wrap" style="overflow-x:auto;">
+<table class="ct" style="min-width:1200px;">
+<thead>
+<tr>
+  <th style="width:150px">Holding</th>
+  <th style="width:70px;text-align:center">Monopoly</th>
+  <th style="width:70px;text-align:center">Lock-in</th>
+  <th style="width:70px;text-align:center">Pricing<br>Power</th>
+  <th style="width:70px;text-align:center">Zero<br>Churn</th>
+  <th style="width:70px;text-align:center">Conglo.<br>Discount</th>
+  <th style="width:70px;text-align:center">Crisis<br>Proof</th>
+  <th style="width:70px;text-align:center">10yr<br>Hold</th>
+  <th style="width:70px;text-align:center">Instit.<br>Scale</th>
+  <th style="width:50px;text-align:center;color:var(--gold)">SCORE</th>
+</tr>
+</thead>
+<tbody>
+<!-- Original 4 -->
+<tr style="background:rgba(74,144,217,0.04)">
+  <td><strong style="color:var(--ibm-blue)">IBM (z Systems)</strong><br><span style="font-size:9px;color:var(--text-faint)">GARY F · 1979–2010</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">31yr</span></td>
+  <td style="text-align:center"><span class="badge badge-3">personal</span></td>
+  <td style="text-align:center;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:16px;color:var(--ibm-blue)">8</td>
+</tr>
+<tr style="background:rgba(212,134,11,0.04)">
+  <td><strong style="color:var(--pfc-amber)">PFC</strong><br><span style="font-size:9px;color:var(--text-faint)">WINDACRE · 2015–2024</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-4">mod</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-2">✗</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">9yr</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:16px;color:var(--pfc-amber)">7</td>
+</tr>
+<tr style="background:rgba(46,168,138,0.04)">
+  <td><strong style="color:var(--fih-teal)">FIH Group</strong><br><span style="font-size:9px;color:var(--text-faint)">JOE'S PITCH · pre-2026</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-4">local</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-4">partial</span></td>
+  <td style="text-align:center"><span class="badge badge-4">req'd</span></td>
+  <td style="text-align:center"><span class="badge badge-2">✗</span></td>
+  <td style="text-align:center;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:16px;color:var(--fih-teal)">6</td>
+</tr>
+<tr style="background:rgba(76,175,80,0.04)">
+  <td><strong style="color:var(--ams-green)">Amadeus (PSS)</strong><br><span style="font-size:9px;color:var(--text-faint)">JOE'S PITCH · 2026</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-2">cyclical</span></td>
+  <td style="text-align:center"><span class="badge badge-5">designed</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:16px;color:var(--ams-green)">7</td>
+</tr>
+<!-- WindAcre holdings -->
+<tr>
+  <td><strong>Nielsen</strong><br><span style="font-size:9px;color:var(--text-faint)">WINDACRE · 2015–2022</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-2">✗</span></td>
+  <td style="text-align:center"><span class="badge badge-4">partial</span></td>
+  <td style="text-align:center"><span class="badge badge-5">7.75yr</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:16px">7</td>
+</tr>
+<tr>
+  <td><strong>TransDigm</strong><br><span style="font-size:9px;color:var(--text-faint)">WINDACRE · 2018–present</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-4">multi-seg</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">5.5yr+</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:16px">8</td>
+</tr>
+<tr>
+  <td><strong>Moody's</strong><br><span style="font-size:9px;color:var(--text-faint)">WINDACRE · ~2015–present</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-2">✗</span></td>
+  <td style="text-align:center"><span class="badge badge-4">partial</span></td>
+  <td style="text-align:center"><span class="badge badge-5">9yr+</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:16px">7</td>
+</tr>
+<tr>
+  <td><strong>FNF</strong><br><span style="font-size:9px;color:var(--text-faint)">WINDACRE · 2015–present</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-4">oligo</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-4">cyclical</span></td>
+  <td style="text-align:center"><span class="badge badge-5">9yr+</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:16px">7</td>
+</tr>
+<tr>
+  <td><strong>ASML</strong><br><span style="font-size:9px;color:var(--text-faint)">WINDACRE · ~2023–2024</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-2">✗</span></td>
+  <td style="text-align:center"><span class="badge badge-4">partial</span></td>
+  <td style="text-align:center"><span class="badge badge-3">~1.5yr</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:16px">6</td>
+</tr>
+<tr>
+  <td><strong>TSMC</strong><br><span style="font-size:9px;color:var(--text-faint)">WINDACRE · ~2023–present</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-2">✗</span></td>
+  <td style="text-align:center"><span class="badge badge-4">geo risk</span></td>
+  <td style="text-align:center"><span class="badge badge-3">~1.5yr</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:16px">6</td>
+</tr>
+<tr>
+  <td><strong>Alphabet</strong><br><span style="font-size:9px;color:var(--text-faint)">WINDACRE · 2019–present</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-4">habit</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-4">soft</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">4.5yr+</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:16px">7</td>
+</tr>
+<tr>
+  <td><strong>Amazon</strong><br><span style="font-size:9px;color:var(--text-faint)">WINDACRE · 2019–present</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-4">mixed</span></td>
+  <td style="text-align:center"><span class="badge badge-4">AWS yes</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">4.5yr+</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:16px">7</td>
+</tr>
+<tr>
+  <td><strong>SAP</strong><br><span style="font-size:9px;color:var(--text-faint)">WINDACRE · ~2024</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-2">✗</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center"><span class="badge badge-3"><1yr</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:16px">6</td>
+</tr>
+<tr>
+  <td><strong>Expedia</strong><br><span style="font-size:9px;color:var(--text-faint)">WINDACRE · Q2 2024</span></td>
+  <td style="text-align:center"><span class="badge badge-4">oligo</span></td>
+  <td style="text-align:center"><span class="badge badge-3">network</span></td>
+  <td style="text-align:center"><span class="badge badge-3">moderate</span></td>
+  <td style="text-align:center"><span class="badge badge-3">moderate</span></td>
+  <td style="text-align:center"><span class="badge badge-2">✗</span></td>
+  <td style="text-align:center"><span class="badge badge-2">cyclical</span></td>
+  <td style="text-align:center"><span class="badge badge-3">new</span></td>
+  <td style="text-align:center"><span class="badge badge-5">✓</span></td>
+  <td style="text-align:center;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:16px">4</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="synth" style="margin-top:20px;">
+  <h3>The Verdict: 15 Monopolies, One Framework</h3>
+  <p><strong>Average monopoly score across all 15 holdings: 6.7 / 8.</strong> Every single investment Andrew was involved in — whether through his father (IBM), through WindAcre (Nielsen, TransDigm, Moody's, FNF, Alphabet, Amazon, ASML, TSMC, SAP, PFC, Expedia), or through his own idea generation (FIH, Amadeus) — is a monopoly or oligopoly. There are no exceptions. Zero.</p>
+  <p>The highest-scoring holdings are <strong>IBM (8), TransDigm (8), and Amadeus (7)</strong> — all three share the same defining characteristic: mission-critical infrastructure with regulatory/operational lock-in that makes switching existentially risky. This is Andrew's sweet spot. Not just "good businesses" or "quality compounders" — specifically: <strong>systems so embedded in their customers' operations that removal would cause operational failure</strong>.</p>
+  <p>The two lowest scorers — <strong>FIH (6) and Expedia (4)</strong> — diverge for opposite reasons. FIH has the strongest monopoly of any holding (174-year geographic lock-in, unbreakable) but fails on institutional scale. Expedia is the weakest monopoly (oligopoly with soft lock-in) but was initiated as a value chain play — buying the traffic to understand the toll road. Neither is a mistake. Both reveal different aspects of how Andrew thinks.</p>
+  <p><strong>Amadeus at 7/8 matches the core WindAcre holdings</strong> (Nielsen, Moody's, FNF, Alphabet, Amazon). Its only weakness — cyclical earnings — is shared by FNF (real estate cycle) and Expedia (travel cycle). Andrew has demonstrated he can hold cyclical monopolies. The question is whether Amadeus's COVID trough (–12% ROE) is deeper than anything he's sat through before. The answer: PFC at 0.17× P/B (FY2020) was arguably more painful to hold. He held.</p>
+</div>
+</div>
+
+<!-- ========== SECTION 5: NIELSEN — THE SIGNATURE CAMPAIGN ========== -->
+<div class="section">
+<div class="section-label">§ 5.0</div>
+<h2>The Nielsen Campaign — What It Reveals About Andrew's Conviction</h2>
+<div class="section-sub">WindAcre accumulated 27.3% of Nielsen Holdings — the single most concentrated public equity position of any fund in 2022. Andrew was there for the entire campaign.</div>
+
+<div class="grid-2" style="margin-bottom:16px;">
+  <div class="card">
+    <div class="card-label" style="color:var(--tci-red)">THE THESIS</div>
+    <div class="card-body">
+      Nielsen was the <strong>monopoly measurement standard</strong> for a $70B TV advertising market. Every ad buy, every upfront, every network valuation was denominated in Nielsen ratings. No alternative existed at scale. WindAcre's thesis: Nielsen ONE (cross-platform measurement, combining linear TV + streaming) would <strong>cement the monopoly in the digital era</strong> — making it more valuable, not less. Amin argued intrinsic value was $40–50/share with a credible path to $80 by 2025. The $28/share bid from Elliott/Brookfield valued a monopoly at a discount to its own infrastructure replacement cost.
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-label" style="color:var(--tci-red)">THE CAMPAIGN</div>
+    <div class="card-body">
+      <strong>Q1 2015:</strong> WindAcre initiates Nielsen position.<br>
+      <strong>2015–2021:</strong> Builds stake over 7 years. Patient accumulation.<br>
+      <strong>Mar 2022:</strong> Elliott/Brookfield bid $28/share (~$16B incl. debt).<br>
+      <strong>Apr 2022:</strong> WindAcre at 27.3% — enough to block UK scheme (requires 75%).<br>
+      <strong>Apr 2022:</strong> Amin demands additional $1.1B in equity (~$40/share effective price). Rejected.<br>
+      <strong>Aug 2022:</strong> Resolution — WindAcre <strong>joins the consortium</strong>. Receives $28/share for public shares + $500M equity commitment in private holdco with minority protections.<br>
+      <strong>Oct 2022:</strong> Deal closes. Nielsen delisted.
+    </div>
+  </div>
+</div>
+
+<div class="synth">
+  <h3>What Nielsen Tells Us About How Tintern Will Invest</h3>
+  <p>The Nielsen campaign reveals three things about Andrew's (and by extension, Tintern's) investment approach:</p>
+  <p><strong>1. Conviction without limits.</strong> 27.3% of a single company is not a position. It's a statement of total conviction. WindAcre put more capital into Nielsen alone than most funds put into their entire portfolio. This only makes sense if you believe — with absolute certainty — that you understand the business better than the market. Andrew watched Amin do this. He will do it at Tintern.</p>
+  <p><strong>2. Willingness to go activist when the monopoly is mispriced.</strong> WindAcre was not a passive holder at Nielsen. They blocked a deal, demanded better terms, and ultimately negotiated entry into the private consortium. This is the TCI lineage in action — Hohn taught Amin that if you own enough of a monopoly, you have leverage. Amin demonstrated it at Nielsen. Andrew will apply it at Tintern. For Amadeus: even a 0.5–1% stake, combined with a credible SOTP letter, could be the first shareholder voice the passive register has ever heard.</p>
+  <p><strong>3. The outcome was not a clean win.</strong> Amin argued Nielsen was worth $40–80. It sold for $28. WindAcre negotiated the best deal available ($500M equity in the holdco with minority protections) but did not get the price they believed was fair. This matters for Joe: Andrew has seen a monopoly thesis fail to reprice in public markets and get taken private at a discount. He knows the risk. The Amadeus pitch should acknowledge it — "the conglomerate discount can persist, or worse, attract a PE bid below intrinsic value. The defence is the SOTP work that makes the discount visible before a predator arrives."</p>
+</div>
+</div>
+
+<!-- ========== SECTION 6: ANDREW'S WEALTH ========== -->
+<div class="section">
+<div class="section-label">§ 6.0</div>
+<h2>Andrew's Personal Wealth — Forensic Estimate</h2>
+<div class="section-sub">Conservative reconstruction of Andrew's WindAcre economics, calibrated against the Form ADV / 13F discrepancy.</div>
+
+<div class="grid-3" style="margin-bottom:16px;">
+  <div class="card">
+    <div class="card-label" style="color:var(--gold)">Scenario A — Mostly Proprietary</div>
+    <div class="card-body">
+      ~$400M–$1B fee-paying AUM. Rest is Amin's capital. Andrew is well-compensated partner but not splitting fees on $7.6B. <strong>Pre-tax: ~$18M. Net liquid: ~$10M.</strong>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-label" style="color:var(--gold)">Scenario B — Moderate Fee Base</div>
+    <div class="card-body">
+      ~$2–4B fee-paying. Andrew gets meaningful partner economics. Performance allocation in strong years (2019–2021, 2023) drives bulk of comp. <strong>Pre-tax: ~$42M. Net liquid: ~$27M.</strong>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-label" style="color:var(--gold)">Combined With Family Capital</div>
+    <div class="card-body">
+      Andrew personal: $10–27M. Gary F IBM equity: ~$6.8M+. Peninsula home: $2.5–3.5M. 401(k) + other: $0.5–2M. <strong>Total Lundstrom capital: $20–40M.</strong> Supports Tintern launch at $200M–$1B AUM with standard GP commitment.
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- FOOTNOTES -->
+<div class="footnotes">
+  <p>SOURCES: SEC EDGAR 13F-HR filings (CIK 0001599383), Form ADV (Adviser #801-78978), WhaleWisdom, 13f.info, SEC 13D/A filings (Nielsen campaign). Firm background from IAPD, Companies House UK (Tintern: 17087185), and Project Tintern origin intelligence dossier (G2G Advisory, March 2026). TCI lineage from public reporting (FT, Bloomberg, Wikipedia). All 13F data is quarterly snapshots — actual entry/exit dates may differ.</p>
+  <p>CORRECTIONS vs earlier analysis: Roper Technologies (ROP) entered portfolio Q4 2025 — AFTER Andrew's departure. Not held during his tenure. Booking Holdings (BKNG) — not confirmed in WindAcre 13F filings. Both previously stated in error. Expedia initiated Q2 2024 (Andrew's final quarter), not earlier.</p>
+  <p>CLASSIFICATION: Confidential · Joe Barry · Application to Tintern Capital · March 2026 · Not for external distribution</p>
+</div>
+
+</div>
+</body>
+</html>

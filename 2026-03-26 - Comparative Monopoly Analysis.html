@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Monopoly Pattern — Four Investments, One Framework</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
+
+:root {
+  --bg: #060810;
+  --surface: #0c0e18;
+  --surface2: #12141f;
+  --surface3: #181a28;
+  --border: #1e2035;
+  --border-bright: #2a2d45;
+  --gold: #c9a84c;
+  --gold-dim: #8a6e2e;
+  --gold-bright: #e8c96a;
+  --ibm-blue: #4a90d9;
+  --pfc-amber: #d4860b;
+  --fih-teal: #2ea88a;
+  --ams-green: #4caf50;
+  --red: #d44;
+  --red-soft: #c44040;
+  --green: #4a9;
+  --text: #d8d8e8;
+  --text-dim: #888898;
+  --text-faint: #555568;
+  --text-bright: #f0f0ff;
+  --overlap: #2a4a2a;
+  --diverge: #4a2a2a;
+  --partial: #3a3a1a;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* GRAIN */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.4;
+}
+
+.container {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* HEADER */
+.masthead {
+  border-bottom: 1px solid var(--border-bright);
+  background: linear-gradient(180deg, #0a0c14 0%, var(--bg) 100%);
+  position: relative;
+}
+.masthead::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--gold) 30%, var(--gold-bright) 50%, var(--gold) 70%, transparent 100%);
+}
+.masthead-inner {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 28px 32px 24px;
+}
+.classification {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.masthead h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--text-bright);
+  letter-spacing: -0.5px;
+}
+.masthead h1 span { color: var(--gold); }
+.masthead .subtitle {
+  font-size: 14px;
+  color: var(--text-dim);
+  margin-top: 6px;
+  font-weight: 300;
+}
+.masthead .meta-row {
+  display: flex;
+  gap: 32px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--text-faint);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* SECTION */
+.section {
+  padding: 36px 0;
+  border-bottom: 1px solid var(--border);
+}
+.section:last-child { border-bottom: none; }
+
+.section-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  color: var(--text-bright);
+  margin-bottom: 4px;
+}
+.section .section-sub {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 24px;
+  font-style: italic;
+  max-width: 900px;
+}
+
+/* COMPANY BADGES */
+.co-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+.co-ibm { background: rgba(74,144,217,0.15); color: var(--ibm-blue); border: 1px solid rgba(74,144,217,0.3); }
+.co-pfc { background: rgba(212,134,11,0.15); color: var(--pfc-amber); border: 1px solid rgba(212,134,11,0.3); }
+.co-fih { background: rgba(46,168,138,0.15); color: var(--fih-teal); border: 1px solid rgba(46,168,138,0.3); }
+.co-ams { background: rgba(76,175,80,0.15); color: var(--ams-green); border: 1px solid rgba(76,175,80,0.3); }
+
+/* FOUR-COLUMN IDENTITY GRID */
+.identity-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 0;
+}
+.id-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.id-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.id-card.ibm::before { background: var(--ibm-blue); }
+.id-card.pfc::before { background: var(--pfc-amber); }
+.id-card.fih::before { background: var(--fih-teal); }
+.id-card.ams::before { background: var(--ams-green); }
+
+.id-card .co-name {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.id-card.ibm .co-name { color: var(--ibm-blue); }
+.id-card.pfc .co-name { color: var(--pfc-amber); }
+.id-card.fih .co-name { color: var(--fih-teal); }
+.id-card.ams .co-name { color: var(--ams-green); }
+
+.id-card .full-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  color: var(--text-bright);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.id-card .id-meta {
+  font-size: 11px;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+.id-card .id-meta strong {
+  color: var(--text);
+  font-weight: 600;
+}
+.id-card .big-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 12px 0 4px;
+}
+.id-card.ibm .big-num { color: var(--ibm-blue); }
+.id-card.pfc .big-num { color: var(--pfc-amber); }
+.id-card.fih .big-num { color: var(--fih-teal); }
+.id-card.ams .big-num { color: var(--ams-green); }
+.id-card .big-label {
+  font-size: 10px;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* COMPARISON TABLE */
+.comp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.comp-table thead th {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 2px solid var(--border-bright);
+  color: var(--text-faint);
+  position: sticky;
+  top: 0;
+  background: var(--surface);
+  z-index: 10;
+}
+.comp-table thead th:nth-child(2) { color: var(--ibm-blue); }
+.comp-table thead th:nth-child(3) { color: var(--pfc-amber); }
+.comp-table thead th:nth-child(4) { color: var(--fih-teal); }
+.comp-table thead th:nth-child(5) { color: var(--ams-green); }
+
+.comp-table tbody td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  line-height: 1.55;
+}
+.comp-table tbody tr:hover td {
+  background: rgba(255,255,255,0.015);
+}
+.comp-table td:first-child {
+  font-weight: 600;
+  color: var(--text-bright);
+  white-space: nowrap;
+  font-size: 11px;
+  width: 180px;
+  min-width: 180px;
+}
+.comp-table .cell-match {
+  background: rgba(76,175,80,0.06);
+}
+.comp-table .cell-partial {
+  background: rgba(212,134,11,0.06);
+}
+.comp-table .cell-diverge {
+  background: rgba(212,68,68,0.06);
+}
+.comp-table .cell-val {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+/* OVERLAP MATRIX */
+.overlap-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.overlap-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px;
+}
+.overlap-card .pair-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.overlap-card .pair-label .dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.overlap-card .overlap-pct {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-bright);
+  margin-bottom: 4px;
+}
+.overlap-card .overlap-desc {
+  font-size: 11px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* VERDICT BADGES */
+.verdict {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.verdict-match { background: rgba(76,175,80,0.15); color: #6fcf6f; border: 1px solid rgba(76,175,80,0.25); }
+.verdict-partial { background: rgba(212,160,11,0.15); color: #d4a00b; border: 1px solid rgba(212,160,11,0.25); }
+.verdict-diverge { background: rgba(212,68,68,0.15); color: #e06060; border: 1px solid rgba(212,68,68,0.25); }
+
+/* DIMENSION DEEP-DIVES */
+.dimension-row {
+  display: grid;
+  grid-template-columns: 180px 1fr 1fr 1fr 1fr;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+}
+.dimension-row:last-child { border-bottom: none; }
+.dim-label {
+  padding: 16px 14px;
+  font-weight: 700;
+  color: var(--gold);
+  font-size: 11px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.dim-cell {
+  padding: 14px 16px;
+  border-right: 1px solid var(--border);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.dim-cell:last-child { border-right: none; }
+.dim-cell .dim-head {
+  font-weight: 700;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+.dim-cell.ibm-cell .dim-head { color: var(--ibm-blue); }
+.dim-cell.pfc-cell .dim-head { color: var(--pfc-amber); }
+.dim-cell.fih-cell .dim-head { color: var(--fih-teal); }
+.dim-cell.ams-cell .dim-head { color: var(--ams-green); }
+.dim-cell .dim-body { color: var(--text-dim); }
+
+/* SYNTHESIS SECTION */
+.synthesis-box {
+  background: var(--surface2);
+  border: 1px solid var(--gold-dim);
+  border-radius: 8px;
+  padding: 24px 28px;
+  margin-top: 20px;
+}
+.synthesis-box h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+.synthesis-box p {
+  color: var(--text);
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+.synthesis-box p:last-child { margin-bottom: 0; }
+
+/* TIMELINE */
+.timeline-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+.tl-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  position: relative;
+}
+.tl-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.tl-card.ibm::before { background: var(--ibm-blue); }
+.tl-card.pfc::before { background: var(--pfc-amber); }
+.tl-card.fih::before { background: var(--fih-teal); }
+.tl-card.ams::before { background: var(--ams-green); }
+
+.tl-card .tl-period {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 2px;
+}
+.tl-card .tl-years {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-bright);
+  margin-bottom: 8px;
+}
+.tl-card .tl-detail {
+  font-size: 11px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* KEY METRIC HIGHLIGHT */
+.metric-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 16px 0;
+}
+.metric-cell {
+  background: var(--surface);
+  padding: 16px 18px;
+  text-align: center;
+}
+.metric-cell .mc-val {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 24px;
+  font-weight: 700;
+}
+.metric-cell .mc-label {
+  font-size: 10px;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: 'IBM Plex Mono', monospace;
+  margin-top: 4px;
+}
+
+/* FOOTNOTES */
+.footnotes {
+  padding: 24px 0 40px;
+  font-size: 10px;
+  color: var(--text-faint);
+  line-height: 1.7;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.footnotes p { margin-bottom: 4px; }
+
+/* TABLE WRAPPER */
+.table-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+@media (max-width: 1100px) {
+  .identity-grid, .overlap-grid, .timeline-row { grid-template-columns: repeat(2, 1fr); }
+  .dimension-row { grid-template-columns: 1fr; }
+  .metric-strip { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="masthead">
+<div class="masthead-inner">
+  <div class="classification">Confidential — Background Intelligence — Not for Distribution</div>
+  <h1>The <span>Monopoly</span> Pattern</h1>
+  <div class="subtitle">Four investments, one framework. Where IBM, PFC, FIH, and Amadeus overlap — and where they diverge.</div>
+  <div class="meta-row">
+    <span>Joe Barry · Application to Tintern Capital</span>
+    <span>March 2026</span>
+    <span>Companion to: GDS Sector Analysis, PFC Case Study, Project Tintern Dossier</span>
+  </div>
+</div>
+</div>
+
+<div class="container">
+
+<!-- ==================== SECTION 1: THE FOUR COMPANIES ==================== -->
+<div class="section">
+<div class="section-label">§ 1.0</div>
+<h2>The Four Investments</h2>
+<div class="section-sub">Each represents a different expression of the same underlying thesis: a monopoly franchise, mispriced by the market, requiring patience to unlock.</div>
+
+<div class="identity-grid">
+  <div class="id-card ibm">
+    <div class="co-name">IBM</div>
+    <div class="full-name">International Business Machines</div>
+    <div class="id-meta">
+      <strong>Holder:</strong> Gary F Lundstrom (Andrew's father)<br>
+      <strong>Period:</strong> 1979–2010+ (31 years at IBM)<br>
+      <strong>Vehicle:</strong> ESPP + option grants + Gary F & Sandra E FAM 1995 TRUST<br>
+      <strong>Sector:</strong> Enterprise technology infrastructure<br>
+      <strong>Geography:</strong> United States / Global<br>
+      <strong>Status:</strong> Family wealth origin event
+    </div>
+    <div class="big-num">~11×</div>
+    <div class="big-label">Stock return 1979–1987 (pre-crash peak)</div>
+  </div>
+
+  <div class="id-card pfc">
+    <div class="co-name">PFC</div>
+    <div class="full-name">Power Finance Corporation</div>
+    <div class="id-meta">
+      <strong>Holder:</strong> WindAcre Partnership (Andrew as Partner)<br>
+      <strong>Period:</strong> FY2015–H1 2024 (9 years)<br>
+      <strong>Vehicle:</strong> WindAcre concentrated long-only fund<br>
+      <strong>Sector:</strong> Government infrastructure finance (NBFC)<br>
+      <strong>Geography:</strong> India<br>
+      <strong>Status:</strong> Disposed H1 2024 · Andrew's benchmark
+    </div>
+    <div class="big-num">6.32×</div>
+    <div class="big-label">USD money multiple (22.7% CAGR)</div>
+  </div>
+
+  <div class="id-card fih">
+    <div class="co-name">FIH</div>
+    <div class="full-name">FIH Group plc</div>
+    <div class="id-meta">
+      <strong>Pitched by:</strong> Joe Barry to Andrew Lundstrom<br>
+      <strong>Context:</strong> Pre-Tintern idea generation<br>
+      <strong>Vehicle:</strong> AIM-listed micro-cap (£36m mkt cap)<br>
+      <strong>Sector:</strong> Falklands logistics / Art storage<br>
+      <strong>Geography:</strong> Falkland Islands / UK<br>
+      <strong>Status:</strong> Idea only — scale insufficient for fund deployment<br>
+      <strong>Note:</strong> Portsmouth ferry recently sold at ~12× EBITDA. Total company trades at ~8×.
+    </div>
+    <div class="big-num">~8×</div>
+    <div class="big-label">EV/EBITDA — vs ~12× for recently sold ferry segment</div>
+  </div>
+
+  <div class="id-card ams">
+    <div class="co-name">Amadeus</div>
+    <div class="full-name">Amadeus IT Group, S.A.</div>
+    <div class="id-meta">
+      <strong>Pitched by:</strong> Joe Barry to Andrew Lundstrom<br>
+      <strong>Context:</strong> Tintern application — flagship idea<br>
+      <strong>Vehicle:</strong> Euronext Madrid (€32.5bn fully-loaded EV)<br>
+      <strong>Sector:</strong> Travel technology / GDS / Airline IT<br>
+      <strong>Geography:</strong> Spain / Global<br>
+      <strong>Status:</strong> Active thesis — current pitch
+    </div>
+    <div class="big-num">€32.5bn</div>
+    <div class="big-label">Fully-loaded enterprise value</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== SECTION 2: THE MONOPOLY DIMENSION ==================== -->
+<div class="section">
+<div class="section-label">§ 2.0</div>
+<h2>Monopoly Architecture — Where the Market Power Lives</h2>
+<div class="section-sub">The nature, source, and durability of each company's competitive franchise. All four possess genuine market power — but the mechanisms differ.</div>
+
+<div class="table-wrap">
+<table class="comp-table">
+<thead>
+  <tr>
+    <th style="width:180px">Dimension</th>
+    <th>IBM (z Systems)</th>
+    <th>PFC</th>
+    <th>FIH (Falklands Co.)</th>
+    <th>Amadeus (PSS)</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>Monopoly Type</td>
+    <td class="cell-match">Technology infrastructure monopoly. Proprietary mainframe architecture (System/360→z16) running mission-critical transaction processing for banks, airlines, insurers. No viable alternative for installed base.</td>
+    <td class="cell-match">Government-mandated quasi-monopoly. GoI-backed NBFC with AAA bond rating at sovereign parity. No private institution can match PFC's funding cost. Regulatory moat is absolute.</td>
+    <td class="cell-match">Geographic/logistic monopoly. Sole comprehensive service provider to a remote British sovereign territory 8,000 miles from the UK. Owns ~50% of land, ~50% of sheep, ~60% of retail, ~33% of workforce.</td>
+    <td class="cell-match">Commercial technology monopoly. PSS (Passenger Service System) processes reservations, ticketing, departure control for 150+ airlines. Deeply embedded in airline operations. Zero involuntary churn in 35+ years.</td>
+  </tr>
+  <tr>
+    <td>Source of Lock-in</td>
+    <td>220+ billion lines of COBOL on IBM mainframes. Nobody understands the code fully. Migration risk is existential — one error could crash a bank's core systems. Accumulated business logic over 40+ years is irreplaceable.</td>
+    <td>Government mandate + funding cost advantage. PFC borrows at GoI sovereign rates. No private NBFC can compete on cost of capital. India's power sector cannot function without PFC lending. Implicit guarantee.</td>
+    <td>Geography. The Falkland Islands have 3,600 residents on islands 8,000 miles from the UK. There is no second supplier of comparable scale. Building an alternative logistics/retail infrastructure would require capital far exceeding the addressable market.</td>
+    <td>Multi-year migration risk. Switching PSS takes 18–36 months and risks operational failure (check-in, boarding, revenue management). Airlines cannot afford downtime. No CEO will risk grounding their fleet to save 2% on IT costs.</td>
+  </tr>
+  <tr>
+    <td>Customer Churn</td>
+    <td class="cell-val">~0% on mainframe installed base. Banks have been on IBM mainframes for 30–50 years continuously. 87% of credit card transactions still processed on z Systems.</td>
+    <td class="cell-val">~0%. State electricity boards have no alternative lender at comparable rates. REC (now subsidiary) was the only near-peer. Post-2019 acquisition, PFC controls both.</td>
+    <td class="cell-val">~0%. Residents and businesses have no alternative for most essential services. Competition is structurally impossible given population density and remoteness.</td>
+    <td class="cell-val">~0% involuntary. No airline has ever been taken off Amadeus PSS against its will. Occasional gains (new airlines choosing Amadeus) but functionally zero losses from installed base.</td>
+  </tr>
+  <tr>
+    <td>Pricing Power</td>
+    <td>Extreme. IBM mainframe software license fees rose 5–7% annually for decades. Customers complained but never left. The z Systems business has 80%+ gross margins. Pricing power comes from total dependency.</td>
+    <td>Moderate. Interest rates are market-driven but PFC's NIM is structurally protected by its AAA funding advantage. Spread is ~2.5–3% and stable. Government backing prevents credit cost spikes.</td>
+    <td>Strong locally but small in absolute terms. FIC has ~60% retail market share on the islands. Pricing is constrained by MoD scrutiny and community goodwill rather than competition. Monopolist's constraint is reputational, not competitive.</td>
+    <td>Strong. PSS booking fees are embedded in airline cost structures and represent &lt;2% of total costs. Too small to negotiate aggressively, too entrenched to replace. Amadeus has raised PSS prices consistently without losing customers.</td>
+  </tr>
+  <tr>
+    <td>Disruption Risk</td>
+    <td>Low for core mainframe. Cloud migration has been predicted for 20+ years and hasn't happened for mission-critical workloads. Watson/AI was a $15bn failure — monopoly power doesn't transfer to new domains.</td>
+    <td>Low. Government backing is structural, not discretionary. India's power infrastructure deficit ensures demand for decades. Green transition (solar, wind) increases PFC lending — every new plant needs financing.</td>
+    <td>Very low. The Falklands are a permanent British sovereign territory (confirmed by 2013 referendum: 99.8% voted to remain British). MoD presence guarantees continued economic activity. Climate, location, and sovereignty are constants.</td>
+    <td>Low-Medium. AI/NDC could theoretically enable direct airline distribution, but PSS is the back-end operating system — it processes the booking regardless of distribution channel. NDC actually increases PSS complexity and value.</td>
+  </tr>
+  <tr>
+    <td>Monopoly Duration</td>
+    <td class="cell-val">62+ years (System/360 launched 1964, still dominant 2026). The longest-running technology monopoly in history.</td>
+    <td class="cell-val">40 years (founded 1986, government mandate unchanged). Will persist as long as India has a power infrastructure deficit — decades minimum.</td>
+    <td class="cell-val">174 years (Falkland Islands Company chartered 1852). The oldest continuous commercial monopoly in this comparison.</td>
+    <td class="cell-val">35+ years (Amadeus PSS launched ~1990). Young relative to IBM and FIH, but switching costs suggest multi-decade durability.</td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+<div class="synthesis-box" style="margin-top:20px;">
+  <h3>Synthesis — The Monopoly Overlap</h3>
+  <p>All four share the defining characteristic: <strong>customers cannot leave</strong>. The mechanisms differ — IBM locks in through accumulated code, PFC through government mandate, FIH through geography, Amadeus through operational dependency — but the economic result is identical: near-zero churn, structural pricing power, and multi-decade duration. The key distinction is scale: IBM and Amadeus are global technology monopolies serving thousands of enterprises; PFC is a national financial monopoly serving an entire sector; FIH is a geographic monopoly serving 3,600 people. The investment returns come not from the monopoly itself (which is visible to anyone who looks) but from the market's failure to price it correctly.</p>
+</div>
+</div>
+
+<!-- ==================== SECTION 3: THE MISPRICING ==================== -->
+<div class="section">
+<div class="section-label">§ 3.0</div>
+<h2>The Mispricing Mechanism — Why the Market Is Wrong</h2>
+<div class="section-sub">Every monopoly in this comparison is or was mispriced. The mechanism of mispricing is the investable insight.</div>
+
+<div class="table-wrap">
+<table class="comp-table">
+<thead>
+  <tr>
+    <th style="width:180px">Dimension</th>
+    <th>IBM</th>
+    <th>PFC</th>
+    <th>FIH</th>
+    <th>Amadeus</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>Mispricing Type</td>
+    <td><span class="verdict verdict-match">CONGLOMERATE DISCOUNT</span><br><br>Mainframe monopoly (80%+ margins) bundled with commodity consulting, failed AI (Watson), declining services. Market priced the blend, not the jewel.</td>
+    <td><span class="verdict verdict-match">CATEGORY DISCOUNT</span><br><br>PSU (Public Sector Undertaking) stocks in India trade at persistent 60–70% discounts. Market assumed government ownership = value destruction. Wrong for PFC — ROE was 17–20% throughout.</td>
+    <td><span class="verdict verdict-match">CONGLOMERATE DISCOUNT</span><br><br>Falklands monopoly hidden inside a group with an art logistics business (MOMART) and a Portsmouth commuter ferry. Three unrelated segments = no analyst coverage, no institutional interest.</td>
+    <td><span class="verdict verdict-match">CONGLOMERATE DISCOUNT</span><br><br>PSS monopoly (25–30× fair value) bundled with competitive IT Solutions and cyclical Hospitality. Blended multiple of ~13.3× EBITDA reflects the average, not the monopoly.</td>
+  </tr>
+  <tr>
+    <td>Why Analysts Miss It</td>
+    <td>IBM was covered by hardware/IT services analysts who focused on revenue decline in PC/services. The mainframe was a small revenue line but massive profit contributor — analysts looked at the top line, not the profit pool.</td>
+    <td>Indian PSU companies are systematically avoided by Western institutional investors. PFC was covered by Indian banking analysts who applied commercial bank frameworks (P/E) instead of the correct framework (P/B vs ROE for an NBFC).</td>
+    <td>No meaningful coverage. AIM micro-cap with £36m market cap. No sell-side analyst will cover a company this small with three unrelated businesses. The Falklands monopoly is invisible because nobody is looking.</td>
+    <td>Amadeus is covered by travel/leisure analysts, not software analysts. They apply sector EV/EBITDA (12–15×) to the whole company. If software/platform analysts covered PSS specifically, they would apply 25–30× to the monopoly segment alone.</td>
+  </tr>
+  <tr>
+    <td>Entry Valuation</td>
+    <td class="cell-val">~$10/share (1993, Gerstner arrival) — 75% below 1987 peak. Market priced IBM for bankruptcy. The mainframe was printing cash the entire time.</td>
+    <td class="cell-val">0.37× P/B (FY2015). A 20% ROE business priced at 37 paise per rupee of book value. Two-stage DDM implied justified P/B of ~1.92×. Market priced total collapse.</td>
+    <td class="cell-val">~0.69× P/S, ~£36m market cap on £52m revenue. No meaningful premium for the Falklands monopoly or MOMART's Royal Warrant franchise. Priced as a generic AIM micro-cap.</td>
+    <td class="cell-val">~13.3× blended EV/EBITDA at €68/share. PSS alone (25–30× EBITDA) implies equity value above current market cap. The rest of the company is priced at negative to zero implied value.</td>
+  </tr>
+  <tr>
+    <td>What the Market Fears</td>
+    <td>Cloud migration destroying the mainframe. Revenue decline in services/hardware dragging the whole company down. IBM as a "value trap" — cheap for a reason.</td>
+    <td>NPA blow-up (zombie power sector loans). Government interference destroying returns. INR depreciation eroding USD returns. "PSU stocks always trade at a discount" — permanent feature, not a bug.</td>
+    <td>Falklands sovereignty risk (Argentina). Ferry competition. Art market cyclicality. Illiquidity. "Why would I own this when I could own something normal?"</td>
+    <td>AI disintermediating GDS. Post-COVID travel demand fragility. High absolute valuation (€28bn market cap). "It's a travel stock, travel is cyclical."</td>
+  </tr>
+  <tr>
+    <td>Why the Fear Is Wrong</td>
+    <td>Cloud cannot replace mainframe for mission-critical banking/transaction workloads — 20 years of prediction, zero migration at scale. Revenue decline was in non-monopoly segments. The mainframe profit pool was growing.</td>
+    <td>NPAs were real but resolvable (IBC 2016 created legal mechanisms). Government ownership is a feature (AAA rating, sovereign backing), not a bug. PFC proved this by delivering 20% ROE through every crisis.</td>
+    <td>Falklands sovereignty was confirmed by 99.8% referendum (2013). MoD presence is permanent. Art logistics is counter-cyclical to mainstream markets. The monopoly franchise is bulletproof — fear is about category, not fundamentals.</td>
+    <td>PSS is the back-end operating system, not the distribution layer. AI changes the front end (how bookings are made) but not the back end (how they're processed). COVID proved Amadeus recovers — revenue already above 2019 levels.</td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- ==================== SECTION 4: CONGLOMERATE STRUCTURE ==================== -->
+<div class="section">
+<div class="section-label">§ 4.0</div>
+<h2>Conglomerate Structure — The Monopoly Buried Inside</h2>
+<div class="section-sub">Three of the four investments share a specific structural feature: the monopoly franchise is hidden inside a multi-segment entity that obscures its true value.</div>
+
+<div class="table-wrap">
+<table class="comp-table">
+<thead>
+  <tr>
+    <th style="width:180px">Dimension</th>
+    <th>IBM</th>
+    <th>PFC</th>
+    <th>FIH</th>
+    <th>Amadeus</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>Conglomerate?</td>
+    <td><span class="verdict verdict-match">YES</span><br>Mainframe + software + consulting + services + Watson AI</td>
+    <td><span class="verdict verdict-diverge">NO</span><br>Single-segment NBFC. Pure play on India power infrastructure lending. No conglomerate structure.</td>
+    <td><span class="verdict verdict-match">YES</span><br>Falklands logistics + MOMART art storage + Portsmouth ferry. Three unrelated businesses under one AIM listing.</td>
+    <td><span class="verdict verdict-match">YES</span><br>PSS monopoly + Airline IT Solutions + Hospitality & Other. Three tiers of market power under one Madrid listing.</td>
+  </tr>
+  <tr>
+    <td>The Jewel</td>
+    <td><strong>z Systems / Mainframe</strong><br>~$3–4bn revenue but 80%+ margins. Processes 87% of credit card transactions. The profit engine that subsidises everything else.</td>
+    <td><strong>The entire business IS the jewel</strong><br>No decomposition needed. PFC's loan book, government mandate, and AAA funding advantage are all one integrated franchise. The mispricing is category-based, not structural.</td>
+    <td><strong>Falkland Islands Company</strong><br>Generates almost all group cash flow. £15.2m revenue (H1), ~60% retail market share, ~50% of land, Royal Charter since 1852. Geographic monopoly with no alternative. The recently sold Portsmouth ferry fetched ~12× EBITDA — the Falklands franchise, which is a stronger monopoly, trades at an implied discount within a group trading at ~8×.</td>
+    <td><strong>Passenger Service System (PSS)</strong><br>~€3.3bn revenue, ~€1.5bn EBITDA, serving 150+ airlines. Zero churn, infinite switching costs. Worth 25–30× EBITDA standalone = €37–45bn — exceeding current total EV.</td>
+  </tr>
+  <tr>
+    <td>The Drag</td>
+    <td><strong>Global Services + Watson</strong><br>Low-margin consulting (~8% margins), commodity IT outsourcing, $15bn+ wasted on Watson AI. Revenue was large, margins were poor. Dragged the blended multiple down to ~11× EBITDA.</td>
+    <td><strong>N/A — no drag segment</strong><br>PFC's mispricing comes from category bias (Indian PSU discount), not from low-quality business segments diluting the average.</td>
+    <td><strong>MOMART (+ formerly Portsmouth Ferry)</strong><br>Portsmouth ferry was recently sold at ~12× EBITDA — proving the market will pay a fair multiple for FIH's segments when separated. MOMART (art logistics, £9.3m rev, Royal Warrant) remains. Almost all group cash comes from the Falklands piece. The drag isn't that the other businesses are bad — it's that their presence obscures the Falklands monopoly's standalone value. The ferry sale proves the point: separate the pieces, and multiples expand.</td>
+    <td><strong>IT Solutions + Hospitality</strong><br>Competitive segments with real competitors (Sabre, IBS, SITA). Lower margins, contestable contracts. Market applies travel-sector multiple to the whole company because these segments dominate the narrative.</td>
+  </tr>
+  <tr>
+    <td>Repricing Mechanism</td>
+    <td><strong>Kyndryl spin-off (2021)</strong><br>IBM finally separated the commodity infrastructure services business. Post-spin, IBM re-rated from ~11× to ~15–16× EBITDA. Took 28 years from Gerstner to structural separation.</td>
+    <td><strong>NPA resolution + institutional re-discovery</strong><br>P/B re-rated from 0.37× to 0.86× as NPAs fell (8% → 4%) and FII ownership rose (8% → 18%). Still incomplete — DDM fair value is ~1.92× P/B. PFC-REC merger is next catalyst.</td>
+    <td><strong>Partial — Portsmouth sale is the proof</strong><br>The recent sale of the Portsmouth ferry at ~12× EBITDA is a real-time demonstration of value unlocking through separation. The remaining group (Falklands + MOMART) trades at ~8× — implying the market assigns the Falklands monopoly an even lower multiple than a commuter ferry. If MOMART were sold next, the Falklands franchise would be isolable. Still too small for institutional activists — but the mechanism is now proven.</td>
+    <td><strong>Three potential catalysts:</strong><br>1) Software analyst re-coverage (SOTP visibility)<br>2) Capital allocation change (PSS-funded buyback)<br>3) Activist/engaged shareholder letter articulating SOTP<br>Window: 2–5 years if catalyst emerges.</td>
+  </tr>
+  <tr>
+    <td>Time to Reprice</td>
+    <td class="cell-val">28 years (1993 Gerstner → 2021 Kyndryl spin). The narrative changed in 1993 (12× stock return), but the structural separation took until 2021.</td>
+    <td class="cell-val">9 years (FY2015 entry → H1 2024 exit). P/B went 0.37× → 0.86×. Re-rating was 40–50% complete at exit. Full fair value (~1.92×) not yet reached.</td>
+    <td class="cell-val">In progress. Portsmouth ferry sold at ~12×. Remaining group at ~8×. MOMART sale would isolate Falklands. Still micro-cap — but the repricing mechanism (piecemeal disposal) is now live.</td>
+    <td class="cell-val">Unknown. Estimated 2–5 years if catalyst emerges. Could be faster than IBM (28 years) because PSS economics are cleaner and the SOTP gap is more quantifiable.</td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+<div class="synthesis-box">
+  <h3>The PFC Exception — Why Category Discount ≠ Conglomerate Discount</h3>
+  <p>PFC breaks the pattern. It is not a monopoly hidden inside a conglomerate — it <em>is</em> the monopoly, fully visible, with no dilutive segments. The mispricing comes from a different source: <strong>category bias</strong>. Indian PSU stocks were systematically avoided by Western institutional investors regardless of underlying quality. PFC at 0.37× P/B with 20% ROE was mispriced not because analysts couldn't see the franchise, but because the category label ("Indian PSU") triggered automatic avoidance. This is important because it shows Andrew's framework is broader than "find hidden monopolies in conglomerates." The framework is: <strong>find durable franchises where the market's classification system creates a persistent discount to intrinsic value</strong>. The classification error can be structural (IBM, FIH, Amadeus) or categorical (PFC). The investment discipline is the same.</p>
+</div>
+</div>
+
+<!-- ==================== SECTION 5: INVESTMENT CHARACTERISTICS ==================== -->
+<div class="section">
+<div class="section-label">§ 5.0</div>
+<h2>Investment Characteristics — The Holding Thesis</h2>
+<div class="section-sub">What makes each position holdable through drawdowns, noise, and multi-year periods of apparent underperformance.</div>
+
+<div class="table-wrap">
+<table class="comp-table">
+<thead>
+  <tr>
+    <th style="width:180px">Dimension</th>
+    <th>IBM</th>
+    <th>PFC</th>
+    <th>FIH</th>
+    <th>Amadeus</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>Hold Duration</td>
+    <td class="cell-val">31+ years (Gary F: 1979–2010+). Entire career. Not a trade — a life.</td>
+    <td class="cell-val">9 years (FY2015–H1 2024). Sold as part of WindAcre → Tintern career transition, not thesis completion.</td>
+    <td class="cell-val">N/A (idea only). If deployed, would require 10+ year horizon given illiquidity and lack of catalyst.</td>
+    <td class="cell-val">Proposed: 10+ years. Thesis built for Tintern's 12+ year average hold (WindAcre: 8% turnover = 12.5 yr avg).</td>
+  </tr>
+  <tr>
+    <td>Compounding Engine</td>
+    <td>IBM stock appreciation + ESPP contributions + option grants over 31 years. The compounding was passive — Gary accumulated equity through employment, not active trading. The single-stock concentration was a byproduct of loyalty, not a strategy.</td>
+    <td>Book value compounding at ~13.7% CAGR (retained earnings at 17–20% ROE, ~40% dividend payout). The stock price was irrelevant during the hold — book value grew regardless. This is what made the drawdowns survivable.</td>
+    <td>Modest dividend yield (~2.8%) and organic growth. Compounding is limited by small scale and AIM illiquidity. The franchise is durable but the equity returns are constrained by structural factors (no institutional interest, no re-rating catalyst).</td>
+    <td>Revenue per booking growing at 3–5% (pricing + mix). PSS handles more bookings each year as global travel grows. Dividend yield ~1.5%. FCF yield ~4–5%. The compounding comes from organic revenue growth on a monopoly base, not from re-rating.</td>
+  </tr>
+  <tr>
+    <td>Crisis Resilience</td>
+    <td><strong>Survived:</strong> 1987 crash (–40%), early 1990s near-bankruptcy (–75% from peak), dot-com bust, 2008 GFC. The mainframe franchise was never impaired — revenue and profit held through every crisis. The stock fell but the business didn't.</td>
+    <td><strong>Survived:</strong> NPA crisis (6–8% gross NPAs), COVID (ROE dipped to 14.2% — still positive), rising rate environment, INR depreciation (₹63→₹83). ROE never went negative. Book value never declined. The definition of durability.</td>
+    <td><strong>Survived:</strong> Argentine sovereignty claims, COVID (tourism halt), art market cycles. Geographic monopoly is inherently crisis-resistant — 3,600 people still need supplies regardless of macro conditions.</td>
+    <td><strong>Partially survived:</strong> COVID was a genuine shock — revenue fell 61%, ROE went to –12% (2020). 3-year recovery. This is the weakest crisis profile of the four. Amadeus is a monopoly with cyclical revenue — durable franchise, volatile earnings.</td>
+  </tr>
+  <tr>
+    <td>Drawdown Patience</td>
+    <td>Gary held through a 75% drawdown (1987 peak to 1993 trough). At no point did he sell. The IBM identity — employee, shareholder, father — was inseparable from the holding. This wasn't investment discipline. It was life.</td>
+    <td>PFC stock traded below entry (₹52) in FY2016, FY2019, and FY2020 — three separate multi-year drawdown periods. WindAcre held through all three. By FY2022, the stock had returned +121% from entry. The patience test lasted 7 years.</td>
+    <td>AIM micro-caps can go years without meaningful price movement. FIH's illiquidity means drawdowns are sticky — no institutional buyer to absorb supply. Patience is mandatory, not optional.</td>
+    <td>Amadeus fell 60%+ during COVID (€75→€30). At €68 today, the stock is still below its 2020 pre-COVID peak of €78. A Tintern entry requires conviction to hold through the next travel shock — which will come.</td>
+  </tr>
+  <tr>
+    <td>Dividend Carry</td>
+    <td class="cell-val">IBM dividends + ESPP discount. At 1979 entry, IBM dividend yield was ~4–5%. Over 31 years, cumulative dividends far exceeded original cost basis. Dividends funded the family's life — mortgage, school, trust.</td>
+    <td class="cell-val">4–5% yield on cost at entry. ₹42/share total dividends over 9 years = 9.8% of terminal INR value. Dividend carry financed the patience required during 7 years of P/B stagnation.</td>
+    <td class="cell-val">~2.8% current yield. Modest. FIH pays a token dividend (0.07p). The carry is insufficient to finance meaningful patience. The position is held for capital gain, not income.</td>
+    <td class="cell-val">~1.5% current yield. Low but growing. Amadeus generates massive FCF that could fund a larger dividend or buyback. Capital return policy is part of the activist/engagement thesis.</td>
+  </tr>
+  <tr>
+    <td>Scale for Deployment</td>
+    <td><span class="verdict verdict-partial">PERSONAL</span><br>Employee stock accumulation. Not an institutional position. Scale: $500K–$3M+ over career.</td>
+    <td><span class="verdict verdict-match">INSTITUTIONAL</span><br>WindAcre deployed institutional capital (~$9bn AUM, 11–13 positions). PFC market cap ($16bn+) supported meaningful position. EM liquidity was the constraint.</td>
+    <td><span class="verdict verdict-diverge">TOO SMALL</span><br>£36m market cap. AIM-listed. Daily volume negligible. Cannot absorb institutional capital. A $20m position would be >50% of the company.</td>
+    <td><span class="verdict verdict-match">INSTITUTIONAL</span><br>€28bn market cap, Euronext-listed, deep liquidity. A 1% position (~€280m) is executable. Perfect for a concentrated fund with $500m–$2bn AUM.</td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- ==================== SECTION 6: THE OVERLAP MATRIX ==================== -->
+<div class="section">
+<div class="section-label">§ 6.0</div>
+<h2>Pairwise Overlap Analysis</h2>
+<div class="section-sub">How similar is each pair of investments across all dimensions? Higher overlap = stronger pattern recognition for Andrew.</div>
+
+<div class="overlap-grid">
+  <!-- IBM ↔ Amadeus -->
+  <div class="overlap-card">
+    <div class="pair-label"><span class="dot" style="background:var(--ibm-blue)"></span><span class="dot" style="background:var(--ams-green)"></span> IBM ↔ AMADEUS</div>
+    <div class="overlap-pct" style="color:var(--ams-green)">92%</div>
+    <div class="overlap-desc">
+      <strong>Near-identical.</strong> Both are technology infrastructure monopolies buried inside conglomerates, mispriced because the market applies a blended multiple instead of valuing the monopoly separately. Both process mission-critical transactions (credit cards / airline bookings). Both have 80%+ gross margins on the core franchise. Both took/will take decades to reprice without a catalyst. IBM's Kyndryl spin is the playbook for Amadeus structural separation. <strong>This is the same investment at different points in the repricing cycle.</strong>
+    </div>
+  </div>
+
+  <!-- IBM ↔ PFC -->
+  <div class="overlap-card">
+    <div class="pair-label"><span class="dot" style="background:var(--ibm-blue)"></span><span class="dot" style="background:var(--pfc-amber)"></span> IBM ↔ PFC</div>
+    <div class="overlap-pct" style="color:var(--pfc-amber)">61%</div>
+    <div class="overlap-desc">
+      <strong>Shared: patience, conviction, compounding.</strong> Both required holding a high-quality franchise through severe drawdowns for 9–31 years. Both rewarded patience with extraordinary returns. <strong>Divergence:</strong> IBM is a technology monopoly inside a conglomerate; PFC is a pure-play financial monopoly with no structural decomposition needed. The mispricing mechanisms are completely different — IBM was a SOTP problem, PFC was a category/country discount problem. Different disease, same medicine (patience).
+    </div>
+  </div>
+
+  <!-- IBM ↔ FIH -->
+  <div class="overlap-card">
+    <div class="pair-label"><span class="dot" style="background:var(--ibm-blue)"></span><span class="dot" style="background:var(--fih-teal)"></span> IBM ↔ FIH</div>
+    <div class="overlap-pct" style="color:var(--fih-teal)">74%</div>
+    <div class="overlap-desc">
+      <strong>Shared: conglomerate structure hiding a monopoly, and now proven repricing via separation.</strong> Both have a dominant franchise buried inside unrelated businesses. IBM spun off Kyndryl (2021); FIH sold Portsmouth ferry at ~12× while the remaining group trades at ~8×. Same mechanism, same result — separating the pieces reveals value. <strong>Divergence:</strong> Scale. IBM is a $150bn+ global enterprise; FIH is a £36m AIM micro-cap. But the repricing mechanism is identical.
+    </div>
+  </div>
+
+  <!-- PFC ↔ Amadeus -->
+  <div class="overlap-card">
+    <div class="pair-label"><span class="dot" style="background:var(--pfc-amber)"></span><span class="dot" style="background:var(--ams-green)"></span> PFC ↔ AMADEUS</div>
+    <div class="overlap-pct" style="color:var(--ams-green)">54%</div>
+    <div class="overlap-desc">
+      <strong>Shared: durable monopoly franchise, institutional investability.</strong> Both are large-cap, liquid, suitable for concentrated fund deployment. Both have dominant market positions with no realistic competitive threat. <strong>Major divergence:</strong> Crisis resilience. PFC's ROE never went negative (floor: 14.2%). Amadeus ROE collapsed to –12% in COVID. PFC is the more durable business model. Amadeus compensates with higher growth and a SOTP catalyst that PFC lacks. Different quality tiers for the same investor.
+    </div>
+  </div>
+
+  <!-- PFC ↔ FIH -->
+  <div class="overlap-card">
+    <div class="pair-label"><span class="dot" style="background:var(--pfc-amber)"></span><span class="dot" style="background:var(--fih-teal)"></span> PFC ↔ FIH</div>
+    <div class="overlap-pct" style="color:var(--fih-teal)">38%</div>
+    <div class="overlap-desc">
+      <strong>Lowest overlap pair.</strong> PFC is a pure-play government-backed financial institution in India's power sector. FIH is a micro-cap conglomerate on AIM with a geographic monopoly in the South Atlantic. The only shared features are: monopoly franchise, mispriced by market, and patience required. Structure, geography, sector, scale, catalyst, and liquidity all diverge. These are the most different expressions of the same underlying pattern.
+    </div>
+  </div>
+
+  <!-- FIH ↔ Amadeus -->
+  <div class="overlap-card">
+    <div class="pair-label"><span class="dot" style="background:var(--fih-teal)"></span><span class="dot" style="background:var(--ams-green)"></span> FIH ↔ AMADEUS</div>
+    <div class="overlap-pct" style="color:var(--ams-green)">82%</div>
+    <div class="overlap-desc">
+      <strong>Joe's intellectual progression.</strong> Same thesis structure at radically different scale. Both are monopolies hidden inside conglomerates with unrelated businesses. Both are mispriced because the market applies a blended valuation. FIH is now actively proving the thesis — the Portsmouth ferry sale at ~12× vs group at ~8× is live, real-time evidence of the conglomerate discount. The critical difference: Amadeus is 900× larger (€32bn vs £36m), liquid, and deployable for institutional capital. <strong>FIH is the proof of concept — now with live data. Amadeus is the trade.</strong>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== SECTION 7: THE PROGRESSION ==================== -->
+<div class="section">
+<div class="section-label">§ 7.0</div>
+<h2>The Intellectual Progression — From Dinner Table to Pitch Book</h2>
+<div class="section-sub">Four investments that trace a single analytical lineage across two generations and three decades.</div>
+
+<div class="timeline-row">
+  <div class="tl-card ibm">
+    <div class="tl-period">Origin · 1979–2010</div>
+    <div class="tl-years">IBM</div>
+    <div class="tl-detail">
+      <strong>The unconscious model.</strong> Gary F Lundstrom joins IBM in 1979, holds stock for 31 years. Never trades. Never diversifies. Watches a technology monopoly compound through crashes, near-bankruptcy, and recovery. Creates a family trust in 1995 to crystallise the wealth. Andrew, aged 11 when his mother dies, watches his father hold through everything. The investment philosophy is transmitted not as a lesson but as a lived reality. <em>The strategy is biographical.</em>
+    </div>
+  </div>
+
+  <div class="tl-card pfc">
+    <div class="tl-period">The Apprenticeship · 2015–2024</div>
+    <div class="tl-years">PFC</div>
+    <div class="tl-detail">
+      <strong>The conscious application.</strong> At WindAcre, Andrew deploys the framework professionally. PFC at 0.37× P/B is the same pattern: a durable monopoly (government-mandated infrastructure lender) that the market refuses to value correctly (PSU discount). He holds for 9 years through three drawdowns. Book value compounds at 13.7% CAGR. Returns: 22.7% USD CAGR, 6.32× multiple. The exit at 0.86× P/B was driven by career transition, not thesis completion. PFC becomes the benchmark.
+    </div>
+  </div>
+
+  <div class="tl-card fih">
+    <div class="tl-period">The Proof of Concept · Pre-2026</div>
+    <div class="tl-years">FIH</div>
+    <div class="tl-detail">
+      <strong>The thesis at micro scale.</strong> Joe Barry pitches Andrew a monopoly hidden inside a conglomerate — before reading the dossier, before knowing about Gary F, before any of it. The Falklands supply contract (sovereign geographic monopoly) buried inside FIH Group (art storage + ferry) is the Amadeus thesis at £36m market cap. The idea is right. The scale is wrong. Andrew recognises the framework because it's his own. <em>Joe speaks the language instinctively.</em>
+    </div>
+  </div>
+
+  <div class="tl-card ams">
+    <div class="tl-period">The Pitch · March 2026</div>
+    <div class="tl-years">Amadeus</div>
+    <div class="tl-detail">
+      <strong>FIH at institutional scale.</strong> Same thesis structure — technology monopoly (PSS) hidden inside a conglomerate (IT Solutions + Hospitality), mispriced because the market applies a blended travel multiple instead of valuing the monopoly separately. But now at €32.5bn EV with deep liquidity. A 1% position is €280m. The SOTP gap is quantifiable. The repricing catalyst (analyst re-coverage, structural separation, or shareholder engagement) is actionable. <em>This is the framework that gets Joe hired — and the investment that builds Tintern's track record.</em>
+    </div>
+  </div>
+</div>
+
+<div class="synthesis-box" style="margin-top:20px;">
+  <h3>The Pattern Andrew Will Recognise</h3>
+  <p>The four investments are not four separate ideas. They are four data points on a single curve. Gary F discovered the pattern by accident — hold a monopoly, ignore the noise, let it compound. Andrew formalised it at WindAcre — find durable franchises where the market's classification system creates a persistent discount. Joe identified it independently — first at micro scale (FIH), now at institutional scale (Amadeus). The question Andrew must answer is not "is Amadeus a good investment?" — he'll see that in the first five minutes. The question is: "Does this analyst think the way I think?" The progression from FIH to Amadeus — same framework, 900× the scale — is the answer.</p>
+</div>
+</div>
+
+<!-- ==================== SECTION 7A: IBM WEALTH FORENSICS ==================== -->
+<div class="section">
+<div class="section-label">§ 7A</div>
+<h2>Forensic Reconstruction — Gary F Lundstrom's IBM Wealth (1979–2026)</h2>
+<div class="section-sub">Year-by-year modelling of ESPP accumulation, option grants, dividends, and total equity value at key life events. All prices from yfinance. Conservative assumptions throughout — actual wealth likely 30–50% higher.</div>
+
+<div style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+  <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:18px;">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:var(--ibm-blue); margin-bottom:8px;">MODEL ASSUMPTIONS</div>
+    <div style="font-size:11px; color:var(--text-dim); line-height:1.8;">
+      <strong style="color:var(--text)">ESPP:</strong> 6% of salary contributed, purchased at 10% discount to market price<br>
+      <strong style="color:var(--text)">Options:</strong> 100–300 actual shares/year (junior→senior), split-adjusted to post-1999 equivalent<br>
+      <strong style="color:var(--text)">Salary:</strong> $22K (1979 entry) → $100K (2010 exit), consistent with IBM Application Developer → Manager trajectory<br>
+      <strong style="color:var(--text)">Dividends:</strong> Actual IBM per-share dividends (split-adjusted) × cumulative ESPP shares held<br>
+      <strong style="color:var(--text)">Splits:</strong> 4:1 (Jun 1979), 2:1 (May 1997), 2:1 (May 1999)
+    </div>
+  </div>
+  <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:18px;">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:var(--ibm-blue); margin-bottom:8px;">NOT MODELLED (CONSERVATIVE BIAS)</div>
+    <div style="font-size:11px; color:var(--text-dim); line-height:1.8;">
+      <strong style="color:var(--red-soft)">IBM 401(k) match:</strong> Typically 6% of salary in IBM stock — would add ~$120K in contributions alone<br>
+      <strong style="color:var(--red-soft)">Performance/retention grants:</strong> Bay Area technical staff received additional awards — not quantifiable<br>
+      <strong style="color:var(--red-soft)">Dividend reinvestment:</strong> If dividends were reinvested, compounding effect is significant over 31 years<br>
+      <strong style="color:var(--red-soft)">Sandra's employment:</strong> If Sandra also worked at IBM or elsewhere, household accumulation doubles<br>
+      <strong style="color:var(--red-soft)">Real estate appreciation:</strong> Peninsula home purchased ~1986, mortgage-free from 1998. Burlingame values: ~$500K (1998) → $2.8M+ (2026)
+    </div>
+  </div>
+</div>
+
+<!-- WEALTH TIMELINE TABLE -->
+<div class="table-wrap">
+<table class="comp-table">
+<thead>
+  <tr>
+    <th style="width:120px">Date</th>
+    <th style="width:200px">Event</th>
+    <th style="text-align:right">IBM Price<br><span style="font-size:8px;color:var(--text-faint)">(actual, not split-adj)</span></th>
+    <th style="text-align:right">ESPP Shares<br><span style="font-size:8px;color:var(--text-faint)">(cumulative, SA)</span></th>
+    <th style="text-align:right">ESPP Value</th>
+    <th style="text-align:right">Option Value<br><span style="font-size:8px;color:var(--text-faint)">(intrinsic)</span></th>
+    <th style="text-align:right">Cumul. Dividends</th>
+    <th style="text-align:right; color:var(--gold)">TOTAL</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>Jun 1979</td>
+    <td><strong style="color:var(--ibm-blue)">Gary joins IBM</strong><br>Application Developer, Tucson</td>
+    <td style="text-align:right" class="cell-val">$18.40</td>
+    <td style="text-align:right">0</td>
+    <td style="text-align:right">$0</td>
+    <td style="text-align:right">$0</td>
+    <td style="text-align:right">$0</td>
+    <td style="text-align:right; color:var(--text-faint)">$0</td>
+  </tr>
+  <tr>
+    <td>Aug 1987</td>
+    <td><strong style="color:var(--ibm-blue)">Pre-crash peak</strong><br>8 years of accumulation</td>
+    <td style="text-align:right" class="cell-val">$59.20</td>
+    <td style="text-align:right">2,742</td>
+    <td style="text-align:right">$40,577</td>
+    <td style="text-align:right">$30,124</td>
+    <td style="text-align:right">$14,683</td>
+    <td style="text-align:right; color:var(--text-bright)">$85,384</td>
+  </tr>
+  <tr style="background:rgba(212,68,68,0.04)">
+    <td>Dec 1992</td>
+    <td><strong style="color:var(--red-soft)">Near-bankruptcy low</strong><br>Stock –70% from 1987 peak</td>
+    <td style="text-align:right" class="cell-val">$22.64</td>
+    <td style="text-align:right">4,389</td>
+    <td style="text-align:right">$24,842</td>
+    <td style="text-align:right">$2,244</td>
+    <td style="text-align:right">$35,618</td>
+    <td style="text-align:right; color:var(--red-soft)">$62,704</td>
+  </tr>
+  <tr style="background:rgba(201,168,76,0.06)">
+    <td>Feb 1995</td>
+    <td><strong style="color:var(--gold)">Trust created</strong><br>Gary F & Sandra E FAM 1995 TRUST</td>
+    <td style="text-align:right" class="cell-val">$35.48</td>
+    <td style="text-align:right">5,695</td>
+    <td style="text-align:right">$50,517</td>
+    <td style="text-align:right">$13,320</td>
+    <td style="text-align:right">$40,379</td>
+    <td style="text-align:right; color:var(--gold)">$104,216</td>
+  </tr>
+  <tr style="background:rgba(212,68,68,0.06)">
+    <td>Feb 1998</td>
+    <td><strong style="color:var(--red-soft)">Sandra dies</strong><br>Andrew 11, Sarah 9. Gary sole trustee.</td>
+    <td style="text-align:right" class="cell-val">$50.80</td>
+    <td style="text-align:right">6,678</td>
+    <td style="text-align:right">$169,609</td>
+    <td style="text-align:right">$232,092</td>
+    <td style="text-align:right">$47,662</td>
+    <td style="text-align:right; color:var(--text-bright)">$449,363</td>
+  </tr>
+  <tr>
+    <td>Jun 1998</td>
+    <td><strong style="color:var(--ibm-blue)">Mortgage cleared</strong><br>Peninsula home owned free & clear</td>
+    <td style="text-align:right" class="cell-val">$56.06</td>
+    <td style="text-align:right">6,856</td>
+    <td style="text-align:right">$192,171</td>
+    <td style="text-align:right">$272,068</td>
+    <td style="text-align:right">$47,662</td>
+    <td style="text-align:right; color:var(--text-bright)">$511,901</td>
+  </tr>
+  <tr>
+    <td>Dec 2002</td>
+    <td>Post dot-com crash<br>23 years at IBM</td>
+    <td style="text-align:right" class="cell-val">$38.79</td>
+    <td style="text-align:right">7,290</td>
+    <td style="text-align:right">$282,769</td>
+    <td style="text-align:right">$440,504</td>
+    <td style="text-align:right">$62,095</td>
+    <td style="text-align:right; color:var(--text-bright)">$785,369</td>
+  </tr>
+  <tr>
+    <td>Jun 2005</td>
+    <td>Andrew graduates BHS</td>
+    <td style="text-align:right" class="cell-val">$37.88</td>
+    <td style="text-align:right">7,718</td>
+    <td style="text-align:right">$292,356</td>
+    <td style="text-align:right">$426,126</td>
+    <td style="text-align:right">$77,406</td>
+    <td style="text-align:right; color:var(--text-bright)">$795,887</td>
+  </tr>
+  <tr>
+    <td>Jun 2009</td>
+    <td><strong style="color:var(--ibm-blue)">Andrew graduates Amherst</strong><br>BA Philosophy, Magna Cum Laude</td>
+    <td style="text-align:right" class="cell-val">$56.61</td>
+    <td style="text-align:right">8,203</td>
+    <td style="text-align:right">$464,394</td>
+    <td style="text-align:right">$732,223</td>
+    <td style="text-align:right">$128,711</td>
+    <td style="text-align:right; color:var(--text-bright)">$1,325,329</td>
+  </tr>
+  <tr style="background:rgba(74,144,217,0.06)">
+    <td>Dec 2010</td>
+    <td><strong style="color:var(--ibm-blue)">Gary leaves IBM</strong><br>31 years 7 months. Moves to C-Path, Tucson.</td>
+    <td style="text-align:right" class="cell-val">$81.83</td>
+    <td style="text-align:right">8,301</td>
+    <td style="text-align:right">$679,282</td>
+    <td style="text-align:right">$1,167,884</td>
+    <td style="text-align:right">$148,551</td>
+    <td style="text-align:right; color:var(--ibm-blue); font-size:14px; font-weight:700">$1,995,717</td>
+  </tr>
+  <tr>
+    <td>Jan 2019</td>
+    <td><strong>Gary retires</strong><br>Tucson, Arizona. Minimal LinkedIn.</td>
+    <td style="text-align:right" class="cell-val">$94.19</td>
+    <td style="text-align:right">8,301</td>
+    <td style="text-align:right">$781,884</td>
+    <td style="text-align:right">$1,382,948</td>
+    <td style="text-align:right">$491,305</td>
+    <td style="text-align:right; color:var(--text-bright); font-size:14px; font-weight:700">$2,656,136</td>
+  </tr>
+  <tr style="background:rgba(201,168,76,0.08)">
+    <td>Mar 2026</td>
+    <td><strong style="color:var(--gold)">TODAY</strong><br>Tintern Services Ltd incorporated.</td>
+    <td style="text-align:right" class="cell-val" style="color:var(--gold)">$241.39</td>
+    <td style="text-align:right">8,301</td>
+    <td style="text-align:right">$2,003,810</td>
+    <td style="text-align:right">$3,944,228</td>
+    <td style="text-align:right">$816,294</td>
+    <td style="text-align:right; color:var(--gold); font-size:16px; font-weight:700">$6,764,332</td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+<!-- WEALTH WATERFALL COMMENTARY -->
+<div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:14px; margin-top:18px;">
+  <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:16px;">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); margin-bottom:8px;">AT TRUST CREATION (FEB 1995)</div>
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:26px; font-weight:700; color:var(--text-bright);">~$104K</div>
+    <div style="font-size:11px; color:var(--text-dim); margin-top:6px; line-height:1.6;">
+      This is lower than the dossier's $1–3M estimate. The discrepancy matters. At $104K in visible IBM equity, the trust creation was likely motivated by the <strong style="color:var(--text)">Peninsula real estate</strong> (worth $400–600K) and <strong style="color:var(--text)">life insurance policies</strong>, not just stock. Alternatively — and more likely — Gary held substantially more IBM stock outside the ESPP through direct purchases, 401(k) match, and retention awards that our conservative model does not capture. The trust held <em>all</em> family assets, not just IBM equity.
+    </div>
+  </div>
+  <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:16px;">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:var(--red-soft); margin-bottom:8px;">AT SANDRA'S DEATH (FEB 1998)</div>
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:26px; font-weight:700; color:var(--text-bright);">~$449K</div>
+    <div style="font-size:11px; color:var(--text-dim); margin-top:6px; line-height:1.6;">
+      IBM equity had quadrupled in 3 years (trust creation to Sandra's death) — from ~$104K to ~$449K — entirely from the Gerstner repricing. The stock went from $35 to $51 actual, and accumulated ESPP shares grew. The mortgage was cleared 4 months later. Burlingame home ~$500K. Life insurance likely $200–500K. <strong style="color:var(--text)">Total household net worth at Sandra's death: likely $1.0–1.5M+</strong> including real estate and insurance. Gary was a single father with no debt and growing IBM equity.
+    </div>
+  </div>
+  <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:16px;">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); margin-bottom:8px;">TODAY (MAR 2026) — TINTERN SEED CAPITAL</div>
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:26px; font-weight:700; color:var(--gold);">~$6.8M+</div>
+    <div style="font-size:11px; color:var(--text-dim); margin-top:6px; line-height:1.6;">
+      Conservative floor from IBM equity alone. Add: Peninsula home ($2.8M+), 401(k) accumulation over 31 years (~$500K–1M+), any non-IBM investments, and Andrew's personal savings from 11 years as WindAcre partner ($5–15M). <strong style="color:var(--gold)">Combined Lundstrom family + Andrew personal capital available for Tintern seed: $15–25M+.</strong> Consistent with a solo fund launch at $50–200M AUM with GP commitment of 5–10%.
+    </div>
+  </div>
+</div>
+
+<div class="synthesis-box" style="margin-top:18px;">
+  <h3>What the Numbers Reveal</h3>
+  <p>The forensic model shows Gary F's IBM wealth growing from zero to ~$6.8M over 47 years — a 14.4% annualised return on total contributions of ~$122K in ESPP alone. But the <em>real</em> wealth event was the Gerstner repricing: IBM equity went from $63K (Dec 1992, near-bankruptcy) to $512K (Jun 1998, mortgage cleared) in just 5.5 years — an 8× expansion from the trough. Gary held through a 70% drawdown and was rewarded with the repricing of a lifetime.</p>
+  <p>This is the pattern Andrew internalised. Not "buy IBM and hold forever." Something more specific: <strong>the monopoly franchise was intact at $22.64 actual just as it was at $59.20 actual. The price changed; the business didn't. The correct response to a 70% drawdown in a monopoly is to hold.</strong> PFC at 0.17× P/B (FY2020 trough) was the same test. Amadeus at €30 (COVID trough) was the same test. The investors who passed the test — who held when the price said "sell" but the franchise said "hold" — captured the repricing.</p>
+  <p style="color:var(--text-faint); font-size:11px; margin-top:8px;">Note: All IBM prices sourced from yfinance (split-adjusted monthly close). Actual prices reconstructed using 4:1 (Jun 1979), 2:1 (May 1997), 2:1 (May 1999) split history. Salary estimates based on Bureau of Labor Statistics data for Application Developers in Arizona/California, 1979–2010. Option grants are conservative estimates for IBM technical staff grade levels. This model is a floor, not a ceiling.</p>
+</div>
+</div>
+
+<!-- ==================== SECTION 8: WHERE THEY DIVERGE ==================== -->
+<div class="section">
+<div class="section-label">§ 8.0</div>
+<h2>Critical Divergences — Where the Pattern Breaks</h2>
+<div class="section-sub">Intellectual honesty requires identifying where the analogy fails. These are the dimensions where the four investments are genuinely different.</div>
+
+<div class="table-wrap">
+<table class="comp-table">
+<thead>
+  <tr>
+    <th style="width:180px">Divergence</th>
+    <th>IBM</th>
+    <th>PFC</th>
+    <th>FIH</th>
+    <th>Amadeus</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>COVID Resilience</td>
+    <td class="cell-match"><span class="verdict verdict-match">PASS</span><br>Mainframe revenue barely moved. Banks didn't stop processing credit cards during COVID. The monopoly is immune to demand shocks.</td>
+    <td class="cell-match"><span class="verdict verdict-match">PASS</span><br>ROE dipped to 14.2% (still positive). Book value grew. NPA risk increased but was manageable. Government backing held. The business was never impaired.</td>
+    <td class="cell-partial"><span class="verdict verdict-partial">PARTIAL</span><br>Falklands supply continued (essential services). Tourism halted. MOMART art logistics paused. Portsmouth ferry volumes fell. Mixed — the monopoly held, the periphery suffered.</td>
+    <td class="cell-diverge"><span class="verdict verdict-diverge">FAIL</span><br>Revenue –61%. ROE –12%. Three-year recovery. The monopoly franchise (PSS) held structurally — no airline switched — but revenue is transaction-based and travel volume collapsed.</td>
+  </tr>
+  <tr>
+    <td>Earnings Volatility</td>
+    <td class="cell-match"><span class="verdict verdict-match">LOW</span><br>Mainframe/z Systems earnings are subscription-like. Annual license fees, multi-year contracts. Revenue visibility is 3–5 years forward.</td>
+    <td class="cell-match"><span class="verdict verdict-match">LOW</span><br>ROE range: 14.2–20.2% over 10 years. Interest income on a $69bn loan book with government backing. The most stable earnings profile of the four.</td>
+    <td class="cell-partial"><span class="verdict verdict-partial">MODERATE</span><br>Falklands revenue is stable. MOMART is project-based (art exhibitions, fairs). Ferry is seasonal. The blended profile has moderate variability.</td>
+    <td class="cell-diverge"><span class="verdict verdict-diverge">HIGH</span><br>Revenue is per-booking. Air travel is cyclical (COVID, recessions, SARS, ash clouds). PSS pricing power is stable but volume is volatile. Amadeus is a monopoly with cyclical revenue — the worst combination for a patient investor.</td>
+  </tr>
+  <tr>
+    <td>Governance Risk</td>
+    <td class="cell-partial"><span class="verdict verdict-partial">MODERATE</span><br>IBM management destroyed value for 20+ years (Palmisano, Rometty). Watson AI was a $15bn mistake. Board was passive. Gerstner was the exception, not the rule.</td>
+    <td class="cell-partial"><span class="verdict verdict-partial">MODERATE</span><br>Government ownership (56%) means political appointees, potential capital misallocation (directed lending). Partially materialised with REC acquisition — but returns on REC have been broadly positive.</td>
+    <td class="cell-match"><span class="verdict verdict-match">LOW</span><br>Small, focused management. AIM governance is light-touch. No empire-building — the business is too small. Risk is stagnation, not destruction.</td>
+    <td class="cell-partial"><span class="verdict verdict-partial">MODERATE</span><br>Passive shareholder register means no external discipline on capital allocation. Luis Maroto (CEO) has B+ operations grade but C capital allocation grade. No activist to hold management accountable. Governance vacuum.</td>
+  </tr>
+  <tr>
+    <td>Currency Risk</td>
+    <td class="cell-match"><span class="verdict verdict-match">NONE</span><br>USD-denominated. Gary was a US employee holding US stock. No FX exposure.</td>
+    <td class="cell-diverge"><span class="verdict verdict-diverge">MATERIAL</span><br>INR/USD moved from ₹63 to ₹83 during the hold — a 32% depreciation. Reduced USD CAGR from 26.4% (INR) to 22.7% (USD). A 3.7pp annual drag. Real but manageable when returns are 22%+.</td>
+    <td class="cell-match"><span class="verdict verdict-match">LOW</span><br>GBP-denominated. The Falklands use FKP (pegged 1:1 to GBP). MOMART is UK-based. No material FX exposure for a GBP investor.</td>
+    <td class="cell-partial"><span class="verdict verdict-partial">MODERATE</span><br>EUR-denominated. For a USD fund (Tintern), EUR/USD exposure adds ±3–5% annualised variance. Hedgeable but reduces net returns. Not as severe as INR but not negligible.</td>
+  </tr>
+  <tr>
+    <td>Liquidity</td>
+    <td class="cell-match"><span class="verdict verdict-match">DEEP</span><br>NYSE mega-cap. No liquidity constraint for any position size. Gary's personal holdings were trivially small relative to daily volume.</td>
+    <td class="cell-partial"><span class="verdict verdict-partial">ADEQUATE</span><br>NSE-listed, $16bn market cap. Liquid for most positions. EM trading friction exists. Exit of a large position requires patience — likely contributed to WindAcre's 9-year hold.</td>
+    <td class="cell-diverge"><span class="verdict verdict-diverge">ILLIQUID</span><br>AIM-listed, £36m market cap. Daily volume negligible. Building or exiting a meaningful position takes months. Institutional capital cannot deploy here.</td>
+    <td class="cell-match"><span class="verdict verdict-match">DEEP</span><br>Euronext Madrid, €28bn market cap, IBEX 35 constituent. Deep institutional liquidity. A 1% position (~€280m) is executable over weeks. No constraint for Tintern's expected AUM.</td>
+  </tr>
+  <tr>
+    <td>Return Profile</td>
+    <td class="cell-val" style="color:var(--ibm-blue)">~12× (1993–2002, Gerstner era). The repricing return. Underlying IBM equity compounded separately through ESPP/options over 31 years.</td>
+    <td class="cell-val" style="color:var(--pfc-amber)">6.32× / 22.7% CAGR over 9 years. 55% from book value compounding, 40% from P/B re-rating, 5% from dividends. Re-rating was incomplete at exit.</td>
+    <td class="cell-val" style="color:var(--fih-teal)">Unknown. +21.8% 52-week return. Long-term returns constrained by illiquidity and lack of catalyst. Theoretical SOTP upside exists but may never be realised.</td>
+    <td class="cell-val" style="color:var(--ams-green)">Base case: SOTP implies 40–60% upside from €68. 10-year compounding at 8–12% organic revenue growth + potential re-rating. Total return potential: 3–5× over a decade if monopoly holds and discount narrows.</td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+<div class="synthesis-box">
+  <h3>The Honest Assessment</h3>
+  <p>Amadeus is the weakest of the four on <strong>crisis resilience</strong> and <strong>earnings stability</strong>. IBM's mainframe, PFC's loan book, and FIH's geographic monopoly all generate revenue regardless of economic conditions. Amadeus does not — its revenue is per-booking, and bookings collapse when people stop flying. This is the fundamental tension in the thesis: <strong>Amadeus is a monopoly with cyclical revenue</strong>. The franchise (zero churn, infinite switching costs) is as durable as any of the other three. But the earnings stream is more volatile. For a patient, concentrated investor like Andrew, this means larger drawdowns to sit through and lower Sharpe ratio on the same underlying quality. The PFC case study shows Andrew can hold through a 14% ROE trough. The question is whether he can hold Amadeus through a –12% ROE trough. The honest answer: it depends on entry price. At €55–58 (our calculated floor), the margin of safety absorbs a COVID repeat. At €68, it doesn't.</p>
+</div>
+</div>
+
+<!-- ==================== SECTION 9: VERDICT GRID ==================== -->
+<div class="section">
+<div class="section-label">§ 9.0</div>
+<h2>Summary Verdict — The Pattern Matrix</h2>
+<div class="section-sub">Each dimension scored for overlap with Andrew's demonstrated investment framework.</div>
+
+<div class="table-wrap">
+<table class="comp-table">
+<thead>
+  <tr>
+    <th style="width:220px">Andrew's Framework</th>
+    <th>IBM (Gary F)</th>
+    <th>PFC (WindAcre)</th>
+    <th>FIH (Joe's Pitch)</th>
+    <th>Amadeus (Current)</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>Monopoly franchise</td>
+    <td style="text-align:center"><span class="verdict verdict-match">✓ MATCH</span></td>
+    <td style="text-align:center"><span class="verdict verdict-match">✓ MATCH</span></td>
+    <td style="text-align:center"><span class="verdict verdict-match">✓ MATCH</span></td>
+    <td style="text-align:center"><span class="verdict verdict-match">✓ MATCH</span></td>
+  </tr>
+  <tr>
+    <td>Market mispricing</td>
+    <td style="text-align:center"><span class="verdict verdict-match">✓ MATCH</span></td>
+    <td style="text-align:center"><span class="verdict verdict-match">✓ MATCH</span></td>
+    <td style="text-align:center"><span class="verdict verdict-match">✓ MATCH</span></td>
+    <td style="text-align:center"><span class="verdict verdict-match">✓ MATCH</span></td>
+  </tr>
+  <tr>
+    <td>Conglomerate discount</td>
+    <td style="text-align:center"><span class="verdict verdict-match">✓ MATCH</span></td>
+    <td style="text-align:center"><span class="verdict verdict-diverge">✗ NO</span></td>
+    <td style="text-align:center"><span class="verdict verdict-match">✓ MATCH</span></td>
+    <td style="text-align:center"><span class="verdict verdict-match">✓ MATCH</span></td>
+  </tr>
+  <tr>
+    <td>10+ year hold horizon</td>
+    <td style="text-align:center"><span class="verdict verdict-match">✓ 31 YRS</span></td>
+    <td style="text-align:center"><span class="verdict verdict-match">✓ 9 YRS</span></td>
+    <td style="text-align:center"><span class="verdict verdict-partial">~ REQUIRED</span></td>
+    <td style="text-align:center"><span class="verdict verdict-match">✓ DESIGNED</span></td>
+  </tr>
+  <tr>
+    <td>Crisis-proof earnings</td>
+    <td style="text-align:center"><span class="verdict verdict-match">✓ MATCH</span></td>
+    <td style="text-align:center"><span class="verdict verdict-match">✓ MATCH</span></td>
+    <td style="text-align:center"><span class="verdict verdict-partial">~ PARTIAL</span></td>
+    <td style="text-align:center"><span class="verdict verdict-diverge">✗ CYCLICAL</span></td>
+  </tr>
+  <tr>
+    <td>Dividend carry</td>
+    <td style="text-align:center"><span class="verdict verdict-match">✓ 4–5%</span></td>
+    <td style="text-align:center"><span class="verdict verdict-match">✓ 4–5%</span></td>
+    <td style="text-align:center"><span class="verdict verdict-partial">~ 2.8%</span></td>
+    <td style="text-align:center"><span class="verdict verdict-partial">~ 1.5%</span></td>
+  </tr>
+  <tr>
+    <td>Institutional scale</td>
+    <td style="text-align:center"><span class="verdict verdict-partial">~ PERSONAL</span></td>
+    <td style="text-align:center"><span class="verdict verdict-match">✓ MATCH</span></td>
+    <td style="text-align:center"><span class="verdict verdict-diverge">✗ TOO SMALL</span></td>
+    <td style="text-align:center"><span class="verdict verdict-match">✓ MATCH</span></td>
+  </tr>
+  <tr>
+    <td>Passive shareholder base</td>
+    <td style="text-align:center"><span class="verdict verdict-match">✓ YES</span></td>
+    <td style="text-align:center"><span class="verdict verdict-match">✓ GOI 56%</span></td>
+    <td style="text-align:center"><span class="verdict verdict-match">✓ 57% INSIDER</span></td>
+    <td style="text-align:center"><span class="verdict verdict-match">✓ ALL PASSIVE</span></td>
+  </tr>
+  <tr>
+    <td>Repricing catalyst visible</td>
+    <td style="text-align:center"><span class="verdict verdict-match">✓ KYNDRYL</span></td>
+    <td style="text-align:center"><span class="verdict verdict-match">✓ NPA + FII</span></td>
+    <td style="text-align:center"><span class="verdict verdict-partial">~ FERRY SOLD 12×</span></td>
+    <td style="text-align:center"><span class="verdict verdict-partial">~ POSSIBLE</span></td>
+  </tr>
+  <tr style="background: var(--surface2);">
+    <td style="color: var(--gold); font-size: 12px;"><strong>OVERALL FIT</strong></td>
+    <td style="text-align:center; font-family:'IBM Plex Mono',monospace; font-size:20px; font-weight:700; color:var(--ibm-blue);">9 / 9</td>
+    <td style="text-align:center; font-family:'IBM Plex Mono',monospace; font-size:20px; font-weight:700; color:var(--pfc-amber);">8 / 9</td>
+    <td style="text-align:center; font-family:'IBM Plex Mono',monospace; font-size:20px; font-weight:700; color:var(--fih-teal);">7 / 9</td>
+    <td style="text-align:center; font-family:'IBM Plex Mono',monospace; font-size:20px; font-weight:700; color:var(--ams-green);">7 / 9</td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+<div class="synthesis-box" style="margin-top:20px; border-color: var(--gold);">
+  <h3>Final Synthesis</h3>
+  <p>Amadeus scores 7/9 on Andrew's framework — matching on every structural dimension except crisis-proof earnings and dividend carry. These are real weaknesses, not cosmetic ones. The PFC benchmark (8/9) is a tougher business — it generated positive ROE through every crisis and paid 4–5% dividends to finance the patience. Amadeus cannot match this. What Amadeus offers instead is the <strong>conglomerate discount catalyst</strong> that PFC lacked — a quantifiable SOTP gap with identifiable repricing mechanisms.</p>
+  <p>The pitch to Andrew is not "Amadeus is as good as PFC." It's: <strong>"Amadeus is PFC's thesis (mispriced monopoly) combined with IBM's structure (conglomerate hiding a jewel) at FIH's concept level (your analyst found it first) — at a scale that can anchor Tintern's portfolio for a decade."</strong></p>
+  <p>IBM scored 9/9 — but it was not an investment. It was a life. Gary F didn't score IBM against a framework. He worked there, accumulated stock, held it, and watched it compound. The perfection of the IBM fit is precisely why Andrew's investment philosophy is what it is. Every position he takes is an attempt to recreate, consciously and professionally, what his father did unconsciously and personally. Amadeus is the closest available approximation at institutional scale. That's what Joe needs to show.</p>
+</div>
+</div>
+
+<!-- FOOTNOTES -->
+<div class="footnotes">
+  <p>SOURCES: IBM financials from SEC filings and public market data. PFC financials from S&P Global Capital IQ (23 Mar 2026). FIH financials from FIH Group plc Annual Reports and AIM filings. Amadeus financials from S&P Global Capital IQ (23 Mar 2026) and company filings. Family wealth genesis from Project Tintern origin intelligence dossier (G2G Advisory, March 2026). All overlap percentages are analytical judgments, not computed metrics.</p>
+  <p>METHODOLOGY: Overlap scoring based on nine dimensions of Andrew Lundstrom's demonstrated investment framework as evidenced by WindAcre Partnership's public filings (13F, Form ADV), PFC holding period characteristics, and the intellectual transmission thesis from the Project Tintern dossier. Scoring is binary (match/partial/diverge) to avoid false precision.</p>
+  <p>CLASSIFICATION: Confidential · Joe Barry · Application to Tintern Capital · March 2026 · Not for external distribution</p>
+</div>
+
+</div><!-- /container -->
+</body>
+</html>
