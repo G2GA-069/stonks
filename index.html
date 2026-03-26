@@ -682,6 +682,8 @@
   <a href="#thesis">Investment Thesis</a>
   <a href="#travelport">Amadeus vs Travelport</a>
   <a href="#merger">Merger Scenarios</a>
+  <a href="#airit">Global Air IT Market</a>
+  <a href="#benchmark">Three-Way Benchmark</a>
 </nav>
 
 <!-- CONTENT -->
@@ -1899,9 +1901,634 @@
     <p><strong>Bottom line:</strong> A full Amadeus-Travelport merger is almost certainly blocked without significant divestitures. The more realistic scenario is a targeted asset deal: Amadeus acquires Travelport's IT/PSS assets (defensible, limited overlap) and leaves the distribution business to Elliott for a separate process (PE sale, IPO, or merger with Sabre's distribution arm). This "cherry-pick" approach captures most of the value creation from Scenario A (~€2-3bn of synergy value) while avoiding the regulatory minefield of Scenario B.</p>
   </div>
 
+  <!-- ============================================================== -->
+  <!-- RIDER 2: GLOBAL AIR IT MARKET ANALYSIS -->
+  <!-- ============================================================== -->
+  <h2 class="section-header" id="airit">Global Air IT / PSS Market — Competitive Landscape</h2>
+  <p class="section-sub">Who owns the operating systems of the world's airlines — and why China matters</p>
+  <p class="section-intro">The Passenger Service System (PSS) is the mission-critical technology platform that runs an airline. It controls reservations, inventory, departure control, ticketing, and revenue integrity. There are fewer than ten providers globally, and switching is extraordinarily rare. Understanding who controls this market — and the structural barriers that segment it — is essential to any valuation of the Altéa franchise. The single most important structural fact is China: TravelSky Technology holds a regulated monopoly over Chinese domestic aviation, effectively removing ~20% of global passenger volume from Amadeus's addressable market. This section maps the entire competitive landscape.</p>
+
+  <!-- GLOBAL PSS MARKET SHARE -->
+  <div class="chart-row">
+    <div class="chart-card">
+      <div class="chart-title">Global PSS Market Share by Passengers Boarded</div>
+      <div class="chart-subtitle">2025 estimates · ~4.5 billion annual passengers globally</div>
+      <div class="chart-container" style="height:300px"><canvas id="pssMarketShare"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">PSS TAM Decomposition</div>
+      <div class="chart-subtitle">Effective addressable market after removing China's protected segment</div>
+      <div class="chart-container" style="height:300px"><canvas id="pssTAM"></canvas></div>
+    </div>
+  </div>
+
+  <!-- PSS PROVIDER TABLE -->
+  <div class="chart-row">
+    <div class="chart-card full">
+      <div class="chart-title">Global PSS Provider Landscape</div>
+      <div class="chart-subtitle">All material providers ranked by estimated passengers boarded · Shading reflects competitive threat to Amadeus</div>
+      <div class="table-scroll">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Provider</th>
+            <th>Owner</th>
+            <th>Airlines Served</th>
+            <th>Pax Boarded (est.)</th>
+            <th>Market Share</th>
+            <th>Geography Focus</th>
+            <th>Threat to Amadeus</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="comp-highlight">
+            <td>Altéa (Amadeus)</td>
+            <td>Amadeus IT Group</td>
+            <td>~200+ (incl. Lufthansa, BA, Cathay, Qantas)</td>
+            <td>~2.0bn</td>
+            <td>~44%</td>
+            <td>Global (ex-China)</td>
+            <td><span class="pill low">N/A</span></td>
+          </tr>
+          <tr>
+            <td>TravelSky</td>
+            <td>CAAC (Chinese state)</td>
+            <td>~50+ (all Chinese domestic)</td>
+            <td>~0.9bn</td>
+            <td>~20%</td>
+            <td>China (domestic monopoly)</td>
+            <td><span class="pill mod">Medium</span></td>
+          </tr>
+          <tr>
+            <td>SabreSonic</td>
+            <td>Sabre Corporation</td>
+            <td>~40+ (AA, JetBlue, Alaska, Philippine)</td>
+            <td>~0.7bn</td>
+            <td>~16%</td>
+            <td>Americas, Asia</td>
+            <td><span class="pill low">Low</span></td>
+          </tr>
+          <tr>
+            <td>Navitaire (New Skies)</td>
+            <td>Amadeus IT Group</td>
+            <td>~60+ LCCs (Ryanair, AirAsia, IndiGo)</td>
+            <td>~0.5bn</td>
+            <td>~11%</td>
+            <td>Global LCC</td>
+            <td><span class="pill low">Amadeus-owned</span></td>
+          </tr>
+          <tr>
+            <td>iFly Res (IBS Software)</td>
+            <td>Blackstone (majority)</td>
+            <td>~50+ (SaudiGulf, SalamAir, SpiceJet)</td>
+            <td>~0.15bn</td>
+            <td>~3%</td>
+            <td>Middle East, S. Asia, LCC</td>
+            <td><span class="pill mod">Medium</span></td>
+          </tr>
+          <tr>
+            <td>Crane PAX</td>
+            <td>Hitit (Turkish)</td>
+            <td>~60+ (mostly small carriers)</td>
+            <td>~0.1bn</td>
+            <td>~2%</td>
+            <td>MENA, Central Asia, Africa</td>
+            <td><span class="pill low">Low</span></td>
+          </tr>
+          <tr>
+            <td>Radixx</td>
+            <td>Sabre Corporation</td>
+            <td>~20+ LCCs</td>
+            <td>~0.05bn</td>
+            <td>~1%</td>
+            <td>LatAm LCC</td>
+            <td><span class="pill low">Low</span></td>
+          </tr>
+          <tr>
+            <td>SITA Horizon</td>
+            <td>SITA (airline consortium)</td>
+            <td>~10 (declining, legacy)</td>
+            <td>~0.04bn</td>
+            <td><1%</td>
+            <td>Africa, small carriers</td>
+            <td><span class="pill low">Low</span></td>
+          </tr>
+          <tr>
+            <td>Kiu System Solutions</td>
+            <td>Kiu (private)</td>
+            <td>~15 (small LatAm/Caribbean)</td>
+            <td>~0.02bn</td>
+            <td><1%</td>
+            <td>Latin America</td>
+            <td><span class="pill low">Low</span></td>
+          </tr>
+          <tr class="comp-median">
+            <td>Cloud-Native Entrants</td>
+            <td>Various (venture-backed)</td>
+            <td>Pilot stage / POCs</td>
+            <td>Negligible</td>
+            <td><0.5%</td>
+            <td>n/a</td>
+            <td><span class="pill high">Watch</span></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE CHINA QUESTION -->
+  <div class="narrative-panel">
+    <h2>The China Question: TravelSky and the Structural Wall</h2>
+
+    <p>TravelSky Technology (0696.HK) is the state-controlled monopoly PSS and GDS provider for Chinese domestic aviation. It is majority-owned by the Civil Aviation Administration of China (CAAC) and processes virtually 100% of Chinese domestic air bookings — roughly <span class="stat-inline">900 million</span> passengers annually, or ~20% of global air traffic. This is not a competitive outcome; it is a regulatory mandate. No foreign PSS provider has ever processed a material volume of Chinese domestic airline operations, and none will in any foreseeable planning horizon.</p>
+
+    <div class="callout">
+      <p>This structural wall has three implications for Amadeus investors. First, it caps Amadeus's addressable Air IT TAM at roughly 80% of global passengers — around 3.6 billion pax, not 4.5 billion. Second, it creates a large, well-capitalised competitor that could theoretically expand internationally — TravelSky has made limited forays into Southeast Asian airport systems and common-use infrastructure. Third, and most subtly, it means that any "global" market share figure for Amadeus (our 44%) is somewhat misleading: Amadeus's share of the <em>contestable</em> market (ex-China) is closer to <span class="stat-inline">55-56%</span>.</p>
+    </div>
+
+    <p><strong>Could TravelSky expand globally?</strong> In theory, yes. TravelSky is well-capitalised (net cash position, ~CNY 8bn revenue, ~35% operating margins) and has made strategic investments in airport common-use systems (CUPPS/CUSS) deployed across Asian airports. However, three factors limit its international ambitions: (1) airlines outside China are deeply reluctant to run their core operations on a platform controlled by a foreign state — the data sovereignty concerns alone are disqualifying for Western carriers; (2) TravelSky's PSS architecture is optimised for Chinese regulatory requirements (e-ticketing standards, government reporting, domestic revenue management) and would require significant investment to compete internationally; (3) there is no evidence of strategic intent to challenge Amadeus or Sabre in their core markets. The realistic risk is indirect: TravelSky could absorb international routes from Chinese carriers that currently use Amadeus for their outbound operations, marginal share loss of perhaps 1-2% over a decade.</p>
+
+    <p><strong>Could Amadeus penetrate China?</strong> No. The regulatory barrier is absolute for domestic operations. The limited opportunity is in providing technology components (revenue management, loyalty platforms, digital retail) to Chinese carriers for their international operations, where Amadeus has some existing relationships (e.g., Hainan Airlines uses Altéa for international). This is a ~$50-100m revenue opportunity, not a market-shifting event. Investors should model Chinese domestic aviation as permanently excluded from Amadeus's addressable market.</p>
+  </div>
+
+  <!-- PSS SWITCHING DYNAMICS -->
+  <div class="chart-row">
+    <div class="chart-card full">
+      <div class="chart-title">PSS Migration History — The Rarity of Switching</div>
+      <div class="chart-subtitle">Notable airline PSS migrations since 2010 · Illustrates extreme switching costs and project risk</div>
+      <div class="table-scroll">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Airline</th>
+            <th>Year</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Est. Cost</th>
+            <th>Duration</th>
+            <th>Outcome</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Southwest Airlines</td>
+            <td>2017-2023</td>
+            <td>In-house (legacy)</td>
+            <td>Amadeus Altéa</td>
+            <td>$500m+</td>
+            <td>~6 years</td>
+            <td>Completed. Largest PSS migration in history.</td>
+          </tr>
+          <tr>
+            <td>Qatar Airways</td>
+            <td>2016-2018</td>
+            <td>Sabre</td>
+            <td>Amadeus Altéa</td>
+            <td>~$100m</td>
+            <td>~2 years</td>
+            <td>Completed successfully.</td>
+          </tr>
+          <tr>
+            <td>Philippine Airlines</td>
+            <td>2019-2021</td>
+            <td>Amadeus Altéa</td>
+            <td>Sabre SabreSonic</td>
+            <td>~$50-80m</td>
+            <td>~2 years</td>
+            <td>Completed. Rare Amadeus loss.</td>
+          </tr>
+          <tr>
+            <td>Air Canada</td>
+            <td>2018-2020</td>
+            <td>Sabre</td>
+            <td>Amadeus Altéa</td>
+            <td>~$80-120m</td>
+            <td>~2 years</td>
+            <td>Completed successfully.</td>
+          </tr>
+          <tr>
+            <td>Frontier Airlines</td>
+            <td>2014-2016</td>
+            <td>Sabre</td>
+            <td>Navitaire (Amadeus)</td>
+            <td>~$30m</td>
+            <td>~18 months</td>
+            <td>Completed. LCC migration.</td>
+          </tr>
+          <tr>
+            <td>Garuda Indonesia</td>
+            <td>Announced 2019</td>
+            <td>Amadeus Altéa</td>
+            <td>IBS iFly Res</td>
+            <td>~$40m est.</td>
+            <td>Delayed / unclear</td>
+            <td>Migration stalled. Amadeus retained.</td>
+          </tr>
+          <tr>
+            <td>Qantas (retender)</td>
+            <td>2022-2023</td>
+            <td>Amadeus Altéa</td>
+            <td>Amadeus Altéa (renewed)</td>
+            <td>n/a</td>
+            <td>n/a</td>
+            <td>Re-tendered and renewed. No viable alternative.</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <div style="font-size:11px; color:var(--gray-400); margin-top:8px; line-height:1.6;">
+        Key takeaway: In 15 years, fewer than 10 major airlines have migrated PSS providers. Of those, the overwhelming majority moved <em>to</em> Amadeus, not away. The one notable loss (Philippine Airlines to Sabre) involved a mid-size carrier where Sabre offered aggressive commercial terms. The Garuda migration to IBS stalled mid-project. This churn rate (~1-2 major airlines per year switching globally) is among the lowest in enterprise software — analogous to core banking system migrations (Temenos, FIS) rather than typical SaaS churn.
+      </div>
+    </div>
+  </div>
+
+  <!-- PSS MARKET OUTLOOK -->
+  <div class="chart-row">
+    <div class="chart-card">
+      <div class="chart-title">Air IT TAM Growth Drivers</div>
+      <div class="chart-subtitle">Where incremental PSS revenue comes from (2025-2032)</div>
+      <div style="padding:8px 0;">
+        <div style="margin-bottom:16px;">
+          <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--gray-400); font-weight:600; margin-bottom:4px;">1. Air Traffic Growth (~4% CAGR)</div>
+          <div style="background:var(--gray-100); border-radius:4px; height:24px; overflow:hidden;">
+            <div style="background:var(--blue); height:100%; width:40%; border-radius:4px;"></div>
+          </div>
+          <div style="font-size:11px; color:var(--gray-600); margin-top:4px;">IATA base case: 4.5bn pax (2025) → 6.0bn pax (2032). Amadeus earns per-pax; volume is the primary revenue driver.</div>
+        </div>
+        <div style="margin-bottom:16px;">
+          <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--gray-400); font-weight:600; margin-bottom:4px;">2. ARPU Expansion (~2-3% p.a.)</div>
+          <div style="background:var(--gray-100); border-radius:4px; height:24px; overflow:hidden;">
+            <div style="background:var(--durable); height:100%; width:30%; border-radius:4px;"></div>
+          </div>
+          <div style="font-size:11px; color:var(--gray-600); margin-top:4px;">Airlines buying more modules: NDC enablement, digital retail, ancillary merchandising, AI-powered revenue management. Amadeus upsells into the installed base.</div>
+        </div>
+        <div style="margin-bottom:16px;">
+          <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--gray-400); font-weight:600; margin-bottom:4px;">3. New Airline Wins (~1-2% p.a.)</div>
+          <div style="background:var(--gray-100); border-radius:4px; height:24px; overflow:hidden;">
+            <div style="background:var(--green); height:100%; width:20%; border-radius:4px;"></div>
+          </div>
+          <div style="font-size:11px; color:var(--gray-600); margin-top:4px;">Competitive wins from Sabre/legacy systems. Pipeline includes several large Middle Eastern and Asian carriers on outdated platforms.</div>
+        </div>
+        <div>
+          <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--gray-400); font-weight:600; margin-bottom:4px;">4. Adjacent Expansion (~3-5% p.a.)</div>
+          <div style="background:var(--gray-100); border-radius:4px; height:24px; overflow:hidden;">
+            <div style="background:var(--amber); height:100%; width:35%; border-radius:4px;"></div>
+          </div>
+          <div style="font-size:11px; color:var(--gray-600); margin-top:4px;">Airport IT, airline operations (AMOS maintenance), crew management, loyalty platforms. Leverages PSS relationship for cross-sell.</div>
+        </div>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Cloud-Native PSS Threat Assessment</div>
+      <div class="chart-subtitle">Could a startup disrupt Altéa? Not likely — but here's why people keep asking</div>
+      <div style="font-size:13px; color:var(--gray-600); line-height:1.7; padding:8px 0;">
+        <p>Every few years, a new wave of "cloud-native airline platform" startups raises capital with the thesis that Amadeus/Sabre can be disrupted. The most notable current efforts include <strong>Bravo (ex-Farelogix team)</strong>, <strong>Kyte (backed by Cathay Pacific ventures)</strong>, and various NDC-native platforms.</p>
+        <p style="margin-top:12px;">The reality check:</p>
+        <p style="margin-top:8px;"><strong>Certification barrier:</strong> A PSS must be IATA-certified for e-ticketing interline, which takes 2-3 years and ~$20-50m of investment. Only 5-6 platforms globally have this certification.</p>
+        <p style="margin-top:8px;"><strong>Interline complexity:</strong> The modern PSS must interoperate with every other PSS for codeshares, interlining, and through-ticketing. This network effect massively favours incumbents.</p>
+        <p style="margin-top:8px;"><strong>Reference customer problem:</strong> No Tier 1 airline will be a startup's first customer. But no startup can win a Tier 1 airline without references. This chicken-and-egg problem has killed every PSS startup in the last 20 years.</p>
+        <p style="margin-top:8px;"><strong>Our assessment:</strong> Cloud-native entrants may capture small LCCs or charter operators (<50 aircraft). They will not threaten Amadeus's ~200+ airline base within any 10-year planning horizon. The moat is operational, not just technological.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- RIDER 3: THREE-WAY BENCHMARK -->
+  <!-- ============================================================== -->
+  <h2 class="section-header" id="benchmark">Three-Way Benchmark: Amadeus vs Sabre vs Travelport</h2>
+  <p class="section-sub">Comprehensive metric comparison of the non-Chinese GDS/IT platforms — S&P Capital IQ verified where available</p>
+  <p class="section-intro">Amadeus, Sabre, and Travelport together control ~97% of non-Chinese global air distribution and ~85% of the Western airline IT market. But beneath that apparent similarity lie three fundamentally different businesses. Amadeus is a high-margin, low-leverage software compounder that happens to also run a distribution network. Sabre is a distribution-heavy, highly leveraged turnaround story with chronic profitability issues. Travelport is an even more distribution-dependent, PE-owned platform drowning in LBO debt. The table below benchmarks every relevant metric — all Amadeus and Sabre figures are S&P Capital IQ sourced (FY2025 reported); Travelport figures are PFC estimates.</p>
+
+  <!-- SCALE & REVENUE -->
+  <div class="chart-row">
+    <div class="chart-card full">
+      <div class="chart-title">Scale, Revenue & Business Mix</div>
+      <div class="chart-subtitle">FY2025 reported (Amadeus EUR, Sabre USD, Travelport USD est.) · Exchange rate ~1.08 USD/EUR</div>
+      <div class="table-scroll">
+      <table class="vs-table">
+        <thead>
+          <tr>
+            <th style="width:28%">Metric</th>
+            <th class="ama-col">Amadeus</th>
+            <th style="background:#FEF3C7; color:#92400E">Sabre</th>
+            <th class="tvpt-col">Travelport (est.)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="vs-section"><td colspan="4">Scale</td></tr>
+          <tr>
+            <td>Total Revenue</td>
+            <td>€6,517m ($7.0bn)</td>
+            <td>$2,771m</td>
+            <td>~$2,300m</td>
+          </tr>
+          <tr>
+            <td>Revenue 5yr CAGR (2019-25)</td>
+            <td>+8.6%</td>
+            <td>-5.8%</td>
+            <td>~-1% (est.)</td>
+          </tr>
+          <tr>
+            <td>Employees</td>
+            <td>20,605</td>
+            <td>4,650</td>
+            <td>~3,500 (est.)</td>
+          </tr>
+          <tr>
+            <td>Revenue per Employee</td>
+            <td>€316k</td>
+            <td>$596k</td>
+            <td>~$657k (est.)</td>
+          </tr>
+          <tr class="vs-section"><td colspan="4">Business Mix (% of Revenue)</td></tr>
+          <tr>
+            <td>Air IT / PSS</td>
+            <td>35% (€2,300m)</td>
+            <td>~15% (~$415m) *</td>
+            <td>~15% (~$350m)</td>
+          </tr>
+          <tr>
+            <td>Hospitality IT</td>
+            <td>12% (€800m)</td>
+            <td>0% (divested 2025) **</td>
+            <td>~3% (~$80m)</td>
+          </tr>
+          <tr>
+            <td>Air Distribution (GDS)</td>
+            <td>45% (€2,930m)</td>
+            <td>~70% (~$1,940m)</td>
+            <td>~78% (~$1,800m)</td>
+          </tr>
+          <tr>
+            <td>Payments & Other</td>
+            <td>8% (€487m)</td>
+            <td>~15% (~$415m)</td>
+            <td>~4% (~$70m)</td>
+          </tr>
+          <tr style="font-size:11px; color:var(--gray-400)">
+            <td colspan="4">* Sabre's "IT Solutions" includes Airline Solutions + Airline Reservations. ** Sabre sold Hospitality Solutions to Symphony Technology Group in 2025 for ~$1.1bn.</td>
+          </tr>
+          <tr class="vs-section"><td colspan="4">Distribution Metrics</td></tr>
+          <tr>
+            <td>Global GDS Market Share</td>
+            <td>~43%</td>
+            <td>~35%</td>
+            <td>~22%</td>
+          </tr>
+          <tr>
+            <td>GDS Air Segments Processed (est.)</td>
+            <td>~620m</td>
+            <td>~470m</td>
+            <td>~310m</td>
+          </tr>
+          <tr>
+            <td>Avg Revenue per Air Segment</td>
+            <td>~€4.70</td>
+            <td>~$4.10</td>
+            <td>~$5.80 (est.)</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROFITABILITY & MARGINS -->
+  <div class="chart-row">
+    <div class="chart-card full">
+      <div class="chart-title">Profitability & Margin Structure</div>
+      <div class="chart-subtitle">FY2025 · The margin gap tells the quality story</div>
+      <div class="table-scroll">
+      <table class="vs-table">
+        <thead>
+          <tr>
+            <th style="width:28%">Metric</th>
+            <th class="ama-col">Amadeus</th>
+            <th style="background:#FEF3C7; color:#92400E">Sabre</th>
+            <th class="tvpt-col">Travelport (est.)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="vs-section"><td colspan="4">Profitability (Reported)</td></tr>
+          <tr>
+            <td>Gross Profit</td>
+            <td>€2,864m (44.0%)</td>
+            <td>$1,571m (56.7%) ***</td>
+            <td>~$920m (~40%)</td>
+          </tr>
+          <tr>
+            <td>EBITDA</td>
+            <td>€2,448m (37.6%)</td>
+            <td>$387m (14.0%)</td>
+            <td>~$550m (~24%)</td>
+          </tr>
+          <tr>
+            <td>EBIT (Operating Income)</td>
+            <td>€1,811m (27.8%)</td>
+            <td>$345m (12.5%)</td>
+            <td>~$400m (~17%)</td>
+          </tr>
+          <tr>
+            <td>Net Income (Continuing Ops)</td>
+            <td>€1,336m (20.5%)</td>
+            <td>-$255m (-9.2%)</td>
+            <td>~-$200m (est., after interest)</td>
+          </tr>
+          <tr style="font-size:11px; color:var(--gray-400)">
+            <td colspan="4">*** Sabre gross margin appears high because R&D and SG&A (including capitalised software amort) are below the gross profit line. Amadeus includes more costs in COGS.</td>
+          </tr>
+          <tr class="vs-section"><td colspan="4">Cash Generation</td></tr>
+          <tr>
+            <td>Cash from Operations</td>
+            <td>€2,201m</td>
+            <td>-$131m</td>
+            <td>~$300m (est.)</td>
+          </tr>
+          <tr>
+            <td>Capital Expenditure (PP&E)</td>
+            <td>€60m</td>
+            <td>$83m</td>
+            <td>~$40m (est.)</td>
+          </tr>
+          <tr>
+            <td>Intangible Capex (Software)</td>
+            <td>€754m</td>
+            <td>$125m (incl. cap. sw.)</td>
+            <td>~$100m (est.)</td>
+          </tr>
+          <tr>
+            <td>Levered Free Cash Flow</td>
+            <td>€1,081m</td>
+            <td>$62m</td>
+            <td>~$100m (est., pre debt service)</td>
+          </tr>
+          <tr>
+            <td>FCF Conversion (LFCF / EBITDA)</td>
+            <td>44%</td>
+            <td>16%</td>
+            <td>~18% (est.)</td>
+          </tr>
+          <tr class="vs-section"><td colspan="4">R&D & Investment</td></tr>
+          <tr>
+            <td>Total R&D (reported)</td>
+            <td>~€1,000m (est.) ****</td>
+            <td>$711m</td>
+            <td>~$200m (est.)</td>
+          </tr>
+          <tr>
+            <td>R&D as % Revenue</td>
+            <td>~15%</td>
+            <td>25.7%</td>
+            <td>~9%</td>
+          </tr>
+          <tr>
+            <td>Stock-Based Compensation</td>
+            <td>€49m (0.8% rev)</td>
+            <td>$46m (1.6% rev)</td>
+            <td>Minimal (PE-owned)</td>
+          </tr>
+          <tr style="font-size:11px; color:var(--gray-400)">
+            <td colspan="4">**** Amadeus stopped disclosing R&D separately after 2023; 2025 estimated based on capitalised intangible development + operating tech costs.</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROFITABILITY BAR CHART -->
+  <div class="chart-row">
+    <div class="chart-card">
+      <div class="chart-title">EBITDA Margin Comparison</div>
+      <div class="chart-subtitle">FY2025 · The margin gap is the quality gap</div>
+      <div class="chart-container" style="height:280px"><canvas id="marginCompare"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Leverage & Balance Sheet Health</div>
+      <div class="chart-subtitle">The single most differentiating factor between the three platforms</div>
+      <div class="chart-container" style="height:280px"><canvas id="leverageCompare"></canvas></div>
+    </div>
+  </div>
+
+  <!-- BALANCE SHEET & LEVERAGE -->
+  <div class="chart-row">
+    <div class="chart-card full">
+      <div class="chart-title">Balance Sheet, Leverage & Valuation</div>
+      <div class="chart-subtitle">FY2025 · Sabre share price ~$3.80 (Mar 2026) · Travelport private</div>
+      <div class="table-scroll">
+      <table class="vs-table">
+        <thead>
+          <tr>
+            <th style="width:28%">Metric</th>
+            <th class="ama-col">Amadeus</th>
+            <th style="background:#FEF3C7; color:#92400E">Sabre</th>
+            <th class="tvpt-col">Travelport (est.)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="vs-section"><td colspan="4">Balance Sheet</td></tr>
+          <tr>
+            <td>Total Debt</td>
+            <td>€3,228m</td>
+            <td>$4,411m</td>
+            <td>~$4,800m</td>
+          </tr>
+          <tr>
+            <td>Cash & Short-term Investments</td>
+            <td>€987m</td>
+            <td>$792m</td>
+            <td>~$200m (est.)</td>
+          </tr>
+          <tr>
+            <td>Net Debt</td>
+            <td>€2,242m</td>
+            <td>$3,619m</td>
+            <td>~$4,600m</td>
+          </tr>
+          <tr>
+            <td>Total Equity</td>
+            <td>€4,852m</td>
+            <td>-$1,024m</td>
+            <td>~-$1,000m (est.)</td>
+          </tr>
+          <tr>
+            <td>Net Debt / EBITDA</td>
+            <td style="color:var(--green); font-weight:700">0.9x</td>
+            <td style="color:var(--red); font-weight:700">9.4x</td>
+            <td style="color:var(--red); font-weight:700">~8.4x</td>
+          </tr>
+          <tr>
+            <td>Interest Coverage (EBIT / Interest)</td>
+            <td style="color:var(--green); font-weight:700">22.8x</td>
+            <td style="color:var(--red); font-weight:700">0.8x</td>
+            <td style="color:var(--red); font-weight:700">~1.0x</td>
+          </tr>
+          <tr>
+            <td>Cash Interest Paid</td>
+            <td>€77m</td>
+            <td>$589m (!)</td>
+            <td>~$350m (est.)</td>
+          </tr>
+          <tr class="vs-section"><td colspan="4">Valuation</td></tr>
+          <tr>
+            <td>Market Cap / Equity Value</td>
+            <td>€29.3bn</td>
+            <td>$1.5bn</td>
+            <td>~$2.5bn (PE est.)</td>
+          </tr>
+          <tr>
+            <td>Enterprise Value (fully loaded)</td>
+            <td>€32.5bn</td>
+            <td>~$5.4bn</td>
+            <td>~$7.5bn (debt + equity)</td>
+          </tr>
+          <tr>
+            <td>EV / Revenue</td>
+            <td>5.0x</td>
+            <td>1.9x</td>
+            <td>~3.3x</td>
+          </tr>
+          <tr>
+            <td>EV / EBITDA</td>
+            <td>13.3x</td>
+            <td>13.9x</td>
+            <td>~13.6x</td>
+          </tr>
+          <tr>
+            <td>EV / EBIT</td>
+            <td>18.0x</td>
+            <td>15.6x</td>
+            <td>~18.8x</td>
+          </tr>
+          <tr>
+            <td>P / E (Continuing Ops)</td>
+            <td>21.9x</td>
+            <td>NM (loss)</td>
+            <td>NM (loss)</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- BENCHMARK SYNTHESIS -->
+  <div class="narrative-panel">
+    <h2>Benchmark Synthesis: Why Amadeus Is Not a "GDS Company"</h2>
+
+    <p>The three-way comparison reveals that labelling Amadeus a "GDS company" is a category error. Amadeus generates <span class="stat-inline">€2.2bn</span> of operating cash flow against <span class="stat-inline">€77m</span> of cash interest. Sabre generates <span class="stat-inline">-$131m</span> of operating cash flow against <span class="stat-inline">$589m</span> of cash interest. One is a software compounder; the other is a leveraged distribution business fighting for survival. That they trade at similar EV/EBITDA multiples (~13-14x) reflects the market's view that Amadeus's higher quality is already priced — or, alternatively, that the market fails to differentiate between recurring mission-critical IT revenue and cyclical distribution toll revenue.</p>
+
+    <div class="callout">
+      <p>The most striking data point in the entire comparison: <strong>Amadeus's interest coverage is 22.8x. Sabre's is 0.8x.</strong> This is not a competitive difference — it is an existential one. Sabre's EBIT does not cover its interest expense. The company survived 2020-2024 through serial debt refinancing, equity dilution (shares outstanding up 44% since 2019), and asset sales (Hospitality Solutions for ~$1.1bn in 2025). Travelport's leverage is equally extreme (~8.4x net debt/EBITDA). Both competitors are structurally impaired: they cannot invest in AI capabilities, they cannot acquire growth, and they cannot return capital. Amadeus can do all three. This balance sheet divergence is the single most important competitive dynamic in the sector — and the primary reason the fortress thesis holds.</p>
+    </div>
+
+    <p><strong>What this means for Amadeus investors:</strong> At €68/share, you are paying a premium for quality — but the premium is earned. Amadeus has the balance sheet to invest through the AI transition (€750m+ annual intangible capex), the cash flow to sustain buybacks (€1.3bn in 2025 alone), and the competitive position to absorb airline customers fleeing underfunded competitors. Sabre and Travelport, by contrast, face a vicious cycle: high leverage → constrained investment → declining competitiveness → lower margins → even higher effective leverage. In a world where AI is reshaping travel technology, the company that can invest wins. Amadeus can invest. Its competitors cannot.</p>
+  </div>
+
   <!-- FOOTER SOURCE -->
   <div style="font-size:11px; color:var(--gray-400); margin-top:24px;">
-    Source: Amadeus FY2025 Annual Report; S&P Capital IQ; McKinsey GDS Practice estimates; PhocusWire; Sabre IR; Google Blog; Travelport Companies House filings; Elliott Management public disclosures. Travelport Group figures are PFC estimates — consolidated financials are not publicly available. Segment EBIT estimates are McKinsey/PFC decompositions. Quality scores are PFC analytical judgements, not ratings. Merger scenario analysis is illustrative and does not constitute investment advice.
+    Source: Amadeus FY2025 Annual Report; S&P Capital IQ (Amadeus & Sabre, standardised financials); Sabre FY2025 10-K; McKinsey GDS Practice estimates; IATA Air Transport Statistics; PhocusWire; Travelport Companies House filings; Elliott Management public disclosures; TravelSky Technology 2024 Annual Report (HKEX). Travelport Group figures are PFC estimates — consolidated financials are not publicly available. Segment EBIT estimates are McKinsey/PFC decompositions. Quality scores are PFC analytical judgements, not ratings. All analysis is illustrative and does not constitute investment advice.
   </div>
 
 </div>
@@ -2272,6 +2899,117 @@ new Chart(document.getElementById('qualityRadar'), {
             label: ctx => ctx.dataset.label + ': ' + ctx.raw + '%'
           }
         }
+      }
+    }
+  });
+})();
+
+// === PSS MARKET SHARE DOUGHNUT ===
+(function() {
+  const ctx = document.getElementById('pssMarketShare');
+  if (!ctx) return;
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Amadeus Altéa', 'TravelSky (China)', 'Sabre SabreSonic', 'Navitaire (Amadeus)', 'IBS iFly Res', 'Hitit Crane', 'Others'],
+      datasets: [{
+        data: [44, 20, 16, 11, 3, 2, 4],
+        backgroundColor: ['#1A73E8', '#DC2626', '#D4770B', '#60A5FA', '#14B8A6', '#8B5CF6', '#9CA3AF'],
+        borderWidth: 2, borderColor: '#FFFFFF'
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '50%',
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 12, usePointStyle: true, pointStyle: 'circle', font: { size: 11 } } },
+        tooltip: { callbacks: { label: ctx => ctx.label + ': ' + ctx.raw + '% of global pax' } }
+      }
+    }
+  });
+})();
+
+// === PSS TAM DECOMPOSITION ===
+(function() {
+  const ctx = document.getElementById('pssTAM');
+  if (!ctx) return;
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Global TAM\n(~4.5bn pax)', 'China Wall\n(~0.9bn pax)', 'Contestable TAM\n(~3.6bn pax)', 'Amadeus Share\n(~2.0bn pax)'],
+      datasets: [{
+        data: [4500, -900, 3600, 2000],
+        backgroundColor: ['#E5E7EB', '#DC2626', '#1A73E8', '#60A5FA'],
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: {
+        y: {
+          ticks: { callback: v => (v / 1000).toFixed(1) + 'bn pax' },
+          grid: { color: '#E5E7EB' }
+        },
+        x: { grid: { display: false } }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => Math.abs(ctx.raw) + 'm passengers' } }
+      }
+    }
+  });
+})();
+
+// === EBITDA MARGIN COMPARISON ===
+(function() {
+  const ctx = document.getElementById('marginCompare');
+  if (!ctx) return;
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['EBITDA Margin', 'EBIT Margin', 'Net Income Margin', 'FCF Margin'],
+      datasets: [
+        { label: 'Amadeus', data: [37.6, 27.8, 20.5, 16.6], backgroundColor: '#1A73E8', borderRadius: 3 },
+        { label: 'Sabre', data: [14.0, 12.5, -9.2, 2.3], backgroundColor: '#D4770B', borderRadius: 3 },
+        { label: 'Travelport (est.)', data: [24.0, 17.0, -8.7, 4.3], backgroundColor: '#9CA3AF', borderRadius: 3 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: {
+        y: { ticks: { callback: v => v + '%' }, grid: { color: '#E5E7EB' } },
+        x: { grid: { display: false } }
+      },
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 16, usePointStyle: true, pointStyle: 'circle' } },
+        tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.raw + '%' } }
+      }
+    }
+  });
+})();
+
+// === LEVERAGE COMPARISON ===
+(function() {
+  const ctx = document.getElementById('leverageCompare');
+  if (!ctx) return;
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Net Debt / EBITDA', 'Interest Coverage (EBIT/Int)'],
+      datasets: [
+        { label: 'Amadeus', data: [0.9, 22.8], backgroundColor: '#1A73E8', borderRadius: 3 },
+        { label: 'Sabre', data: [9.4, 0.8], backgroundColor: '#D4770B', borderRadius: 3 },
+        { label: 'Travelport (est.)', data: [8.4, 1.0], backgroundColor: '#9CA3AF', borderRadius: 3 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: {
+        y: { ticks: { callback: v => v + 'x' }, grid: { color: '#E5E7EB' } },
+        x: { grid: { display: false } }
+      },
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 16, usePointStyle: true, pointStyle: 'circle' } },
+        tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.raw + 'x' } }
       }
     }
   });
