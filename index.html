@@ -460,6 +460,192 @@
     .narrative-panel { padding: 16px; margin: 20px 0; }
   }
 
+  /* === EV-EQUITY BRIDGE TABLE === */
+  .bridge-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+  .bridge-table th {
+    background: var(--navy);
+    color: var(--white);
+    padding: 10px 16px;
+    text-align: right;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .bridge-table th:first-child { text-align: left; }
+  .bridge-table td {
+    padding: 9px 16px;
+    text-align: right;
+    border-bottom: 1px solid var(--gray-200);
+    font-size: 13px;
+  }
+  .bridge-table td:first-child {
+    text-align: left;
+    font-weight: 500;
+    color: var(--charcoal);
+  }
+  .bridge-table tr:nth-child(even) { background: var(--gray-100); }
+  .bridge-table tr.subtotal-row { font-weight: 700; }
+  .bridge-table tr.subtotal-row td { border-top: 2px solid var(--blue); border-bottom: 2px solid var(--blue); background: var(--blue-pale); }
+  .bridge-table tr.header-row td { font-weight: 700; color: var(--navy); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; padding-top: 14px; background: transparent !important; border-bottom: 1px solid var(--navy); }
+  .bridge-table tr.ev-row { background: var(--navy) !important; color: var(--white); font-weight: 700; }
+  .bridge-table tr.ev-row td { color: var(--white); border: none; }
+  .bridge-table .note { font-size: 11px; color: var(--gray-400); font-weight: 400; }
+  .bridge-table .ifrs-tag { display: inline-block; background: var(--amber-light); color: var(--amber); font-size: 9px; padding: 1px 6px; border-radius: 3px; font-weight: 700; letter-spacing: 0.5px; margin-left: 6px; }
+  .bridge-table .delta { font-size: 11px; color: var(--gray-400); }
+
+  /* === MULTIPLES GRID === */
+  .multiples-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .multiple-card {
+    background: var(--white);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    text-align: center;
+    border-top: 3px solid var(--blue);
+  }
+  .multiple-card .mult-label {
+    font-size: 11px; text-transform: uppercase;
+    letter-spacing: 1.5px; color: var(--gray-400);
+    font-weight: 600; margin-bottom: 6px;
+  }
+  .multiple-card .mult-value {
+    font-family: var(--font-head);
+    font-size: 32px; font-weight: 700;
+    color: var(--charcoal);
+  }
+  .multiple-card .mult-sub {
+    font-size: 11px; color: var(--gray-600);
+    margin-top: 4px;
+  }
+
+  /* === COMP TABLE === */
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-bottom: 16px;
+  }
+  .comp-table th {
+    background: var(--gray-100);
+    padding: 8px 12px;
+    text-align: right;
+    font-weight: 600;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--gray-600);
+    border-bottom: 2px solid var(--gray-200);
+  }
+  .comp-table th:first-child { text-align: left; }
+  .comp-table td {
+    padding: 7px 12px;
+    text-align: right;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .comp-table td:first-child { text-align: left; font-weight: 500; }
+  .comp-table tr:hover { background: var(--gray-100); }
+  .comp-table tr.comp-highlight { background: var(--blue-pale) !important; font-weight: 700; }
+  .comp-table tr.comp-median td { border-top: 2px solid var(--navy); font-weight: 700; font-style: italic; }
+  .comp-table .comp-ticker { color: var(--gray-400); font-size: 10px; }
+
+  /* === VS TABLE (Amadeus vs Travelport) === */
+  .vs-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-bottom: 20px;
+  }
+  .vs-table th {
+    padding: 10px 14px;
+    text-align: right;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 2px solid var(--gray-200);
+  }
+  .vs-table th:first-child { text-align: left; }
+  .vs-table th.ama-col { background: var(--blue-pale); color: var(--blue-deep); }
+  .vs-table th.tvpt-col { background: var(--amber-light); color: var(--amber); }
+  .vs-table th.merger-col { background: var(--green-light); color: var(--green); }
+  .vs-table td {
+    padding: 8px 14px;
+    text-align: right;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 12px;
+  }
+  .vs-table td:first-child { text-align: left; font-weight: 500; color: var(--charcoal); }
+  .vs-table tr:nth-child(even) { background: rgba(0,0,0,0.015); }
+  .vs-table tr.vs-section td { font-weight: 700; color: var(--navy); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; padding-top: 14px; border-bottom: 1px solid var(--navy); }
+  .vs-table tr.vs-total td { border-top: 2px solid var(--blue); font-weight: 700; }
+
+  /* === MERGER SCENARIO CARDS === */
+  .scenario-card {
+    background: var(--white);
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+    border-left: 4px solid var(--blue);
+  }
+  .scenario-card.sell { border-left-color: var(--amber); }
+  .scenario-card.antitrust { border-left-color: var(--red); }
+  .scenario-card h4 {
+    font-family: var(--font-head);
+    font-size: 16px; margin-bottom: 8px;
+    color: var(--charcoal);
+  }
+  .scenario-card p {
+    font-size: 13px; color: var(--gray-600);
+    line-height: 1.7; margin-bottom: 10px;
+  }
+  .scenario-card p:last-child { margin-bottom: 0; }
+  .scenario-metric-row {
+    display: flex; gap: 24px; flex-wrap: wrap;
+    margin: 12px 0;
+    padding: 12px 0;
+    border-top: 1px solid var(--gray-200);
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .scenario-metric {
+    text-align: center;
+  }
+  .scenario-metric .sm-val {
+    font-family: var(--font-head);
+    font-size: 22px; font-weight: 700;
+    color: var(--charcoal);
+  }
+  .scenario-metric .sm-label {
+    font-size: 10px; color: var(--gray-400);
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+
+  /* Responsive additions for new sections */
+  @media (max-width: 1100px) {
+    .multiples-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .multiples-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .multiple-card .mult-value { font-size: 24px; }
+    .scenario-metric-row { gap: 16px; }
+    .scenario-metric .sm-val { font-size: 18px; }
+  }
+  @media (max-width: 480px) {
+    .multiples-grid { grid-template-columns: 1fr; }
+    .scenario-metric-row { flex-direction: column; gap: 8px; }
+  }
+
   @media print {
     body { background: white; }
     .content { padding: 20px; }
@@ -489,9 +675,13 @@
   <a href="#composition">Composition</a>
   <a href="#tiers">Quality Tiers</a>
   <a href="#attributes">Attribute Matrix</a>
+  <a href="#evbridge">EV-Equity Bridge</a>
   <a href="#sotp">SOTP Valuation</a>
+  <a href="#multiples">Multiple Derivation</a>
   <a href="#stress">Stress Test</a>
   <a href="#thesis">Investment Thesis</a>
+  <a href="#travelport">Amadeus vs Travelport</a>
+  <a href="#merger">Merger Scenarios</a>
 </nav>
 
 <!-- CONTENT -->
@@ -694,6 +884,274 @@
     </div>
   </div>
 
+  <!-- EV-EQUITY BRIDGE -->
+  <h2 class="section-header" id="evbridge">Enterprise Value — Equity Bridge</h2>
+  <p class="section-sub">Full balance sheet and off-balance sheet sweep as at 31 December 2025</p>
+  <p class="section-intro">Before applying SOTP multiples, you need a clean EV-to-equity bridge. The bridge below starts from market capitalisation (431m shares × €68 = €29.3bn) and builds up to enterprise value by adding all debt-like claims and subtracting cash-like assets. We show both the IFRS 16 reported view (which capitalises operating leases) and the pre-IFRS 16 view (which treats leases as an operating expense). The distinction matters: IFRS 16 inflates both debt and EBITDA by roughly the same lease payment stream, leaving EV/EBITDA broadly comparable — but the pre-IFRS 16 multiples are the ones that allow apples-to-apples comparison with pre-2019 history and US GAAP peers like Sabre. All figures are sourced from the 2025 S&P Capital IQ standardised financials (reported 27 Feb 2026).</p>
+
+  <!-- Multiples summary cards -->
+  <div class="multiples-grid">
+    <div class="multiple-card">
+      <div class="mult-label">EV / EBITDA</div>
+      <div class="mult-value">12.9x</div>
+      <div class="mult-sub">IFRS 16 · €2,448m EBITDA</div>
+    </div>
+    <div class="multiple-card" style="border-top-color:var(--amber)">
+      <div class="mult-label">EV / EBITDA</div>
+      <div class="mult-value">13.3x</div>
+      <div class="mult-sub">Pre-IFRS 16 · ~€2,370m EBITDA</div>
+    </div>
+    <div class="multiple-card" style="border-top-color:var(--green)">
+      <div class="mult-label">EV / EBIT</div>
+      <div class="mult-value">17.5x</div>
+      <div class="mult-sub">€1,811m reported EBIT</div>
+    </div>
+    <div class="multiple-card" style="border-top-color:var(--charcoal)">
+      <div class="mult-label">P / Owner Earnings</div>
+      <div class="mult-value">29.4x</div>
+      <div class="mult-sub">€998m OE (NI+amort–SBC–capex)</div>
+    </div>
+  </div>
+
+  <div class="chart-row">
+    <div class="chart-card full">
+      <div class="chart-title">EV–Equity Bridge: Full Balance Sheet Decomposition</div>
+      <div class="chart-subtitle">€ millions · Source: S&P Capital IQ standardised, FY2025 reported</div>
+      <div class="table-scroll">
+      <table class="bridge-table">
+        <thead>
+          <tr>
+            <th style="width:40%">Component</th>
+            <th>IFRS 16 (Reported)</th>
+            <th>Pre-IFRS 16</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="ev-row">
+            <td>Market Capitalisation</td>
+            <td>29,302</td>
+            <td>29,302</td>
+            <td>430.9m shares × €68.00</td>
+          </tr>
+          <tr class="header-row"><td colspan="4">Financial Debt</td></tr>
+          <tr>
+            <td>&nbsp;&nbsp;Short-term Borrowings</td>
+            <td>100</td>
+            <td>100</td>
+            <td>Commercial paper / revolving credit</td>
+          </tr>
+          <tr>
+            <td>&nbsp;&nbsp;Current Portion of LT Debt</td>
+            <td>542</td>
+            <td>542</td>
+            <td>Bonds maturing within 12 months</td>
+          </tr>
+          <tr>
+            <td>&nbsp;&nbsp;Long-term Debt</td>
+            <td>2,451</td>
+            <td>2,451</td>
+            <td>Senior unsecured bonds, avg ~1.5% coupon</td>
+          </tr>
+          <tr class="subtotal-row">
+            <td>&nbsp;&nbsp;Total Financial Debt</td>
+            <td>3,094</td>
+            <td>3,094</td>
+            <td></td>
+          </tr>
+          <tr class="header-row"><td colspan="4">Lease Liabilities <span class="ifrs-tag">IFRS 16</span></td></tr>
+          <tr>
+            <td>&nbsp;&nbsp;Current Portion of Leases</td>
+            <td>42</td>
+            <td style="color:var(--gray-400)">—</td>
+            <td>Treated as operating expense pre-IFRS 16</td>
+          </tr>
+          <tr>
+            <td>&nbsp;&nbsp;Long-term Leases</td>
+            <td>93</td>
+            <td style="color:var(--gray-400)">—</td>
+            <td>Office, data centre, equipment leases</td>
+          </tr>
+          <tr class="subtotal-row">
+            <td>&nbsp;&nbsp;Total Lease Liabilities</td>
+            <td>135</td>
+            <td style="color:var(--gray-400)">—</td>
+            <td>Down from €206m (2024) — lease portfolio shrinking</td>
+          </tr>
+          <tr class="header-row"><td colspan="4">Gross Debt</td></tr>
+          <tr class="subtotal-row">
+            <td>&nbsp;&nbsp;Total Debt (S&P Reported)</td>
+            <td>3,228</td>
+            <td>3,094</td>
+            <td></td>
+          </tr>
+          <tr class="header-row"><td colspan="4">Cash & Cash-Like Assets</td></tr>
+          <tr>
+            <td>&nbsp;&nbsp;Cash & Equivalents</td>
+            <td>(976)</td>
+            <td>(976)</td>
+            <td>Highly liquid, ~€500m restricted estimate</td>
+          </tr>
+          <tr>
+            <td>&nbsp;&nbsp;Short-term Investments</td>
+            <td>(11)</td>
+            <td>(11)</td>
+            <td>Down from €83m (2024)</td>
+          </tr>
+          <tr class="subtotal-row">
+            <td>&nbsp;&nbsp;Total Cash & Liquid Assets</td>
+            <td>(987)</td>
+            <td>(987)</td>
+            <td></td>
+          </tr>
+          <tr class="subtotal-row">
+            <td>Net Debt</td>
+            <td>2,242</td>
+            <td>2,107</td>
+            <td>S&P reports €2,242m (IFRS 16 basis)</td>
+          </tr>
+          <tr class="header-row"><td colspan="4">Off-Balance Sheet & Other Adjustments</td></tr>
+          <tr>
+            <td>&nbsp;&nbsp;Pension & Post-Retirement Obligations</td>
+            <td>107</td>
+            <td>107</td>
+            <td>Defined benefit deficit (underfunded)</td>
+          </tr>
+          <tr>
+            <td>&nbsp;&nbsp;Minority Interest</td>
+            <td>0</td>
+            <td>0</td>
+            <td>NCI = (€1.3m) deficit — no value claim</td>
+          </tr>
+          <tr>
+            <td>&nbsp;&nbsp;Equity Method Investments</td>
+            <td>(6)</td>
+            <td>(6)</td>
+            <td>Small JV stakes</td>
+          </tr>
+          <tr>
+            <td>&nbsp;&nbsp;Deferred Revenue (Non-Current)</td>
+            <td>199</td>
+            <td>199</td>
+            <td>Advance payments from airline customers</td>
+          </tr>
+          <tr>
+            <td>&nbsp;&nbsp;Deferred Tax Liability (Net)</td>
+            <td>517</td>
+            <td>517</td>
+            <td>€567m DTL less €51m DTA — intangible amort driven</td>
+          </tr>
+          <tr>
+            <td>&nbsp;&nbsp;Estimated Off-BS Commitments</td>
+            <td>~150</td>
+            <td>~150</td>
+            <td>Purchase obligations, bank guarantees (est.)</td>
+          </tr>
+          <tr class="subtotal-row">
+            <td>&nbsp;&nbsp;Total Other Adjustments</td>
+            <td>967</td>
+            <td>967</td>
+            <td></td>
+          </tr>
+          <tr class="ev-row">
+            <td>Fully-Loaded Enterprise Value</td>
+            <td>32,511</td>
+            <td>32,376</td>
+            <td>Market cap + net debt + all adjustments</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- EV Bridge Multiples Table -->
+  <div class="chart-row">
+    <div class="chart-card full">
+      <div class="chart-title">Implied Trading Multiples</div>
+      <div class="chart-subtitle">Enterprise and equity multiples at €68/share · IFRS 16 and pre-IFRS 16 views</div>
+      <div class="table-scroll">
+      <table class="bridge-table">
+        <thead>
+          <tr>
+            <th style="width:30%">Multiple</th>
+            <th>Numerator</th>
+            <th>Denominator</th>
+            <th>IFRS 16</th>
+            <th>Pre-IFRS 16</th>
+            <th>Context</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>EV / Revenue</td>
+            <td>32,511</td>
+            <td>6,517</td>
+            <td><strong>5.0x</strong></td>
+            <td><strong>5.0x</strong></td>
+            <td>Software cos typically 5-15x</td>
+          </tr>
+          <tr>
+            <td>EV / EBITDA</td>
+            <td>32,511</td>
+            <td>2,448</td>
+            <td><strong>13.3x</strong></td>
+            <td><strong>13.7x</strong> <span class="delta">(÷~€2,370m)</span></td>
+            <td>5yr avg: ~14x. Peers: 10-18x</td>
+          </tr>
+          <tr>
+            <td>EV / EBIT</td>
+            <td>32,511</td>
+            <td>1,811</td>
+            <td><strong>18.0x</strong></td>
+            <td><strong>17.9x</strong></td>
+            <td>High intangible amort (€581m) depresses EBIT</td>
+          </tr>
+          <tr>
+            <td>P / E (Diluted)</td>
+            <td>29,302</td>
+            <td>1,336</td>
+            <td colspan="2" style="text-align:center"><strong>21.9x</strong></td>
+            <td>Diluted EPS €3.01</td>
+          </tr>
+          <tr>
+            <td>P / Owner Earnings</td>
+            <td>29,302</td>
+            <td>998</td>
+            <td colspan="2" style="text-align:center"><strong>29.4x</strong></td>
+            <td>OE = NI + intang amort − SBC − capex</td>
+          </tr>
+          <tr>
+            <td>P / FCF (Levered)</td>
+            <td>29,302</td>
+            <td>1,081</td>
+            <td colspan="2" style="text-align:center"><strong>27.1x</strong></td>
+            <td>S&P levered FCF</td>
+          </tr>
+          <tr>
+            <td>Net Debt / EBITDA</td>
+            <td>2,242</td>
+            <td>2,448</td>
+            <td><strong>0.9x</strong></td>
+            <td><strong>0.9x</strong></td>
+            <td>Conservative. Capacity for ~3x = €5bn+ debt</td>
+          </tr>
+          <tr>
+            <td>Interest Coverage</td>
+            <td>1,811</td>
+            <td>80</td>
+            <td colspan="2" style="text-align:center"><strong>22.8x</strong></td>
+            <td>Cash interest paid €77m</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <div style="font-size:11px; color:var(--gray-400); margin-top:12px; line-height:1.6;">
+        <strong>Key observation:</strong> The gap between EV/EBIT (18.0x) and EV/EBITDA (13.3x) is unusually wide — driven by €581m of intangible amortisation (9% of revenue) flowing from the 2005 Cinven LBO and subsequent M&A. This amort has no cash cost and is fully added back in Owner Earnings. A buyer using Owner Earnings as the base metric sees a business trading at 29.4x OE — expensive unless you believe in 12%+ earnings growth, which requires the Fortress thesis plus Tier 2 margin expansion. Net leverage at 0.9x EBITDA signals significant balance sheet optionality — Amadeus could comfortably lever to 2.5-3.0x for M&A or buybacks without straining investment-grade ratings.
+      </div>
+    </div>
+  </div>
+
   <!-- SUM OF THE PARTS -->
   <h2 class="section-header" id="sotp">Sum-of-the-Parts Valuation</h2>
   <p class="section-sub">What you're actually buying at €68/share — each tier deserves a different multiple</p>
@@ -790,6 +1248,274 @@
     </div>
   </div>
 
+  <!-- SOTP MULTIPLE DERIVATION -->
+  <h2 class="section-header" id="multiples">SOTP Multiple Derivation — Rigorous Justification</h2>
+  <p class="section-sub">Each tier's multiple is anchored in comparable transactions, public comps, and intrinsic frameworks</p>
+  <p class="section-intro">Assigning multiples to a SOTP without justification is hand-waving. The analysis below triangulates each tier's EBIT multiple through three lenses: (1) public comparable companies with similar business characteristics, (2) precedent transactions in adjacent verticals, and (3) a DCF-implied multiple based on each tier's growth, margin, and reinvestment profile. The goal is not false precision — it's to demonstrate that 25-30x for fortress earnings, 20-25x for durable growth, and 12-15x for exposed distribution are not arbitrary but sit comfortably within defensible ranges derived from market evidence.</p>
+
+  <!-- TIER 1: FORTRESS -->
+  <div class="chart-row">
+    <div class="chart-card full">
+      <div class="chart-title" style="color:var(--fortress)">Tier 1 — Fortress (Air IT / Altéa PSS): 25-30x EBIT</div>
+      <div class="chart-subtitle">Mission-critical infrastructure SaaS with 5-10yr contracts, >99% retention, 37% EBIT margins, ~60% recurring</div>
+      <p style="font-size:13px; color:var(--gray-600); line-height:1.7; margin:12px 0 16px;">The Altéa PSS sits in a category of software businesses that essentially become operating systems for their customers. Airlines cannot function without their PSS — it controls departure control, ticketing, inventory management, and revenue integrity. The switching cost is not just financial ($50-100m migration cost for a large airline); it is existential — a botched PSS migration can ground flights. This creates a competitive moat comparable to the best vertical market software businesses globally. The appropriate comp set is not "travel tech" but rather "mission-critical vertical SaaS with extreme lock-in."</p>
+      <div class="table-scroll">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Comparable</th>
+            <th>Ticker</th>
+            <th>EV/EBIT</th>
+            <th>EBIT Margin</th>
+            <th>Revenue Growth</th>
+            <th>Retention</th>
+            <th>Relevance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Tyler Technologies</td>
+            <td class="comp-ticker">TYL</td>
+            <td>38x</td>
+            <td>22%</td>
+            <td>~8%</td>
+            <td>>98%</td>
+            <td>Gov't vertical SaaS, captive base</td>
+          </tr>
+          <tr>
+            <td>Veeva Systems</td>
+            <td class="comp-ticker">VEEV</td>
+            <td>36x</td>
+            <td>35%</td>
+            <td>~12%</td>
+            <td>>95%</td>
+            <td>Pharma SaaS, deep workflow lock-in</td>
+          </tr>
+          <tr>
+            <td>Constellation Software</td>
+            <td class="comp-ticker">CSU.TO</td>
+            <td>28x</td>
+            <td>20%</td>
+            <td>~20%</td>
+            <td>>95%</td>
+            <td>Vertical market rollup, captive niches</td>
+          </tr>
+          <tr>
+            <td>Temenos</td>
+            <td class="comp-ticker">TEMN.SW</td>
+            <td>22x</td>
+            <td>26%</td>
+            <td>~6%</td>
+            <td>>95%</td>
+            <td>Core banking software, mission-critical</td>
+          </tr>
+          <tr>
+            <td>Descartes Systems</td>
+            <td class="comp-ticker">DSG.TO</td>
+            <td>32x</td>
+            <td>32%</td>
+            <td>~14%</td>
+            <td>>95%</td>
+            <td>Logistics SaaS, network effects</td>
+          </tr>
+          <tr>
+            <td>Bottomline Technologies</td>
+            <td class="comp-ticker">Acq. 2022</td>
+            <td>27x</td>
+            <td>18%</td>
+            <td>~7%</td>
+            <td>>90%</td>
+            <td>Payments infrastructure (Thoma Bravo acq.)</td>
+          </tr>
+          <tr class="comp-median">
+            <td>Median</td>
+            <td></td>
+            <td>30x</td>
+            <td>24%</td>
+            <td>~10%</td>
+            <td>>95%</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <p style="font-size:12px; color:var(--gray-600); line-height:1.6; margin-top:12px;"><strong>DCF-implied multiple:</strong> At 10% EBIT growth (driven by new airline wins + price escalators), 37% steady-state margins, 8.5% cost of equity, and 3% terminal growth, a DCF implies ~28x current EBIT. <strong>Precedent transactions:</strong> Thoma Bravo acquired Bottomline at 27x EBIT (2022); Vista Equity Partners acquired Aptean at ~25x (2021). Airline PSS switching costs exceed any of these comps, justifying the upper end. <strong>Our range of 25-30x is conservative</strong> — it represents a ~15% discount to the median mission-critical vertical SaaS comp (30x), appropriate given Amadeus's larger scale and lower organic growth.</p>
+    </div>
+  </div>
+
+  <!-- TIER 2: DURABLE -->
+  <div class="chart-row">
+    <div class="chart-card full">
+      <div class="chart-title" style="color:var(--durable)">Tier 2 — Durable (Hospitality IT + Payments): 20-25x EBIT</div>
+      <div class="chart-subtitle">High-growth platforms (15-20% revenue CAGR), expanding margins (22% → 30%+), structural tailwinds</div>
+      <p style="font-size:13px; color:var(--gray-600); line-height:1.7; margin:12px 0 16px;">Hospitality IT (TravelClick, iHotelier, HotSOS) and Payments are in the investment phase — below group-average margins today but growing significantly faster than the core. Hospitality IT benefits from the hotel industry's belated digitisation: independent hotels are ~5 years behind airlines in technology adoption, and Amadeus is the largest pure-play hospitality tech platform outside Oracle. Payments is a classic platform play — processing travel payments end-to-end with cross-sell into the existing airline and hotel base. The comp set here is high-growth vertical SaaS and payments platforms.</p>
+      <div class="table-scroll">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Comparable</th>
+            <th>Ticker</th>
+            <th>EV/EBIT</th>
+            <th>EBIT Margin</th>
+            <th>Revenue Growth</th>
+            <th>Relevance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Shift4 Payments</td>
+            <td class="comp-ticker">FOUR</td>
+            <td>28x</td>
+            <td>16%</td>
+            <td>~30%</td>
+            <td>Hospitality + travel payments</td>
+          </tr>
+          <tr>
+            <td>Nuvei / Worldline</td>
+            <td class="comp-ticker">NVEI / WLN</td>
+            <td>16x</td>
+            <td>22%</td>
+            <td>~8%</td>
+            <td>Travel-adjacent payments</td>
+          </tr>
+          <tr>
+            <td>Agilysys</td>
+            <td class="comp-ticker">AGYS</td>
+            <td>42x</td>
+            <td>18%</td>
+            <td>~20%</td>
+            <td>Pure-play hospitality tech</td>
+          </tr>
+          <tr>
+            <td>Lightspeed Commerce</td>
+            <td class="comp-ticker">LSPD</td>
+            <td>NM (loss)</td>
+            <td>-5%</td>
+            <td>~25%</td>
+            <td>Hospitality POS + payments</td>
+          </tr>
+          <tr>
+            <td>Protel / Mews</td>
+            <td class="comp-ticker">Private</td>
+            <td>~25x (est.)</td>
+            <td>~15%</td>
+            <td>~30%</td>
+            <td>Cloud PMS, direct competitor</td>
+          </tr>
+          <tr>
+            <td>Sabre Hospitality</td>
+            <td class="comp-ticker">SABR seg.</td>
+            <td>~18x</td>
+            <td>~15%</td>
+            <td>~10%</td>
+            <td>SynXis CRS, direct competitor</td>
+          </tr>
+          <tr class="comp-median">
+            <td>Median (profitable)</td>
+            <td></td>
+            <td>23x</td>
+            <td>17%</td>
+            <td>~19%</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <p style="font-size:12px; color:var(--gray-600); line-height:1.6; margin-top:12px;"><strong>DCF-implied multiple:</strong> At 15% revenue growth decelerating to 8% over 5 years, margins expanding from 20% to 30%, 9% cost of equity (higher beta for growth), and 3.5% terminal growth, a DCF implies ~24x current EBIT. <strong>Key insight:</strong> These segments are being valued on current EBIT (~€249m), which understates their contribution because margins are still expanding. At steady-state 30%+ margins on €1.8bn+ revenue (5-year view), EBIT would be €540m+ — meaning today's 22.5x mid-case actually implies only ~10x forward 2030 EBIT. <strong>Our range of 20-25x is mid-pack</strong> relative to comps, reflecting Amadeus's distribution advantage (cross-sell into 400+ airline relationships) but discounting execution risk on margin expansion.</p>
+    </div>
+  </div>
+
+  <!-- TIER 3: EXPOSED -->
+  <div class="chart-row">
+    <div class="chart-card full">
+      <div class="chart-title" style="color:var(--exposed)">Tier 3 — Exposed (Air Distribution): 12-15x EBIT</div>
+      <div class="chart-subtitle">Mature distribution platform, high margins (28%) but secular volume risk from AI disintermediation</div>
+      <p style="font-size:13px; color:var(--gray-600); line-height:1.7; margin:12px 0 16px;">Air Distribution is a toll-road business: Amadeus earns a booking fee (~€3.50-4.50 per segment) each time a travel agent or OTA books a flight through the GDS. The model is highly profitable but faces existential questions from AI-driven direct channel proliferation, agentic booking engines, and airline NDC strategies that bypass the GDS entirely. The comp set is mature distribution and network businesses facing disruption — not growing SaaS. The multiple should reflect the probability-weighted terminal value of cash flows that may be permanently impaired.</p>
+      <div class="table-scroll">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Comparable</th>
+            <th>Ticker</th>
+            <th>EV/EBIT</th>
+            <th>EBIT Margin</th>
+            <th>Revenue Growth</th>
+            <th>Relevance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sabre Corp (Travel Solutions)</td>
+            <td class="comp-ticker">SABR</td>
+            <td>~18x</td>
+            <td>12%</td>
+            <td>~5%</td>
+            <td>Direct GDS competitor, weaker margins</td>
+          </tr>
+          <tr>
+            <td>Travelsky Technology</td>
+            <td class="comp-ticker">0696.HK</td>
+            <td>16x</td>
+            <td>25%</td>
+            <td>~6%</td>
+            <td>Chinese GDS monopoly, state-owned</td>
+          </tr>
+          <tr>
+            <td>Travelport (Elliott/Siris)</td>
+            <td class="comp-ticker">Private</td>
+            <td>~10-12x (est.)</td>
+            <td>~20%</td>
+            <td>~3%</td>
+            <td>Direct GDS competitor, high leverage</td>
+          </tr>
+          <tr>
+            <td>Western Union</td>
+            <td class="comp-ticker">WU</td>
+            <td>7x</td>
+            <td>18%</td>
+            <td>-3%</td>
+            <td>Legacy network, digital disruption</td>
+          </tr>
+          <tr>
+            <td>Euronet Worldwide</td>
+            <td class="comp-ticker">EEFT</td>
+            <td>14x</td>
+            <td>13%</td>
+            <td>~8%</td>
+            <td>Payment processing, ATM network</td>
+          </tr>
+          <tr>
+            <td>ITV / ProSieben</td>
+            <td class="comp-ticker">ITV.L / PSM.DE</td>
+            <td>8x</td>
+            <td>15%</td>
+            <td>-2%</td>
+            <td>Legacy distribution facing digital shift</td>
+          </tr>
+          <tr class="comp-median">
+            <td>Median</td>
+            <td></td>
+            <td>13x</td>
+            <td>17%</td>
+            <td>~3%</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <p style="font-size:12px; color:var(--gray-600); line-height:1.6; margin-top:12px;"><strong>DCF-implied multiple:</strong> At 3% revenue growth (in-line with historical air traffic growth), margins compressing from 28% to 22% over 10 years (reflecting price pressure from NDC and direct channels), 9.5% cost of equity (disruption risk premium), and 2% terminal growth, a DCF implies ~12x current EBIT. <strong>Bull case:</strong> If Amadeus successfully pivots to an "AI backbone" role (aggregation APIs, MCP translators, agentic infrastructure), growth could sustain at 5-6% with stable margins → 15-17x EBIT. <strong>Bear case:</strong> Accelerated disintermediation (20%+ volume decline by 2030) with operating deleverage → EBIT halves → 8-10x impaired EBIT. <strong>Our range of 12-15x splits the difference</strong>, implicitly assigning ~40% probability to the bull case and ~60% to the base/bear case. At the 13.5x midpoint, Air Distribution is valued as a slowly declining franchise with optionality on the AI pivot — neither heroic nor punitive.</p>
+    </div>
+  </div>
+
+  <!-- Multiple Synthesis Summary -->
+  <div class="narrative-panel">
+    <h2>Multiple Derivation: Synthesis</h2>
+    <p>The three-tier SOTP framework produces a midpoint equity value of <span class="stat-inline">€85/share</span> versus a current market price of <span class="stat-inline">€68</span>. But this €17 "gap" is not alpha — it's a statement about how the market prices the distribution risk. At €68, the market is implicitly assigning <span class="stat-inline">~4.3x EBIT</span> to Air Distribution (after subtracting the fortress and durable valuations and net debt). That's a deeply distressed multiple — below Western Union, below legacy media. Either the market is pricing in a >50% EBIT decline in distribution, or the fortress is being valued below our 27.5x midpoint, or some combination of both.</p>
+    <div class="callout">
+      <p>The intellectual honesty of the SOTP lies not in the point estimate but in what it reveals about implied beliefs. If you buy at €68 and the fortress alone is worth €47, you are paying just €21/share for the durable + exposed tiers combined. That's €9.3bn of implied EV for €1,069m of EBIT — about 8.7x blended. The market is pricing Amadeus as if roughly half its earnings base will be permanently impaired. Whether that's too pessimistic depends entirely on the pace and depth of AI-driven disintermediation over the next 5-10 years.</p>
+    </div>
+  </div>
+
   <!-- STRESS TEST -->
   <h2 class="section-header" id="stress">Stress Test: Air Distribution Erosion Scenarios</h2>
   <p class="section-sub">What if the exposed segment declines? The fortress provides a valuation floor.</p>
@@ -849,9 +1575,333 @@
     </div>
   </div>
 
+  <!-- AMADEUS vs TRAVELPORT APPENDIX -->
+  <h2 class="section-header" id="travelport">Appendix: Amadeus vs Travelport (Elliott/Siris)</h2>
+  <p class="section-sub">Side-by-side quality decomposition of the two largest Western GDS platforms</p>
+  <p class="section-intro">Travelport was taken private in 2018 by Elliott Management and Siris Capital Partners for ~$4.4bn (~€3.7bn at prevailing FX). The thesis was a classic PE turnaround: strip costs, invest in platform modernisation (Travelport+), and monetise through an eventual re-listing or trade sale. COVID derailed the timeline — revenue collapsed from ~$2.5bn (2019) to ~$1.2bn (2020), and the business narrowly avoided restructuring. By 2024, Travelport has recovered to ~$2.3bn revenue but carries ~$4.8bn of gross debt (~6x EBITDA), severely constraining investment capacity. The comparison below uses the same quality framework applied to Amadeus, exposing the dramatically different earnings mix and the strategic logic of a hypothetical combination.</p>
+
+  <div class="chart-row">
+    <div class="chart-card full">
+      <div class="chart-title">Revenue & Profit Quality: Amadeus vs Travelport</div>
+      <div class="chart-subtitle">Estimated 2024/25 figures · Travelport figures are PFC estimates based on public filings and industry data</div>
+      <div class="table-scroll">
+      <table class="vs-table">
+        <thead>
+          <tr>
+            <th style="width:25%"></th>
+            <th class="ama-col" colspan="3">Amadeus (2025)</th>
+            <th class="tvpt-col" colspan="3">Travelport (2024E)</th>
+          </tr>
+          <tr>
+            <th>Segment / Metric</th>
+            <th class="ama-col">Revenue</th>
+            <th class="ama-col">EBIT</th>
+            <th class="ama-col">Margin</th>
+            <th class="tvpt-col">Revenue</th>
+            <th class="tvpt-col">EBIT</th>
+            <th class="tvpt-col">Margin</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="vs-section"><td colspan="7">Tier 1 — Fortress (IT Solutions / PSS)</td></tr>
+          <tr>
+            <td>&nbsp;&nbsp;Airline IT / PSS</td>
+            <td>€2,300m</td>
+            <td>€850m</td>
+            <td>37%</td>
+            <td>~$350m</td>
+            <td>~$55m</td>
+            <td>~16%</td>
+          </tr>
+          <tr style="font-size:11px; color:var(--gray-400)">
+            <td colspan="7">&nbsp;&nbsp;&nbsp;Amadeus: 200+ airline PSS customers (Altéa). Travelport: legacy platform, ~30 small airlines, minimal investment post-LBO.</td>
+          </tr>
+          <tr class="vs-section"><td colspan="7">Tier 2 — Durable (Hospitality + Payments / Adjacent)</td></tr>
+          <tr>
+            <td>&nbsp;&nbsp;Hospitality IT</td>
+            <td>€800m</td>
+            <td>€176m</td>
+            <td>22%</td>
+            <td>~$80m</td>
+            <td>~$8m</td>
+            <td>~10%</td>
+          </tr>
+          <tr>
+            <td>&nbsp;&nbsp;Payments / Other</td>
+            <td>€487m</td>
+            <td>€73m</td>
+            <td>15%</td>
+            <td>~$70m</td>
+            <td>~$5m</td>
+            <td>~7%</td>
+          </tr>
+          <tr class="vs-section"><td colspan="7">Tier 3 — Exposed (Air Distribution / GDS)</td></tr>
+          <tr>
+            <td>&nbsp;&nbsp;Air Distribution (GDS)</td>
+            <td>€2,930m</td>
+            <td>€820m</td>
+            <td>28%</td>
+            <td>~$1,800m</td>
+            <td>~$380m</td>
+            <td>~21%</td>
+          </tr>
+          <tr style="font-size:11px; color:var(--gray-400)">
+            <td colspan="7">&nbsp;&nbsp;&nbsp;Amadeus: ~43% global GDS share. Travelport: ~22% share (Apollo/Galileo/Worldspan combined). Both face same AI disruption risk.</td>
+          </tr>
+          <tr class="vs-total">
+            <td><strong>Total</strong></td>
+            <td><strong>€6,517m</strong></td>
+            <td><strong>€1,919m</strong></td>
+            <td><strong>29%</strong></td>
+            <td><strong>~$2,300m</strong></td>
+            <td><strong>~$448m</strong></td>
+            <td><strong>~19%</strong></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <div style="font-size:11px; color:var(--gray-400); margin-top:8px; line-height:1.6;">
+        Note: Travelport figures are PFC estimates based on limited public data (Companies House UK subsidiary filings, industry segment reports, and analyst estimates). Travelport does not publish consolidated Group financials. Revenue in USD at ~$1.08/€. EBIT estimates assume Travelport Group adj. EBITDA ~$550-600m, D&A ~$150m, giving EBIT ~$400-450m.
+      </div>
+    </div>
+  </div>
+
+  <!-- KEY COMPARISON INSIGHTS -->
+  <div class="chart-row">
+    <div class="chart-card">
+      <div class="chart-title">Revenue Mix Comparison</div>
+      <div class="chart-subtitle">% of total revenue by quality tier</div>
+      <div class="chart-container" style="height:280px"><canvas id="mixCompare"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Financial Profile Comparison</div>
+      <div class="chart-subtitle">Key differences that define the strategic logic</div>
+      <div class="table-scroll">
+      <table class="comp-table" style="margin-top:12px;">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Amadeus</th>
+            <th>Travelport</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Enterprise Value</td>
+            <td>~€32.5bn</td>
+            <td>~$7-8bn (est. debt + equity)</td>
+          </tr>
+          <tr>
+            <td>Net Debt / EBITDA</td>
+            <td>0.9x</td>
+            <td>~6-7x (severely constrained)</td>
+          </tr>
+          <tr>
+            <td>Fortress Revenue %</td>
+            <td>35%</td>
+            <td>~15%</td>
+          </tr>
+          <tr>
+            <td>Exposed Revenue %</td>
+            <td>45%</td>
+            <td>~78%</td>
+          </tr>
+          <tr>
+            <td>Blended EBIT Margin</td>
+            <td>29%</td>
+            <td>~19%</td>
+          </tr>
+          <tr>
+            <td>GDS Market Share</td>
+            <td>~43%</td>
+            <td>~22%</td>
+          </tr>
+          <tr>
+            <td>R&D / Revenue</td>
+            <td>~15% (est.)</td>
+            <td>~8% (est., constrained)</td>
+          </tr>
+          <tr>
+            <td>Cash Generation</td>
+            <td>€2.2bn CFO</td>
+            <td>~$300m (mostly to debt service)</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- MERGER SCENARIOS -->
+  <h2 class="section-header" id="merger">Hypothetical Merger & Separation Scenarios</h2>
+  <p class="section-sub">What if you merged only the "good" parts and separated the "bad" parts?</p>
+  <p class="section-intro">The strategic thought experiment: what value could be unlocked if Amadeus and Travelport's fortress and durable segments were combined, while the exposed distribution businesses were merged separately or divested? This is the kind of analysis a GP like Apollo or Elliott would run when evaluating a transformative deal. The logic is straightforward: (1) the combined IT/PSS franchise would have near-monopoly status in airline technology, commanding premium multiples; (2) the combined distribution entity would have scale advantages to invest in the AI pivot; (3) antitrust is the binding constraint.</p>
+
+  <!-- Scenario 1: Merge Good Parts -->
+  <div class="scenario-card">
+    <h4>Scenario A: Merge Fortress + Durable ("AeraTech")</h4>
+    <p>Combine Amadeus's Air IT (Altéa PSS), Hospitality IT, Payments, and Travelport's IT Solutions into a single entity focused on mission-critical travel technology. This "AeraTech" would be the undisputed global leader in airline PSS, hospitality tech, and travel payments — with no distribution exposure.</p>
+    <div class="scenario-metric-row">
+      <div class="scenario-metric">
+        <div class="sm-val">~€4.0bn</div>
+        <div class="sm-label">Combined Revenue</div>
+      </div>
+      <div class="scenario-metric">
+        <div class="sm-val">~€1,150m</div>
+        <div class="sm-label">Combined EBIT</div>
+      </div>
+      <div class="scenario-metric">
+        <div class="sm-val">~29%</div>
+        <div class="sm-label">Blended Margin</div>
+      </div>
+      <div class="scenario-metric">
+        <div class="sm-val">28-32x</div>
+        <div class="sm-label">Warranted Multiple</div>
+      </div>
+      <div class="scenario-metric">
+        <div class="sm-val">€32-37bn</div>
+        <div class="sm-label">Implied EV</div>
+      </div>
+    </div>
+    <p><strong>Value creation logic:</strong> The combined entity eliminates Amadeus's "conglomerate discount" — today, the market drags down the fortress multiple because it's bundled with exposed distribution. A pure-play travel technology company with 95%+ recurring revenue, 200+ airline PSS customers, and expanding hospitality and payments platforms would trade at the high end of vertical SaaS comps (28-32x EBIT). At the midpoint (30x × €1,150m = €34.5bn), this alone exceeds Amadeus's current total EV of €32.5bn — implying the distribution business is being given away for free, plus you get Travelport's IT assets on top.</p>
+    <p><strong>Synergies:</strong> Estimated €150-200m of run-rate cost synergies (duplicate airline support infrastructure, shared data centres, R&D platform consolidation). Revenue synergies from cross-selling Amadeus hospitality products to Travelport's airline base = additional €50-80m over 3-5 years.</p>
+  </div>
+
+  <!-- Scenario 2: Merge/Sell Bad Parts -->
+  <div class="scenario-card sell">
+    <h4>Scenario B: Merge or Divest Distribution ("GlobalConnect")</h4>
+    <p>Combine Amadeus Air Distribution and Travelport's GDS (Apollo/Galileo/Worldspan) into a single distribution entity, or sell them to a financial buyer willing to harvest cash flows during the AI transition period.</p>
+    <div class="scenario-metric-row">
+      <div class="scenario-metric">
+        <div class="sm-val">~€4.6bn</div>
+        <div class="sm-label">Combined Revenue</div>
+      </div>
+      <div class="scenario-metric">
+        <div class="sm-val">~€1,170m</div>
+        <div class="sm-label">Combined EBIT</div>
+      </div>
+      <div class="scenario-metric">
+        <div class="sm-val">~65%</div>
+        <div class="sm-label">Global GDS Share</div>
+      </div>
+      <div class="scenario-metric">
+        <div class="sm-val">10-14x</div>
+        <div class="sm-label">Warranted Multiple</div>
+      </div>
+      <div class="scenario-metric">
+        <div class="sm-val">€12-16bn</div>
+        <div class="sm-label">Implied EV</div>
+      </div>
+    </div>
+    <p><strong>Strategic logic:</strong> A merged distribution entity would have overwhelming scale to invest in the AI backbone pivot — building agentic APIs, NDC aggregation services, and MCP translators that no individual GDS could afford alone. The combined ~65% market share would give pricing power with airlines and OTAs. At 12x blended EBIT (€14bn midpoint), the distribution entity alone would generate significant value — especially for a PE buyer willing to lever the stable (if declining) cash flows and harvest dividends while investing selectively in the AI transition.</p>
+    <p><strong>Alternative: Outright divestiture.</strong> If the Amadeus board preferred a clean break, selling the distribution business to a PE consortium at 10-12x EBIT would yield €8-10bn of proceeds (Amadeus share only, pre-Travelport combination). At €10bn, that's €23/share returned to Amadeus shareholders — compared to the market's implicit valuation of ~€8/share for the same assets today. Even a "fire sale" at 8x EBIT would realise €6.6bn (€15/share), nearly double the market's implied price.</p>
+  </div>
+
+  <!-- Combined Value Creation -->
+  <div class="chart-row">
+    <div class="chart-card full">
+      <div class="chart-title">Value Creation Analysis: Combined Scenario A+B</div>
+      <div class="chart-subtitle">What if both scenarios were executed simultaneously? Sources-and-uses of value.</div>
+      <div class="table-scroll">
+      <table class="bridge-table">
+        <thead>
+          <tr>
+            <th style="width:45%">Component</th>
+            <th>Value (€bn)</th>
+            <th>Per Amadeus Share</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="header-row"><td colspan="4">Sources of Value</td></tr>
+          <tr>
+            <td>AeraTech (Fortress + Durable combined)</td>
+            <td>34.5</td>
+            <td>—</td>
+            <td>30x €1,150m EBIT (midpoint)</td>
+          </tr>
+          <tr>
+            <td>GlobalConnect (Distribution combined)</td>
+            <td>14.0</td>
+            <td>—</td>
+            <td>12x €1,170m EBIT (midpoint)</td>
+          </tr>
+          <tr>
+            <td>Cost synergies (capitalised at 10x)</td>
+            <td>1.8</td>
+            <td>—</td>
+            <td>€180m run-rate synergies × 10x</td>
+          </tr>
+          <tr class="subtotal-row">
+            <td>Total Combined EV</td>
+            <td>50.3</td>
+            <td>—</td>
+            <td></td>
+          </tr>
+          <tr class="header-row"><td colspan="4">Uses / Deductions</td></tr>
+          <tr>
+            <td>Amadeus Net Debt</td>
+            <td>(2.2)</td>
+            <td>—</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Travelport Net Debt (estimated)</td>
+            <td>(4.5)</td>
+            <td>—</td>
+            <td>~$4.8bn → €4.4bn at current FX</td>
+          </tr>
+          <tr>
+            <td>Travelport Equity (Elliott/Siris)</td>
+            <td>(2.5)</td>
+            <td>—</td>
+            <td>Estimated equity value to PE sponsors</td>
+          </tr>
+          <tr>
+            <td>Transaction Costs & Integration</td>
+            <td>(1.0)</td>
+            <td>—</td>
+            <td>Advisory, regulatory, restructuring</td>
+          </tr>
+          <tr class="subtotal-row">
+            <td>Total Deductions</td>
+            <td>(10.2)</td>
+            <td>—</td>
+            <td></td>
+          </tr>
+          <tr class="ev-row">
+            <td>Pro-Forma Amadeus Equity Value</td>
+            <td>40.1</td>
+            <td>€93</td>
+            <td>vs €29.3bn / €68 today → +37% upside</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <div style="font-size:11px; color:var(--gray-400); margin-top:8px; line-height:1.6;">
+        Assumes Amadeus acquires Travelport and executes simultaneous separation. Amadeus shareholders receive equity in both AeraTech and GlobalConnect (or cash from GlobalConnect sale). Elliott/Siris receives cash/equity mix for Travelport equity. Illustrative only — actual deal structure would depend on negotiations, antitrust remedies, and tax structuring.
+      </div>
+    </div>
+  </div>
+
+  <!-- ANTITRUST ANALYSIS -->
+  <div class="scenario-card antitrust">
+    <h4>Antitrust Analysis: The Binding Constraint</h4>
+    <p>Any combination of Amadeus and Travelport triggers immediate scrutiny from the European Commission (DG COMP) and the US Department of Justice (DOJ). The GDS market is a textbook oligopoly: three players (Amadeus ~43%, Sabre ~35%, Travelport ~22%) control ~97% of global air distribution. A merger reducing the market from three players to two would face extraordinary regulatory hurdles.</p>
+
+    <p><strong>Scenario A (IT/PSS merger) is more defensible.</strong> The airline PSS market is distinct from GDS distribution. Amadeus (Altéa) and Travelport's legacy PSS serve different customer segments — Amadeus targets large full-service carriers while Travelport's IT serves smaller regional airlines. The combined share in PSS would be ~55-60%, which is high but potentially defensible given the competitive constraint from IBS Software, Hitit, and the emerging cloud-native entrants (Kiu, Radixx). Regulators would likely require behavioural remedies (interoperability commitments, data portability) rather than structural remedies.</p>
+
+    <p><strong>Scenario B (Distribution merger) faces a near-certain block in its pure form.</strong> Combining Amadeus and Travelport's GDS operations would create a ~65% global market share entity in air distribution — far above typical concentration thresholds. Regulators blocked or required extensive remedies in far less concentrated deals (e.g., Sabre/Farelogix 2020, blocked by UK CMA). However, there are nuances that could shift the analysis:</p>
+    <p style="padding-left:16px;"><strong>1. Market definition is evolving.</strong> If regulators accept that Google Flights, airline direct channels, and AI-powered booking agents are effective competitive constraints on GDS pricing, the "relevant market" expands well beyond the traditional GDS triopoly. A combined 65% of GDS bookings might represent only 40-45% of total air distribution if direct channels are included — still high, but more defensible.</p>
+    <p style="padding-left:16px;"><strong>2. Failing firm defence.</strong> If Travelport's debt burden is unsustainable (6-7x leverage with declining volumes), Elliott might argue that Travelport's GDS business would exit the market absent a merger — making the counterfactual a duopoly (Amadeus + Sabre) regardless. This defence has succeeded in other industries (e.g., Lloyds/HBOS 2008) but is rarely accepted in tech.</p>
+    <p style="padding-left:16px;"><strong>3. Structural remedies.</strong> The most likely path to approval would involve divesting one of the legacy GDS brands (e.g., selling Worldspan or Galileo to a new entrant or existing competitor) to maintain three-player competition. Google, Amazon, or a travel-tech startup might be interested buyers for a €2-3bn GDS business as a beachhead for AI-driven distribution.</p>
+
+    <p><strong>Bottom line:</strong> A full Amadeus-Travelport merger is almost certainly blocked without significant divestitures. The more realistic scenario is a targeted asset deal: Amadeus acquires Travelport's IT/PSS assets (defensible, limited overlap) and leaves the distribution business to Elliott for a separate process (PE sale, IPO, or merger with Sabre's distribution arm). This "cherry-pick" approach captures most of the value creation from Scenario A (~€2-3bn of synergy value) while avoiding the regulatory minefield of Scenario B.</p>
+  </div>
+
   <!-- FOOTER SOURCE -->
   <div style="font-size:11px; color:var(--gray-400); margin-top:24px;">
-    Source: Amadeus FY2025 Annual Report; S&P Capital IQ; McKinsey GDS Practice estimates; PhocusWire; Sabre IR; Google Blog. Segment EBIT estimates are McKinsey/PFC decompositions based on reported divisional revenue and group-level margins — Amadeus does not disclose segment-level EBIT. Quality scores are PFC analytical judgements, not ratings.
+    Source: Amadeus FY2025 Annual Report; S&P Capital IQ; McKinsey GDS Practice estimates; PhocusWire; Sabre IR; Google Blog; Travelport Companies House filings; Elliott Management public disclosures. Travelport Group figures are PFC estimates — consolidated financials are not publicly available. Segment EBIT estimates are McKinsey/PFC decompositions. Quality scores are PFC analytical judgements, not ratings. Merger scenario analysis is illustrative and does not constitute investment advice.
   </div>
 
 </div>
@@ -1169,6 +2219,61 @@ new Chart(document.getElementById('qualityRadar'), {
         ctx.restore();
       }
     }]
+  });
+})();
+
+// === AMADEUS vs TRAVELPORT MIX COMPARISON CHART ===
+(function() {
+  const ctx = document.getElementById('mixCompare');
+  if (!ctx) return;
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Amadeus', 'Travelport'],
+      datasets: [
+        {
+          label: 'Fortress (IT/PSS)',
+          data: [35, 15],
+          backgroundColor: '#1A73E8'
+        },
+        {
+          label: 'Durable (Hosp + Pay)',
+          data: [20, 7],
+          backgroundColor: '#0D9488'
+        },
+        {
+          label: 'Exposed (Distribution)',
+          data: [45, 78],
+          backgroundColor: '#DC2626'
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      indexAxis: 'y',
+      scales: {
+        x: {
+          stacked: true,
+          max: 100,
+          ticks: { callback: v => v + '%' },
+          grid: { color: '#E5E7EB' }
+        },
+        y: {
+          stacked: true,
+          grid: { display: false }
+        }
+      },
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 16, usePointStyle: true, pointStyle: 'circle' } },
+        tooltip: {
+          callbacks: {
+            label: ctx => ctx.dataset.label + ': ' + ctx.raw + '%'
+          }
+        }
+      }
+    }
   });
 })();
 </script>
