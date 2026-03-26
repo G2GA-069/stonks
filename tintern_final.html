@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amadeus IT — The Complete Case · Tintern Capital</title>
+<!-- Favicon: Golden Arches "M" for Monopoly -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23DA291C'/%3E%3Cpath d='M6 54 L6 22 C6 8 18 4 22 18 L28 38 L32 48 L36 38 L42 18 C46 4 58 8 58 22 L58 54 L50 54 L50 24 C50 18 48 16 46 20 L32 54 L18 20 C16 16 14 18 14 24 L14 54 Z' fill='%23FFC72C'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABrElEQVR4nO1bwW3DMAykNUEH6LcFulYG61oFmm8HyAbtozBgKJZNSTxeIvFeQUTJ5OmOSgxoEQW+P15/NXGPhvevn+Us5jDgWQvPcUTE7sAohefYIyLlX4xavMh+beksYDTkNabSwMjY1npngdmQROba/RVrze4KePt86Rq3xoLe/VJB18utK9YK5gTU7uD1cmuaYwVTAjzla0WCCQHevt2il4juJsgs3uL5zQrQPLi0O0dzW+aczT3C9McgjICaY04ThzoKmwhg+76ElrzcLFD7I8eLZAgBKLki1nVRwNnuM1VQTcCj+n9FbX5wBWi9z1JBvBCxXlDTqEoxPXNbAVWAlXyRNggLoBZufbvj3QxDAewE2HAlQNvBkS9Bc0AIQPkVsW5YgJ0AG24E1Praqw+YE4D+82K9fliAnQAbLgS0+tmjD4QC2AmwEQSwE2AjCEA/oLeTo0+CUAA7ATaCAHYCbAQB7ATYgBJgdYQhj8JQADsBNqYnYBGZ876AyP8lqukVkER0FwxHw1pzKGD9MJMKtrWm0sCoyGu8s8DIJOzVFpenNQs8KxEaNf8BGOup3wGhY4AAAAAASUVORK5CYII=">
+<!-- Open Graph / WhatsApp link preview -->
+<meta property="og:title" content="Monopoly — Amadeus IT Group">
+<meta property="og:description" content="The Hidden Monopoly. PSS Altéa: 400+ airlines, ~€680m EBIT, near-zero churn. Conglomerate discount masks a fortress asset trading at 13× blended.">
+<meta property="og:image" content="og_monopoly.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:type" content="article">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
+:root{
+  --bg:#060810;--s1:#0c0e18;--s2:#12141f;--s3:#181a28;
+  --bd:#1e2035;--bd2:#2a2d45;
+  --gold:#c9a84c;--gold-d:#8a6e2e;--gold-b:#e8c96a;
+  --ibm:#4a90d9;--pfc:#d4860b;--fih:#2ea88a;--ams:#4caf50;
+  --wa:#9370db;--red:#d44;--reds:#c44040;--grn:#4a9;
+  --tx:#d8d8e8;--tx2:#888898;--tx3:#555568;--txb:#f0f0ff;
+  --tci:#e05555;--fort:#4a90d9;--dur:#2ea88a;--exp:#d44;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:'Inter',sans-serif;font-size:13px;line-height:1.6}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:1000;opacity:.4}
+
+/* ─── MASTHEAD ────── */
+.mast{border-bottom:1px solid var(--bd2);background:linear-gradient(180deg,#0a0c14,var(--bg));position:relative}
+.mast::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold) 20%,var(--ams) 40%,var(--gold-b) 60%,var(--wa) 80%,transparent)}
+.mast-in{max-width:1520px;margin:0 auto;padding:24px 32px 20px}
+.clf{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.25em;color:var(--red);text-transform:uppercase;margin-bottom:8px}
+.mast h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;color:var(--txb);letter-spacing:-.5px}
+.mast h1 .a{color:var(--gold)}.mast h1 .b{color:var(--ams)}
+.mast .sub{font-size:13px;color:var(--tx2);margin-top:4px;font-weight:300}
+.mast .meta{display:flex;gap:28px;margin-top:14px;padding-top:12px;border-top:1px solid var(--bd);font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--tx3);letter-spacing:.08em;text-transform:uppercase}
+
+/* ─── TABS ────── */
+.tnav{background:var(--s1);border-bottom:1px solid var(--bd2);position:sticky;top:0;z-index:500}
+.tnav-in{max-width:1520px;margin:0 auto;padding:0 32px;display:flex;gap:0;overflow-x:auto}
+.tbtn{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:12px 16px;color:var(--tx3);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .2s}
+.tbtn:hover{color:var(--tx);background:rgba(255,255,255,.02)}
+.tbtn.on{color:var(--gold);border-bottom-color:var(--gold)}
+
+/* ─── PANELS ────── */
+.tp{display:none}.tp.on{display:block}
+.ctr{max-width:1520px;margin:0 auto;padding:0 32px}
+.sec{padding:32px 0;border-bottom:1px solid var(--bd)}.sec:last-child{border-bottom:none}
+.sl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.sec h2{font-family:'Playfair Display',serif;font-size:22px;color:var(--txb);margin-bottom:4px}
+.sec .sd{font-size:12px;color:var(--tx2);margin-bottom:20px;font-style:italic;max-width:900px}
+
+/* ─── GRID & CARDS ────── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.g6{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.cd{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:16px;position:relative;overflow:hidden}
+.cd-top{height:3px;position:absolute;top:0;left:0;right:0}
+.cd-l{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;margin-bottom:6px}
+.cd-v{font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:700;color:var(--txb)}
+.cd-b{font-size:11px;color:var(--tx2);line-height:1.7;margin-top:6px}
+.cd-b strong{color:var(--tx)}
+
+/* ─── TABLES ────── */
+.tw{background:var(--s1);border:1px solid var(--bd);border-radius:8px;overflow-x:auto}
+table.ct{width:100%;border-collapse:collapse;font-size:12px}
+table.ct thead th{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:11px 13px;text-align:left;border-bottom:2px solid var(--bd2);color:var(--tx3);background:var(--s1)}
+table.ct tbody td{padding:10px 13px;border-bottom:1px solid var(--bd);vertical-align:top;line-height:1.55}
+table.ct tbody tr:hover td{background:rgba(255,255,255,.015)}
+table.ct td:first-child{font-weight:600;color:var(--txb);font-size:11px}
+.cv{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:12px}
+
+/* ─── BADGES ────── */
+.bg{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:3px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+.bg-g{background:rgba(76,175,80,.15);color:#6fcf6f;border:1px solid rgba(76,175,80,.25)}
+.bg-b{background:rgba(74,144,217,.15);color:#7ab8f0;border:1px solid rgba(74,144,217,.25)}
+.bg-a{background:rgba(212,160,11,.15);color:#d4a00b;border:1px solid rgba(212,160,11,.25)}
+.bg-r{background:rgba(212,68,68,.15);color:#e06060;border:1px solid rgba(212,68,68,.25)}
+.bg-p{background:rgba(147,112,219,.15);color:#b090e0;border:1px solid rgba(147,112,219,.25)}
+
+/* ─── SYNTHESIS ────── */
+.syn{background:var(--s2);border:1px solid var(--gold-d);border-radius:8px;padding:20px 24px;margin-top:18px}
+.syn h3{font-family:'Playfair Display',serif;font-size:16px;color:var(--gold);margin-bottom:10px}
+.syn p{color:var(--tx);line-height:1.7;margin-bottom:8px}
+.syn p:last-child{margin-bottom:0}
+
+/* ─── METRIC STRIP ────── */
+.ms{display:grid;gap:1px;background:var(--bd);border-radius:8px;overflow:hidden}
+.mc{background:var(--s1);padding:14px 16px;text-align:center}
+.mcv{font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:700}
+.mcl{font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:.08em;font-family:'IBM Plex Mono',monospace;margin-top:3px}
+
+/* ─── LINEAGE ────── */
+.ln{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--s1);border:1px solid var(--bd);border-radius:8px;margin-bottom:8px}
+.ln-n{font-weight:700;font-size:13px;color:var(--txb)}
+.ln-d{font-size:11px;color:var(--tx2);margin-top:3px}
+
+/* ─── CHART ────── */
+.cw{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:20px;margin:14px 0}
+.ca{height:400px;position:relative}
+
+/* ─── TIER BORDERS ────── */
+.tf{border-left:3px solid var(--fort);padding-left:18px}
+.td{border-left:3px solid var(--dur);padding-left:18px}
+.te{border-left:3px solid var(--exp);padding-left:18px}
+
+/* ─── EMAIL BLOCK ────── */
+.email-block{background:#0e1018;border:1px solid var(--bd2);border-radius:8px;padding:0;overflow:hidden;margin:20px 0}
+.email-bar{background:var(--s3);padding:10px 18px;border-bottom:1px solid var(--bd);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3)}
+.email-field{display:flex;padding:6px 18px;border-bottom:1px solid var(--bd);font-size:12px}
+.email-field .ef-l{width:60px;color:var(--tx3);font-weight:600;padding:4px 0}
+.email-field .ef-v{color:var(--tx);padding:4px 0}
+.email-body{padding:20px 24px;font-size:13px;color:var(--tx);line-height:1.8;white-space:pre-wrap;font-family:'Inter',sans-serif}
+
+/* ─── FOOTNOTES ────── */
+.fn{padding:20px 0 36px;font-size:10px;color:var(--tx3);line-height:1.7;font-family:'IBM Plex Mono',monospace}
+
+/* ─── RESPONSIVE ────── */
+@media(max-width:1100px){.g2,.g3,.g4,.g5,.g6{grid-template-columns:1fr}.tbtn{padding:10px 10px;font-size:9px}}
+</style>
+</head>
+<body>
+
+<!-- ═════ MASTHEAD ═════ -->
+<div class="mast"><div class="mast-in">
+  <div class="clf">Confidential — Final Consolidated Analysis — Not for Distribution</div>
+  <h1>Amadeus IT Group — <span class="b">The Complete Case</span></h1>
+  <div class="sub">Hidden monopoly. Conglomerate discount. Institutional scale. Every dimension of the thesis — and every weakness — in one document.</div>
+  <div class="meta">
+    <span>Joe Barry · Application to Tintern Capital</span>
+    <span>March 2026</span>
+    <span>Prepared by: G2G Advisory</span>
+    <span>Consolidates: GDS Decomposition · Monopoly Pattern · WindAcre Intelligence · TSR Analysis</span>
+  </div>
+</div></div>
+
+<!-- ═════ TAB NAV ═════ -->
+<div class="tnav"><div class="tnav-in">
+  <button class="tbtn on" onclick="go('exec')">① Summary</button>
+  <button class="tbtn" onclick="go('mono')">② The Monopoly</button>
+  <button class="tbtn" onclick="go('sotp')">③ SOTP & Discount</button>
+  <button class="tbtn" onclick="go('tsr')">④ TSR & Valuation</button>
+  <button class="tbtn" onclick="go('patt')">⑤ The Pattern</button>
+  <button class="tbtn" onclick="go('wind')">⑥ WindAcre Intel</button>
+  <button class="tbtn" onclick="go('risk')">⑦ Risk Register</button>
+  <button class="tbtn" onclick="go('pitch')">⑧ Joe's Cramsheet</button>
+</div></div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- TAB 1: EXECUTIVE SUMMARY                          -->
+<!-- ══════════════════════════════════════════════════ -->
+<div id="t-exec" class="tp on"><div class="ctr">
+
+<div class="sec">
+<div class="sl">The Thesis in One Sentence</div>
+<h2 style="font-size:19px;line-height:1.5;max-width:1100px">
+  Amadeus IT's Air IT division is a <span style="color:var(--ams)">zero-churn technology monopoly</span> generating €850m EBIT from mission-critical airline infrastructure, valued by the market as a <span style="color:var(--pfc)">cyclical travel stock</span> at a blended ~13× EV/EBITDA instead of the <span style="color:var(--fort)">27–33× EBIT multiple</span> the fortress franchise deserves — creating a quantifiable SOTP gap with midpoint equity value of <span style="color:var(--gold)">€87.6/share vs €68 today</span>.
+</h2>
+</div>
+
+<div class="sec">
+<div class="sl">Key Numbers — All From S&P Capital IQ Model</div>
+<div class="ms g5" style="margin-bottom:14px">
+  <div class="mc"><div class="mcv" style="color:var(--txb)">€68</div><div class="mcl">Current share price</div></div>
+  <div class="mc"><div class="mcv" style="color:var(--gold)">€87.6</div><div class="mcl">SOTP midpoint / share</div></div>
+  <div class="mc"><div class="mcv" style="color:var(--ams)">29%</div><div class="mcl">Upside (mid case)</div></div>
+  <div class="mc"><div class="mcv" style="color:var(--txb)">€32.5bn</div><div class="mcl">Total EV (incl. minorities)</div></div>
+  <div class="mc"><div class="mcv" style="color:var(--fort)">€850m</div><div class="mcl">Fortress EBIT (Air IT)</div></div>
+</div>
+<div class="ms g5">
+  <div class="mc"><div class="mcv" style="color:var(--txb)">€1,919m</div><div class="mcl">Total group EBIT</div></div>
+  <div class="mc"><div class="mcv" style="color:var(--txb)">~13.3×</div><div class="mcl">Blended EV / EBITDA</div></div>
+  <div class="mc"><div class="mcv" style="color:var(--red)">0%</div><div class="mcl">Involuntary PSS churn (35yr)</div></div>
+  <div class="mc"><div class="mcv" style="color:var(--pfc)">–61%</div><div class="mcl">COVID revenue trough (2020)</div></div>
+  <div class="mc"><div class="mcv" style="color:var(--ams)">€2.2bn</div><div class="mcl">Net debt (2025E)</div></div>
+</div>
+</div>
+
+<div class="sec">
+<div class="sl">The Three Quality Tiers</div>
+<div class="g3">
+  <div class="cd tf">
+    <div class="cd-l" style="color:var(--fort)">Tier 1 — Fortress (Air IT)</div>
+    <div class="cd-b">
+      <strong>EBIT: €850m · Mid EV: €24.3bn · 44% of group EBIT → 59% of SOTP value</strong><br><br>
+      PSS Altéa (€680m EBIT, near-monopoly, 27–33×), Navitaire LCC PSS (€105m, dominant, 22–28×), Adjacent airline IT modules (€65m, leading, 18–22×). Zero involuntary churn in 35+ years. 18–36 month migration risk. Revenue: &lt;2% of airline costs, switching cost: existential. <strong>This is the monopoly.</strong>
+    </div>
+  </div>
+  <div class="cd td">
+    <div class="cd-l" style="color:var(--dur)">Tier 2 — Durable (Hospitality + Payments)</div>
+    <div class="cd-b">
+      <strong>EBIT: €249m · Mid EV: €5.6bn · 13% of group EBIT → 14% of SOTP value</strong><br><br>
+      Hotel CRS/TravelClick (€125m, oligopoly #2, 20–26×), Hotel PMS/HotSOS (€51m, competitive, 16–20×), Travel Payments (€73m, scaling, 22–28×). Durable through PSS cross-sell and travel infrastructure position. Not a monopoly, but structural tailwinds.
+    </div>
+  </div>
+  <div class="cd te">
+    <div class="cd-l" style="color:var(--exp)">Tier 3 — Exposed (Air Distribution)</div>
+    <div class="cd-b">
+      <strong>EBIT: €820m · Mid EV: €11.1bn · 43% of group EBIT → 27% of SOTP value</strong><br><br>
+      GDS Europe (€370m, dominant, 13–16×), GDS APAC/MENA (€260m, strong #1, 12–15×), GDS Americas (€140m, #2 to Sabre, 11–14×), NDC/New Distribution (€50m, nascent, 8–15×). Highest disruption risk from NDC/AI. <strong>This is what the market fears.</strong>
+    </div>
+  </div>
+</div>
+
+<div class="syn">
+  <h3>The Gap in Numbers</h3>
+  <p><strong>SOTP range: €36.6–45.7bn EV (€77.6–97.9/share)</strong> vs current EV of €32.5bn (€68/share). Midpoint: €41.1bn EV (€87.6/share) = <strong>29% upside</strong>. The market applies a single blended travel-sector multiple to a company whose fortress tier (44% of EBIT) deserves 27–33× EBIT — a software monopoly multiple — while the exposed distribution tier (43% of EBIT) gets 11–16×. The blended approach hides the quality gap between a zero-churn monopoly and a GDS facing structural disruption.</p>
+</div>
+</div>
+
+<div class="sec">
+<div class="sl">Why This Fits Tintern</div>
+<div class="g4">
+  <div class="cd"><div class="cd-l" style="color:var(--gold)">Monopoly</div><div class="cd-v" style="font-size:18px;color:var(--ams)">✓</div><div class="cd-b">Zero churn. Infinite switching costs. 35yr duration. PSS is structurally identical to IBM mainframe, TransDigm sole-source, SAP ERP — all WindAcre holdings.</div></div>
+  <div class="cd"><div class="cd-l" style="color:var(--gold)">Conglomerate Discount</div><div class="cd-v" style="font-size:18px;color:var(--ams)">✓</div><div class="cd-b">Fortress hidden inside Distribution + Hospitality. Same as IBM (mainframe inside consulting), FNF (title insurance inside annuities), Alphabet (Search inside "Other Bets").</div></div>
+  <div class="cd"><div class="cd-l" style="color:var(--gold)">Institutional Scale</div><div class="cd-v" style="font-size:18px;color:var(--ams)">✓</div><div class="cd-b">€30bn market cap. IBEX 35. A 1% position (~€300m) executable over weeks. Fits Tintern's expected $500m–$2bn AUM.</div></div>
+  <div class="cd"><div class="cd-l" style="color:var(--gold)">10+ Year Hold</div><div class="cd-v" style="font-size:18px;color:var(--ams)">✓</div><div class="cd-b">Air travel grows 3–5%/yr. PSS pricing adds 2–3%. Fortress compounding works for decades. Designed for Tintern's 12+ year average hold.</div></div>
+</div>
+</div>
+
+</div></div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- TAB 2: THE MONOPOLY                               -->
+<!-- ══════════════════════════════════════════════════ -->
+<div id="t-mono" class="tp"><div class="ctr">
+
+<div class="sec">
+<div class="sl">§ 2.1 — What PSS Actually Does</div>
+<h2>The Operating System of Global Aviation</h2>
+<div class="sd">PSS is not a product airlines choose to use. It is the system that makes an airline operational. Without PSS, no flight departs.</div>
+
+<div class="g4">
+  <div class="cd"><div class="cd-top" style="background:var(--fort)"></div><div class="cd-l" style="color:var(--fort)">Reservations (PNR)</div><div class="cd-b">Creates and manages every passenger name record. Every booking — direct, OTA, GDS, corporate — flows through this system. The PNR is the single source of truth. Amadeus processes <strong>~690M bookings/year</strong>.</div></div>
+  <div class="cd"><div class="cd-top" style="background:var(--fort)"></div><div class="cd-l" style="color:var(--fort)">Inventory & Revenue Mgmt</div><div class="cd-b">Controls seat availability and pricing in real-time. Decides which fare classes are open, how many seats remain, what price to display. <strong>This is where airlines make money.</strong> Millions of optimisation decisions per day.</div></div>
+  <div class="cd"><div class="cd-top" style="background:var(--fort)"></div><div class="cd-l" style="color:var(--fort)">Departure Control (DCS)</div><div class="cd-b">Manages check-in, boarding, gate assignment, passenger processing. Prints boarding passes, validates documents, reconciles manifests. <strong>If DCS goes down, no one boards.</strong> BA's 2017 IT failure: £80M+ in one weekend.</div></div>
+  <div class="cd"><div class="cd-top" style="background:var(--fort)"></div><div class="cd-l" style="color:var(--fort)">Ticketing & Settlement</div><div class="cd-b">Issues e-tickets, manages fare rules, interline settlement. A single itinerary can involve 4 airlines, 3 currencies, 12 fare components. Complexity is the moat — no startup can replicate interline certification.</div></div>
+</div>
+
+<div class="syn">
+  <h3>Why These Four Systems Cannot Be Separated</h3>
+  <p>Reservations, inventory, DCS, and ticketing interact <strong>in real-time, millions of times per day</strong>. A booking instantly updates inventory (one fewer seat). Inventory feeds revenue management (reprice remaining seats). DCS pulls from reservations at check-in. Ticketing validates against all three. Switching one without the others is technically impossible — data formats, APIs, and 20+ years of custom business logic are deeply intertwined. Switching ALL FOUR simultaneously means running dual systems for 18–36 months: double cost, double failure risk, double IT staff. <strong>No airline CEO will risk grounding their fleet to save &lt;2% on IT costs.</strong></p>
+</div>
+</div>
+
+<div class="sec">
+<div class="sl">§ 2.2 — Switching Cost Forensics</div>
+<h2>Why No Airline Has Ever Left PSS Involuntarily</h2>
+
+<div class="tw">
+<table class="ct">
+<thead><tr><th style="width:140px">Barrier</th><th>What It Means in Practice</th><th style="width:100px;text-align:center">Severity</th></tr></thead>
+<tbody>
+<tr><td>Migration Timeline</td><td>Full PSS migration: <strong>18–36 months</strong> of parallel running. Both systems operating simultaneously at every airport, every kiosk, every gate. Staff trained on both. Routes migrated one by one — no "big bang" cutover possible.</td><td style="text-align:center"><span class="bg bg-r">EXTREME</span></td></tr>
+<tr><td>Failure Risk</td><td>If new PSS fails during cutover: no check-in, no boarding passes, no revenue management. Flights grounded or operated on paper. <strong>One day of system failure costs more than years of PSS fees.</strong> BA 2017 IT failure: £80M+ in a single weekend.</td><td style="text-align:center"><span class="bg bg-r">EXISTENTIAL</span></td></tr>
+<tr><td>Customisation Depth</td><td>Over 10–20 years, each airline has built hundreds of custom business rules, fare structures, loyalty integrations, codeshare agreements into their PSS instance. This accumulated logic is <strong>undocumented, untransferable, irreproducible</strong> — same dynamic as IBM mainframes (220bn lines of COBOL).</td><td style="text-align:center"><span class="bg bg-r">EXTREME</span></td></tr>
+<tr><td>Cost vs Value</td><td>PSS fees: <strong>&lt;2% of airline revenue</strong>. Switching cost: $50–200M (migration project) + 2+ years dual running + operational risk. The rational economic decision is always to stay. Complaints about pricing never translate into departures.</td><td style="text-align:center"><span class="bg bg-a">STRUCTURAL</span></td></tr>
+<tr><td>Alternatives</td><td><strong>Sabre:</strong> $4.9bn net debt, –92% TSR, functionally uninvestable as long-term IT partner. <strong>Travelport:</strong> Private, small. <strong>In-house:</strong> Only largest carriers ($500M+ build cost). For 95% of airlines, Amadeus is the only viable option.</td><td style="text-align:center"><span class="bg bg-g">NONE</span></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="sec">
+<div class="sl">§ 2.3 — Pricing Power & Contracts</div>
+<h2>Revenue Per Booking: 3–5% CAGR for Over a Decade</h2>
+
+<div class="g2">
+  <div class="cd"><div class="cd-l" style="color:var(--ams)">Pricing Power</div><div class="cd-v" style="font-size:20px">3–5% CAGR</div><div class="cd-b">Revenue per booking growth above inflation for 10+ consecutive years. Airlines absorb increases because: (a) PSS cost is immaterial (&lt;2% of revenue), (b) switching is impossible, (c) the alternative (Sabre) is worse. <strong>Lowest price-to-value ratio of any enterprise software.</strong></div></div>
+  <div class="cd"><div class="cd-l" style="color:var(--ams)">Contract Structure</div><div class="cd-v" style="font-size:20px">10–15yr terms</div><div class="cd-b">PSS contracts: 10–15 years with <strong>automatic CPI + spread escalators</strong>. Renewal rate: functionally 100%. Revenue visibility exceeds a decade — ideal for a concentrated long-hold fund. No airline has ever failed to renew a PSS contract.</div></div>
+</div>
+
+<div class="syn">
+  <h3>Amadeus PSS vs Peers Andrew Already Owns</h3>
+  <p><strong>IBM z Systems:</strong> Mission-critical transaction processing. 220bn lines of irreplaceable code. 87% of credit card transactions. Zero churn. 80%+ margins. Same.<br>
+  <strong>SAP ERP:</strong> Runs back-office of 87% of Fortune 500. Switching: 2–5 years, $50–500M. S/4HANA migration forces reinvestment, not departure. Same.<br>
+  <strong>TransDigm:</strong> 90% sole-source aerospace parts. FAA recertification for alternatives: 18–36mo, $10M+. Pentagon investigated pricing — found no alternative. Same.<br>
+  The pattern is identical: mission-critical infrastructure where switching risk is existential, cost is immaterial, and no credible alternative exists.</p>
+</div>
+</div>
+
+</div></div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- TAB 3: SOTP & CONGLOMERATE DISCOUNT               -->
+<!-- ══════════════════════════════════════════════════ -->
+<div id="t-sotp" class="tp"><div class="ctr">
+
+<div class="sec">
+<div class="sl">§ 3.1 — The SOTP (Source: S&P Capital IQ Model)</div>
+<h2>Three Tiers, Three Multiples, One Blended Error</h2>
+<div class="sd">EBIT-based sum-of-parts. Each sub-segment assigned a multiple based on market power, competitive position, and comparable transactions.</div>
+
+<div class="tw">
+<table class="ct">
+<thead><tr>
+  <th style="width:200px">Tier / Segment</th>
+  <th style="text-align:right;width:90px">EBIT (€m)</th>
+  <th style="text-align:right;width:80px">Low ×</th>
+  <th style="text-align:right;width:90px">Low EV</th>
+  <th style="text-align:right;width:80px">Mid ×</th>
+  <th style="text-align:right;width:90px">Mid EV</th>
+  <th style="text-align:right;width:80px">High ×</th>
+  <th style="text-align:right;width:90px">High EV</th>
+</tr></thead>
+<tbody>
+<tr style="background:rgba(74,144,217,.06)"><td colspan="8" style="color:var(--fort);font-weight:700;font-size:11px;letter-spacing:.1em">▎ TIER 1 — FORTRESS (AIR IT)</td></tr>
+<tr><td style="padding-left:24px;font-weight:400;color:var(--tx2)">PSS Altéa (Full-Service)</td><td style="text-align:right" class="cv">680</td><td style="text-align:right">27.0×</td><td style="text-align:right" class="cv">18,360</td><td style="text-align:right">30.0×</td><td style="text-align:right" class="cv">20,400</td><td style="text-align:right">33.0×</td><td style="text-align:right" class="cv">22,440</td></tr>
+<tr><td style="padding-left:24px;font-weight:400;color:var(--tx2)">Navitaire (LCC PSS)</td><td style="text-align:right" class="cv">105</td><td style="text-align:right">22.0×</td><td style="text-align:right" class="cv">2,310</td><td style="text-align:right">25.0×</td><td style="text-align:right" class="cv">2,625</td><td style="text-align:right">28.0×</td><td style="text-align:right" class="cv">2,940</td></tr>
+<tr><td style="padding-left:24px;font-weight:400;color:var(--tx2)">Adjacent Airline IT Modules</td><td style="text-align:right" class="cv">65</td><td style="text-align:right">18.0×</td><td style="text-align:right" class="cv">1,170</td><td style="text-align:right">20.0×</td><td style="text-align:right" class="cv">1,300</td><td style="text-align:right">22.0×</td><td style="text-align:right" class="cv">1,430</td></tr>
+<tr style="background:rgba(74,144,217,.04)"><td style="color:var(--fort);font-weight:700;padding-left:16px">Tier 1 Subtotal</td><td style="text-align:right;font-weight:700">850</td><td></td><td style="text-align:right;font-weight:700;color:var(--fort)">21,840</td><td></td><td style="text-align:right;font-weight:700;color:var(--fort)">24,325</td><td></td><td style="text-align:right;font-weight:700;color:var(--fort)">26,810</td></tr>
+
+<tr style="background:rgba(46,168,138,.06)"><td colspan="8" style="color:var(--dur);font-weight:700;font-size:11px;letter-spacing:.1em">▎ TIER 2 — DURABLE (HOSPITALITY + PAYMENTS)</td></tr>
+<tr><td style="padding-left:24px;font-weight:400;color:var(--tx2)">Hotel CRS (TravelClick)</td><td style="text-align:right" class="cv">125</td><td style="text-align:right">20.0×</td><td style="text-align:right" class="cv">2,500</td><td style="text-align:right">23.0×</td><td style="text-align:right" class="cv">2,875</td><td style="text-align:right">26.0×</td><td style="text-align:right" class="cv">3,250</td></tr>
+<tr><td style="padding-left:24px;font-weight:400;color:var(--tx2)">Hotel PMS (HotSOS)</td><td style="text-align:right" class="cv">51</td><td style="text-align:right">16.0×</td><td style="text-align:right" class="cv">816</td><td style="text-align:right">18.0×</td><td style="text-align:right" class="cv">918</td><td style="text-align:right">20.0×</td><td style="text-align:right" class="cv">1,020</td></tr>
+<tr><td style="padding-left:24px;font-weight:400;color:var(--tx2)">Travel Payments</td><td style="text-align:right" class="cv">73</td><td style="text-align:right">22.0×</td><td style="text-align:right" class="cv">1,606</td><td style="text-align:right">25.0×</td><td style="text-align:right" class="cv">1,825</td><td style="text-align:right">28.0×</td><td style="text-align:right" class="cv">2,044</td></tr>
+<tr style="background:rgba(46,168,138,.04)"><td style="color:var(--dur);font-weight:700;padding-left:16px">Tier 2 Subtotal</td><td style="text-align:right;font-weight:700">249</td><td></td><td style="text-align:right;font-weight:700;color:var(--dur)">4,922</td><td></td><td style="text-align:right;font-weight:700;color:var(--dur)">5,618</td><td></td><td style="text-align:right;font-weight:700;color:var(--dur)">6,314</td></tr>
+
+<tr style="background:rgba(212,68,68,.06)"><td colspan="8" style="color:var(--exp);font-weight:700;font-size:11px;letter-spacing:.1em">▎ TIER 3 — EXPOSED (AIR DISTRIBUTION)</td></tr>
+<tr><td style="padding-left:24px;font-weight:400;color:var(--tx2)">GDS Europe</td><td style="text-align:right" class="cv">370</td><td style="text-align:right">13.0×</td><td style="text-align:right" class="cv">4,810</td><td style="text-align:right">14.5×</td><td style="text-align:right" class="cv">5,365</td><td style="text-align:right">16.0×</td><td style="text-align:right" class="cv">5,920</td></tr>
+<tr><td style="padding-left:24px;font-weight:400;color:var(--tx2)">GDS APAC & MENA</td><td style="text-align:right" class="cv">260</td><td style="text-align:right">12.0×</td><td style="text-align:right" class="cv">3,120</td><td style="text-align:right">13.5×</td><td style="text-align:right" class="cv">3,510</td><td style="text-align:right">15.0×</td><td style="text-align:right" class="cv">3,900</td></tr>
+<tr><td style="padding-left:24px;font-weight:400;color:var(--tx2)">GDS Americas</td><td style="text-align:right" class="cv">140</td><td style="text-align:right">11.0×</td><td style="text-align:right" class="cv">1,540</td><td style="text-align:right">12.5×</td><td style="text-align:right" class="cv">1,750</td><td style="text-align:right">14.0×</td><td style="text-align:right" class="cv">1,960</td></tr>
+<tr><td style="padding-left:24px;font-weight:400;color:var(--tx2)">NDC / New Distribution</td><td style="text-align:right" class="cv">50</td><td style="text-align:right">8.0×</td><td style="text-align:right" class="cv">400</td><td style="text-align:right">10.0×</td><td style="text-align:right" class="cv">500</td><td style="text-align:right">15.0×</td><td style="text-align:right" class="cv">750</td></tr>
+<tr style="background:rgba(212,68,68,.04)"><td style="color:var(--exp);font-weight:700;padding-left:16px">Tier 3 Subtotal</td><td style="text-align:right;font-weight:700">820</td><td></td><td style="text-align:right;font-weight:700;color:var(--exp)">9,870</td><td></td><td style="text-align:right;font-weight:700;color:var(--exp)">11,125</td><td></td><td style="text-align:right;font-weight:700;color:var(--exp)">12,530</td></tr>
+
+<tr style="background:rgba(201,168,76,.08)"><td style="color:var(--gold);font-weight:700">TOTAL ENTERPRISE VALUE</td><td style="text-align:right;font-weight:700;color:var(--gold)">1,919</td><td></td><td style="text-align:right;font-weight:700;color:var(--gold);font-size:14px">36,632</td><td></td><td style="text-align:right;font-weight:700;color:var(--gold);font-size:14px">41,068</td><td></td><td style="text-align:right;font-weight:700;color:var(--gold);font-size:14px">45,654</td></tr>
+<tr><td style="color:var(--red)">Less: Net Debt (2025E)</td><td></td><td></td><td style="text-align:right;color:var(--red)">(2,242)</td><td></td><td style="text-align:right;color:var(--red)">(2,242)</td><td></td><td style="text-align:right;color:var(--red)">(2,242)</td></tr>
+<tr style="background:var(--s3)"><td style="color:var(--gold);font-weight:700;font-size:13px">EQUITY VALUE / SHARE</td><td></td><td></td><td style="text-align:right;color:var(--gold);font-weight:700;font-size:16px">€77.6</td><td></td><td style="text-align:right;color:var(--gold);font-weight:700;font-size:16px">€87.6</td><td></td><td style="text-align:right;color:var(--gold);font-weight:700;font-size:16px">€97.9</td></tr>
+<tr style="background:var(--s2)"><td style="color:var(--tx2)">vs Current (€68)</td><td></td><td></td><td style="text-align:right;color:var(--ams);font-weight:700">+14%</td><td></td><td style="text-align:right;color:var(--ams);font-weight:700;font-size:14px">+29%</td><td></td><td style="text-align:right;color:var(--ams);font-weight:700">+44%</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="sec">
+<div class="sl">§ 3.2 — The Implied Absurdity</div>
+<h2>What the Market Is Saying</h2>
+
+<div class="g2">
+  <div class="cd" style="border-color:var(--red)">
+    <div class="cd-l" style="color:var(--red)">The Market's Implicit Maths</div>
+    <div class="cd-b" style="font-size:13px;line-height:1.8">
+      <strong>Fortress (Air IT) at midpoint:</strong> €24.3bn<br>
+      <strong>Current total EV:</strong> €32.5bn<br>
+      <strong>Implied value of Durable + Exposed tiers:</strong> €8.2bn<br><br>
+      At midpoint SOTP, Distribution + Hospitality + Payments = €16.7bn. The market assigns them €8.2bn — a <strong>51% discount</strong> to fair value. The blended multiple forces the fortress to subsidise the implied discount on exposed distribution. Travel/leisure analysts see one company and apply one multiple. Software analysts would see two very different businesses.
+    </div>
+  </div>
+  <div class="cd" style="border-color:var(--ibm)">
+    <div class="cd-l" style="color:var(--ibm)">The IBM Precedent</div>
+    <div class="cd-b" style="font-size:13px;line-height:1.8">
+      <strong>IBM pre-Kyndryl (2020):</strong> ~11× EV/EBITDA<br>
+      <strong>IBM post-Kyndryl (2022+):</strong> ~15–16× EV/EBITDA<br>
+      <strong>Re-rating from separation:</strong> ~40% multiple expansion<br><br>
+      Same structure: monopoly mainframe (80%+ margins) masked by commodity consulting and failed AI. The market applied a blended multiple. Kyndryl spin-off separated the drag. Remaining IBM re-rated 40%+ on same underlying earnings. <strong>Amadeus is IBM before the spin.</strong>
+    </div>
+  </div>
+</div>
+
+<div class="syn">
+  <h3>The Analyst Coverage Problem</h3>
+  <p><strong>Who covers Amadeus today:</strong> Travel & leisure analysts (JPMorgan, Goldman, Morgan Stanley). They compare to Booking, Expedia, IAG, TUI. Apply sector EV/EBITDA (12–15×) uniformly. Write about "post-COVID recovery" and "NDC risk."</p>
+  <p><strong>Who SHOULD cover the Fortress tier:</strong> Enterprise software analysts covering SAP, Oracle, ServiceNow, Veeva. They understand zero-churn mission-critical infrastructure and apply 25–33× EBIT. If one Tier 1 software analyst published a SOTP note, the re-rating conversation begins.</p>
+  <p><strong>Why management won't fix this:</strong> The bundled structure serves management, not shareholders. Luis Maroto runs a €30bn company. If Air IT were separated, Distribution and Hospitality would be exposed as lower-quality standalone entities that cannot justify premium compensation. Management cross-subsidises weaker segments with fortress cash flows — the same dynamic that kept IBM investing mainframe profits into Watson for a decade.</p>
+</div>
+</div>
+
+</div></div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- TAB 4: TSR & VALUATION                            -->
+<!-- ══════════════════════════════════════════════════ -->
+<div id="t-tsr" class="tp"><div class="ctr">
+
+<div class="sec">
+<div class="sl">§ 4.1 — Same Industry, Same Macro — Opposite Outcomes</div>
+<h2>Amadeus vs Sabre — 10 Year Total Shareholder Return</h2>
+
+<div class="cw">
+  <div class="ca"><canvas id="tsrChart"></canvas></div>
+  <div style="display:flex;gap:20px;padding-top:10px;border-top:1px solid var(--bd);margin-top:10px;font-size:11px">
+    <span style="color:#34d399">■ Amadeus TSR</span>
+    <span style="color:#f87171">■ Sabre TSR</span>
+    <span style="color:#60a5fa">┈ Air Passengers (ICAO)</span>
+    <span style="color:#fbbf24">┈ Tourist Arrivals (UNWTO)</span>
+  </div>
+</div>
+
+<div class="g5" style="margin-top:14px">
+  <div class="cd"><div class="cd-l" style="color:#34d399">Amadeus</div><div class="cd-v" style="color:#34d399">+80%</div><div class="cd-b">€100→€180 · 5.9% CAGR</div></div>
+  <div class="cd"><div class="cd-l" style="color:#f87171">Sabre</div><div class="cd-v" style="color:#f87171">–92%</div><div class="cd-b">$100→$8 · –22% CAGR</div></div>
+  <div class="cd"><div class="cd-l" style="color:var(--wa)">Spread</div><div class="cd-v" style="color:var(--wa)">172pp</div><div class="cd-b">Cumulative divergence</div></div>
+  <div class="cd"><div class="cd-l" style="color:#60a5fa">Air Pax</div><div class="cd-v" style="color:#60a5fa">+50%</div><div class="cd-b">3.47bn→5.2bn</div></div>
+  <div class="cd"><div class="cd-l" style="color:#fbbf24">Tourism</div><div class="cd-v" style="color:#fbbf24">+28%</div><div class="cd-b">1.19bn→1.52bn</div></div>
+</div>
+</div>
+
+<div class="sec">
+<div class="sl">§ 4.2 — Return Scenarios at €68 Entry</div>
+<h2>What the Model Shows</h2>
+
+<div class="tw">
+<table class="ct">
+<thead><tr>
+  <th style="width:120px">Scenario</th>
+  <th style="text-align:right;width:90px">Target /shr</th>
+  <th style="text-align:right;width:80px">Upside</th>
+  <th style="text-align:right;width:100px">10yr CAGR (est.)</th>
+  <th>Assumptions</th>
+</tr></thead>
+<tbody>
+<tr><td><span class="bg bg-r">BEAR</span></td><td style="text-align:right" class="cv">€55–60</td><td style="text-align:right;color:var(--red)" class="cv">–12 to –19%</td><td style="text-align:right" class="cv">3–5%</td><td>Multiple compression to trough. COVID repeat. No catalyst. Returns from organic compounding only (volume + pricing). Fortress EBIT still grows — just no re-rating.</td></tr>
+<tr><td><span class="bg bg-a">BASE</span></td><td style="text-align:right" class="cv">€78–88</td><td style="text-align:right;color:var(--gold)" class="cv">+14 to +29%</td><td style="text-align:right" class="cv">7–10%</td><td>SOTP low-to-mid recognition. Partial re-rating as market differentiates fortress from exposed. No structural separation. Organic growth + modest multiple expansion.</td></tr>
+<tr><td><span class="bg bg-g">BULL</span></td><td style="text-align:right" class="cv">€98–110+</td><td style="text-align:right;color:var(--ams)" class="cv">+44 to +62%</td><td style="text-align:right" class="cv">12–16%</td><td>Full SOTP recognition. Software analyst initiation or activist engagement. PSS valued as standalone software monopoly. Capital return policy change amplifies.</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="syn">
+  <h3>The PFC Benchmark — Honest Comparison</h3>
+  <p>Andrew's last major position — PFC at WindAcre — returned <strong>6.32× over 9 years (22.7% USD CAGR)</strong>. Decomposition: 55% book value compounding, 40% P/B re-rating (0.37×→0.86×), 5% dividends. Re-rating was only 40–50% complete at exit (DDM fair value: ~1.92× P/B).</p>
+  <p>Amadeus at base case: <strong>1.3× over 10 years (7–10% CAGR)</strong> — materially below PFC. At bull case: <strong>1.5–1.6× (12–16% CAGR)</strong> — still below PFC. The honest framing: <em>lower probability of transformational re-rating, but higher certainty on the underlying franchise quality</em>. Amadeus is not "the next PFC." It is a different trade: institutional-scale monopoly with moderate upside, anchored by the most durable franchise in the portfolio. The fortress compounding is the thesis. The re-rating is the bonus.</p>
+</div>
+</div>
+
+</div></div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- TAB 5: THE PATTERN                                -->
+<!-- ══════════════════════════════════════════════════ -->
+<div id="t-patt" class="tp"><div class="ctr">
+
+<div class="sec">
+<div class="sl">§ 5.1 — Four Investments, One Framework</div>
+<h2>IBM → PFC → FIH → Amadeus</h2>
+
+<div class="g4">
+  <div class="cd" style="border-top:3px solid var(--ibm)"><div class="cd-l" style="color:var(--ibm)">IBM · 1979–2010</div><div class="cd-b"><strong>Gary F Lundstrom.</strong> 31 years. ESPP + options. Held through 75% drawdown. Trust with ~$104K IBM equity (1995) → ~$6.8M today. 8,301 split-adjusted shares. The investment philosophy is biographical.</div></div>
+  <div class="cd" style="border-top:3px solid var(--pfc)"><div class="cd-l" style="color:var(--pfc)">PFC · FY2015–H1 2024</div><div class="cd-b"><strong>WindAcre.</strong> 0.37× P/B entry. Government-mandated monopoly. 20% ROE, never negative. 6.32× / 22.7% CAGR. Re-rating incomplete (0.86× vs 1.92× DDM fair). Andrew's benchmark.</div></div>
+  <div class="cd" style="border-top:3px solid var(--fih)"><div class="cd-l" style="color:var(--fih)">FIH · Pre-2026</div><div class="cd-b"><strong>Joe's earlier pitch.</strong> Geographic monopoly (Falklands) hidden in conglomerate. £36m market cap — too small. Portsmouth ferry sold at ~12× EBITDA; total group at ~8×. Live proof of conglomerate discount. Right thesis, wrong scale.</div></div>
+  <div class="cd" style="border-top:3px solid var(--ams)"><div class="cd-l" style="color:var(--ams)">Amadeus · March 2026</div><div class="cd-b"><strong>The case study.</strong> Technology monopoly (PSS) inside conglomerate. €32.5bn EV, deep liquidity. SOTP gap: 29% mid upside. 1% position = ~€300m, executable. FIH at ~900× scale. <strong>The framework at institutional scale.</strong></div></div>
+</div>
+</div>
+
+<div class="sec">
+<div class="sl">§ 5.2 — The Expanded Monopoly Matrix (15 Investments)</div>
+<h2>Every WindAcre Holding During Andrew's Tenure</h2>
+
+<div class="tw" style="overflow-x:auto">
+<table class="ct" style="min-width:1050px">
+<thead><tr>
+  <th style="width:140px">Holding</th>
+  <th style="text-align:center;width:60px">Mono.</th>
+  <th style="text-align:center;width:60px">Lock-in</th>
+  <th style="text-align:center;width:60px">Pricing</th>
+  <th style="text-align:center;width:60px">Churn</th>
+  <th style="text-align:center;width:60px">Conglo.</th>
+  <th style="text-align:center;width:60px">Crisis</th>
+  <th style="text-align:center;width:60px">Hold</th>
+  <th style="text-align:center;width:60px">Scale</th>
+  <th style="text-align:center;width:45px;color:var(--gold)">Score</th>
+</tr></thead>
+<tbody>
+<tr style="background:rgba(74,144,217,.04)"><td style="color:var(--ibm)"><strong>IBM (z Systems)</strong></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">31yr</span></td><td style="text-align:center"><span class="bg bg-a">pers.</span></td><td style="text-align:center;font-weight:700;color:var(--ibm)">8</td></tr>
+<tr><td><strong>TransDigm</strong></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-b">multi</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">5.5yr</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center;font-weight:700">8</td></tr>
+<tr style="background:rgba(76,175,80,.04)"><td style="color:var(--ams)"><strong>Amadeus (PSS)</strong></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-r">cycl.</span></td><td style="text-align:center"><span class="bg bg-g">10yr+</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center;font-weight:700;color:var(--ams)">7</td></tr>
+<tr style="background:rgba(212,134,11,.04)"><td style="color:var(--pfc)"><strong>PFC</strong></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-b">mod</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-r">✗</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">9yr</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center;font-weight:700;color:var(--pfc)">7</td></tr>
+<tr><td><strong>Nielsen</strong></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-r">✗</span></td><td style="text-align:center"><span class="bg bg-b">part</span></td><td style="text-align:center"><span class="bg bg-g">7.75yr</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center;font-weight:700">7</td></tr>
+<tr><td><strong>Moody's</strong></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-r">✗</span></td><td style="text-align:center"><span class="bg bg-b">part</span></td><td style="text-align:center"><span class="bg bg-g">9yr+</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center;font-weight:700">7</td></tr>
+<tr><td><strong>FNF</strong></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-b">oligo</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-b">cycl</span></td><td style="text-align:center"><span class="bg bg-g">9yr+</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center;font-weight:700">7</td></tr>
+<tr><td><strong>Alphabet</strong></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-b">habit</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-b">soft</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">4.5yr</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center;font-weight:700">7</td></tr>
+<tr><td><strong>Amazon</strong></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-b">mix</span></td><td style="text-align:center"><span class="bg bg-b">AWS</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">4.5yr</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center;font-weight:700">7</td></tr>
+<tr style="background:rgba(46,168,138,.04)"><td style="color:var(--fih)"><strong>FIH Group</strong></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-b">local</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-b">part</span></td><td style="text-align:center"><span class="bg bg-b">req'd</span></td><td style="text-align:center"><span class="bg bg-r">✗</span></td><td style="text-align:center;font-weight:700;color:var(--fih)">6</td></tr>
+<tr><td><strong>ASML</strong></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-r">✗</span></td><td style="text-align:center"><span class="bg bg-b">part</span></td><td style="text-align:center"><span class="bg bg-a">1.5yr</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center;font-weight:700">6</td></tr>
+<tr><td><strong>TSMC</strong></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-r">✗</span></td><td style="text-align:center"><span class="bg bg-b">geo</span></td><td style="text-align:center"><span class="bg bg-a">1.5yr</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center;font-weight:700">6</td></tr>
+<tr><td><strong>SAP</strong></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-r">✗</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center"><span class="bg bg-a">&lt;1yr</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center;font-weight:700">6</td></tr>
+<tr><td><strong>Expedia</strong></td><td style="text-align:center"><span class="bg bg-b">oligo</span></td><td style="text-align:center"><span class="bg bg-a">net</span></td><td style="text-align:center"><span class="bg bg-a">mod</span></td><td style="text-align:center"><span class="bg bg-a">mod</span></td><td style="text-align:center"><span class="bg bg-r">✗</span></td><td style="text-align:center"><span class="bg bg-r">cycl</span></td><td style="text-align:center"><span class="bg bg-a">new</span></td><td style="text-align:center"><span class="bg bg-g">✓</span></td><td style="text-align:center;font-weight:700">4</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+</div></div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- TAB 6: WINDACRE INTELLIGENCE                      -->
+<!-- ══════════════════════════════════════════════════ -->
+<div id="t-wind" class="tp"><div class="ctr">
+
+<div class="sec">
+<div class="sl">§ 6.1 — The Firm</div>
+<h2>WindAcre Partnership LLC</h2>
+<div class="g4" style="margin-bottom:14px">
+  <div class="cd"><div class="cd-l" style="color:var(--wa)">Founded</div><div class="cd-v">2013</div><div class="cd-b">Fee-paying from Feb 2014.</div></div>
+  <div class="cd"><div class="cd-l" style="color:var(--wa)">AUM (13F)</div><div class="cd-v">$7.6B</div><div class="cd-b">Form ADV: ~$408M. Difference = Amin's proprietary capital.</div></div>
+  <div class="cd"><div class="cd-l" style="color:var(--wa)">Positions</div><div class="cd-v">11–13</div><div class="cd-b">Top 3 ≈ 52%. Avg hold: 12.5yr.</div></div>
+  <div class="cd"><div class="cd-l" style="color:var(--wa)">Staff</div><div class="cd-v">~25</div><div class="cd-b">6–7 investment pros. Houston TX. Long-only. No leverage.</div></div>
+</div>
+</div>
+
+<div class="sec">
+<div class="sl">§ 6.2 — The TCI Lineage</div>
+<h2>Three Generations</h2>
+
+<div style="max-width:900px">
+  <div class="ln" style="border-left:3px solid var(--tci)"><div><div class="ln-n" style="color:var(--tci)">Gen 0 — Christopher Hohn · TCI (2003)</div><div class="ln-d">~$77B AUM. ~$70B net gains. CSX proxy fight. CIFF endowed $2B. <strong>THE SOURCE.</strong></div></div></div>
+  <div class="ln" style="border-left:3px solid var(--wa);margin-left:30px"><div><div class="ln-n" style="color:var(--wa)">Gen 1a — Patrick Degorce · Thelème (2009)</div><div class="ln-d">TCI co-founder. <strong>Snehal Amin co-founded. Rishi Sunak joined.</strong> Bridge to WindAcre.</div></div></div>
+  <div class="ln" style="border-left:3px solid var(--wa);margin-left:60px"><div><div class="ln-n" style="color:var(--wa)">Gen 1b — Snehal Amin · WindAcre (2013)</div><div class="ln-d">Michigan → Stanford GSB. Goldman VP. TCI founding partner. CEO & >75% owner. <strong>THE TEACHER.</strong></div></div></div>
+  <div class="ln" style="border-left:3px solid var(--gold);margin-left:90px"><div><div class="ln-n" style="color:var(--gold)">Gen 2 — Andrew Lundstrom · Tintern (2026)</div><div class="ln-d">Amherst (Philosophy, MCL, ΦΒΚ). Route One → WindAcre founding-year → Partner (11yr). London W1K 3NB. <strong>THE HEIR.</strong></div></div></div>
+</div>
+</div>
+
+<div class="sec">
+<div class="sl">§ 6.3 — The Nielsen Campaign</div>
+<h2>27.3% of a Single Company</h2>
+
+<div class="g3">
+  <div class="cd"><div class="cd-l" style="color:var(--tci)">Conviction</div><div class="cd-b">27.3% of Nielsen — most concentrated public equity position of any fund in 2022. This isn't a position, it's a declaration of total conviction. Andrew watched this. He'll replicate the temperament.</div></div>
+  <div class="cd"><div class="cd-l" style="color:var(--tci)">Activism</div><div class="cd-b">Blocked $28/share bid. Demanded better terms. Joined consortium with $500M equity commitment. For Amadeus: even 0.5–1% + a SOTP letter = the first shareholder voice the passive register has ever heard.</div></div>
+  <div class="cd"><div class="cd-l" style="color:var(--pfc)">Outcome</div><div class="cd-b">Amin argued $40–80. Sold for $28. Best available deal, not fair value. <strong>Joe must acknowledge this risk:</strong> conglomerate discounts can persist, or worse, attract PE below intrinsic value.</div></div>
+</div>
+</div>
+
+<div class="sec">
+<div class="sl">§ 6.4 — Andrew's Capital</div>
+<h2>Forensic Wealth Estimate</h2>
+<div class="g3">
+  <div class="cd"><div class="cd-l" style="color:var(--gold)">Andrew (WindAcre)</div><div class="cd-v" style="font-size:20px">$10–27M</div><div class="cd-b">11 years analyst→partner. Based on $408M–$2B fee base.</div></div>
+  <div class="cd"><div class="cd-l" style="color:var(--ibm)">Gary F (IBM equity)</div><div class="cd-v" style="font-size:20px">~$6.8M+</div><div class="cd-b">8,301 split-adjusted shares. 31yr ESPP + options. Conservative floor.</div></div>
+  <div class="cd"><div class="cd-l" style="color:var(--gold)">Combined for Tintern</div><div class="cd-v" style="font-size:20px">$20–40M</div><div class="cd-b">Supports GP commitment at $200M–$1B AUM (5–10% stake).</div></div>
+</div>
+</div>
+
+</div></div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- TAB 7: RISK REGISTER                              -->
+<!-- ══════════════════════════════════════════════════ -->
+<div id="t-risk" class="tp"><div class="ctr">
+
+<div class="sec">
+<div class="sl">§ 7.0 — Every Bear Case</div>
+<h2>Risk Register — What Can Go Wrong</h2>
+
+<div class="tw">
+<table class="ct">
+<thead><tr><th style="width:130px">Risk</th><th style="width:70px;text-align:center">Severity</th><th style="width:80px;text-align:center">Probability</th><th>The Bear Case</th><th>Why the Bear Is Wrong (or Right)</th></tr></thead>
+<tbody>
+<tr><td><strong>COVID Repeat</strong></td><td style="text-align:center"><span class="bg bg-r">HIGH</span></td><td style="text-align:center"><span class="bg bg-a">LOW-MED</span></td><td>Another pandemic collapses bookings. Revenue –50%+. Cash drain for 2 years. At €68, margin of safety is thin.</td><td><strong>Partially right.</strong> Revenue IS cyclical. But: franchise held (zero churn) and Sabre is now financially impaired — the competitive landscape is permanently better. Entry at €55–58 absorbs a repeat; at €68, it hurts but the franchise survives.</td></tr>
+<tr><td><strong>NDC / AI Disruption</strong></td><td style="text-align:center"><span class="bg bg-a">MEDIUM</span></td><td style="text-align:center"><span class="bg bg-a">MEDIUM</span></td><td>IATA NDC enables airlines to bypass GDS. AI agents book directly. Distribution revenue (Tier 3, EBIT €820m) erodes 25–35% by 2030.</td><td><strong>Right for Distribution, wrong for PSS.</strong> NDC disrupts the GDS layer, not PSS. PSS processes bookings regardless of how they were made. Our SOTP already prices Distribution at 11–16× EBIT — the market fear is baked into the low-tier multiple. The fortress is upstream and unaffected.</td></tr>
+<tr><td><strong>No Catalyst</strong></td><td style="text-align:center"><span class="bg bg-r">HIGH</span></td><td style="text-align:center"><span class="bg bg-a">MEDIUM</span></td><td>SOTP gap persists 10+ years. No software analyst initiates. No separation. Amadeus trades at 13× forever.</td><td><strong>The most legitimate risk.</strong> IBM took 28 years. FIH is still discounted. Without catalyst, returns are 7–10% CAGR from organic compounding. The defence: even without re-rating, the fortress compounds. Joe should be honest: "The catalyst is the bonus, not the thesis."</td></tr>
+<tr><td><strong>PE Takeout &lt; SOTP</strong></td><td style="text-align:center"><span class="bg bg-a">MEDIUM</span></td><td style="text-align:center"><span class="bg bg-g">LOW</span></td><td>Consortium bids €85–90 — premium to market but below SOTP. Passive register accepts.</td><td><strong>The Nielsen lesson.</strong> WindAcre owned 27.3% and still couldn't prevent below-intrinsic take-private. Defence: publish SOTP analysis early, raise the floor for any bid before a predator arrives.</td></tr>
+<tr><td><strong>Governance</strong></td><td style="text-align:center"><span class="bg bg-a">MEDIUM</span></td><td style="text-align:center"><span class="bg bg-a">MEDIUM</span></td><td>Management invests fortress cash into competitive Hospitality/Payments. Empire-building erodes returns.</td><td><strong>Valid.</strong> CEO Maroto: B+ on ops, C on capital allocation. No activist discipline. This is exactly what Tintern's engagement could address. The pitch: "Return fortress cash to shareholders."</td></tr>
+<tr><td><strong>EUR/USD</strong></td><td style="text-align:center"><span class="bg bg-g">LOW</span></td><td style="text-align:center"><span class="bg bg-a">MEDIUM</span></td><td>EUR weakens. ±3–5pp annualised drag for USD-based fund.</td><td><strong>Manageable.</strong> PFC had 3.7pp annual INR drag — worse. Andrew held through it. EUR is more stable than INR. Hedgeable if needed.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+</div></div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- TAB 8: JOE'S CRAMSHEET                            -->
+<!-- ══════════════════════════════════════════════════ -->
+<div id="t-pitch" class="tp"><div class="ctr">
+
+<div class="sec">
+<div class="sl">§ 8.1 — Numbers Joe Must Know Cold</div>
+<h2>Quick-Reference Card</h2>
+
+<div class="g6">
+  <div class="cd"><div class="cd-l" style="color:var(--gold)">Share Price</div><div class="cd-v" style="font-size:20px">€68</div><div class="cd-b">Market cap: ~€30.1bn<br>Shares: ~443m</div></div>
+  <div class="cd"><div class="cd-l" style="color:var(--gold)">Enterprise Value</div><div class="cd-v" style="font-size:20px">€32.5bn</div><div class="cd-b">Net debt: €2.2bn<br>Minorities: ~€0.2bn</div></div>
+  <div class="cd"><div class="cd-l" style="color:var(--gold)">Total EBIT</div><div class="cd-v" style="font-size:20px">€1,919m</div><div class="cd-b">Fortress: €850m (44%)<br>Exposed: €820m (43%)</div></div>
+  <div class="cd"><div class="cd-l" style="color:var(--gold)">Blended Multiple</div><div class="cd-v" style="font-size:20px">~13.3×</div><div class="cd-b">EV/EBITDA (EBITDA ~€2.45bn)<br>EV/EBIT: ~16.9×</div></div>
+  <div class="cd"><div class="cd-l" style="color:var(--gold)">SOTP Midpoint</div><div class="cd-v" style="font-size:20px">€87.6/shr</div><div class="cd-b">Range: €77.6–97.9<br>Upside: 14–44%</div></div>
+  <div class="cd"><div class="cd-l" style="color:var(--gold)">PSS Altéa EBIT</div><div class="cd-v" style="font-size:20px">€680m</div><div class="cd-b">Near-monopoly (~75%)<br>Fair multiple: 27–33×</div></div>
+</div>
+</div>
+
+<div class="sec">
+<div class="sl">§ 8.2 — The Thesis as Joe Should Deliver It (3 Minutes)</div>
+<h2>The Pitch</h2>
+
+<div class="syn" style="border-color:var(--ams);font-size:13.5px;line-height:1.9">
+  <p>"Amadeus is three businesses under one listing. The market treats them as one travel stock at 13× EBITDA. They're not.</p>
+  <p>"<strong>The first business — Air IT — is a monopoly.</strong> The Altéa Passenger Service System runs reservations, ticketing, departure control, and revenue management for over 150 airlines. No airline has ever been involuntarily removed from PSS in 35 years. Switching takes 18–36 months of dual-system running, costs $50–200 million, and risks grounding your fleet. For context: PSS fees are less than 2% of airline revenue. The cost of failure is existential. No CEO will take that trade. This is IBM mainframe logic — the same dynamics that kept banks on z Systems for 60 years.</p>
+  <p>"Altéa alone generates €680m EBIT. At 27–33× — the multiple comparable zero-churn infrastructure software commands — that's €18–22 billion. Add Navitaire (LCC PSS, €105m EBIT) and adjacent airline IT modules (€65m), and the fortress tier is worth €22–27 billion at midpoint. <strong>That's 75% of Amadeus's total enterprise value for 44% of group EBIT.</strong></p>
+  <p>"<strong>The second business — Hospitality and Payments — is durable.</strong> €249m EBIT, growing, worth €5–6 billion.</p>
+  <p>"<strong>The third business — GDS distribution — is the one the market fears.</strong> €820m EBIT, but facing structural disruption from NDC and AI-driven booking. The fear is valid. But our SOTP already prices this tier at 11–16× EBIT, reflecting the risk. The market's error isn't overvaluing Distribution — it's <em>undervaluing the fortress</em> by applying the same blended multiple to everything.</p>
+  <p>"Midpoint SOTP: €87.6 per share versus €68 today. 29% upside. Low case: €77.6 (+14%). High case: €97.9 (+44%).</p>
+  <p>"<strong>The weakness I need to own:</strong> the revenue is cyclical. COVID took revenue down 61% and ROE to –12%. The franchise held — zero churn — but the cash flows didn't. Amadeus is a monopoly with cyclical revenue. The mitigation: COVID permanently impaired Sabre ($4.9bn net debt, –92% TSR), eliminating the only credible alternative. The monopoly is stronger after the crisis than before it.</p>
+  <p>"<strong>Catalyst:</strong> three paths. Software analyst re-coverage — one Tier 1 initiation changes the conversation. Capital return policy — fortress cash flows funding buybacks instead of subsidising hospitality. Or shareholder engagement — even at 0.5–1%, Tintern could be the first active voice on a register that's entirely passive. The SOTP letter is the catalyst.</p>
+  <p>"<strong>Without catalyst:</strong> 7–10% CAGR from organic compounding — fortress volume growth plus pricing power. Not PFC returns. But a franchise that justifies a decade-long hold with or without re-rating. The re-rating is the bonus, not the thesis."</p>
+</div>
+</div>
+
+<div class="sec">
+<div class="sl">§ 8.3 — Andrew's Likely Questions</div>
+<h2>Anticipated Probes & Answers</h2>
+
+<div class="tw">
+<table class="ct">
+<thead><tr><th style="width:250px">Andrew Will Ask</th><th>Joe's Answer</th></tr></thead>
+<tbody>
+<tr><td><strong>"What reprices it? IBM took 28 years."</strong></td><td>Three paths: (1) Software analyst initiation — one SOTP note from a Tier 1 bank starts the conversation. (2) Capital return — if management reallocates fortress cash flows to buybacks, the mechanical re-rating begins. (3) Shareholder engagement — Tintern's SOTP letter would be the first active voice on a fully passive register. <strong>But even without catalyst: 7–10% CAGR from organic compounding is a defensible hold.</strong> The re-rating is upside optionality, not the base case.</td></tr>
+<tr><td><strong>"COVID proved the revenue is cyclical. How is this a monopoly?"</strong></td><td>The franchise is not cyclical — the revenue is. Zero airlines left PSS during COVID. Zero. The monopoly held structurally while revenue fell 61%. The distinction matters: Amadeus is a toll road where traffic is variable but the toll is permanent. More importantly, COVID permanently impaired Sabre ($4.9bn net debt, –92% TSR over 10 years). The competitive landscape is better now than in 2019. <strong>The monopoly strengthened through the crisis.</strong></td></tr>
+<tr><td><strong>"What about NDC and AI? Aren't they disintermediating the GDS?"</strong></td><td>Yes — but that's Tier 3, not Tier 1. NDC disrupts the <em>distribution</em> layer (how bookings reach airlines). PSS is the <em>processing</em> layer (how bookings are executed). AI agents and NDC pipes still need PSS to check in passengers, issue tickets, manage inventory, and settle interline transactions. Our SOTP already prices Distribution at 11–16× EBIT — the fear is in the multiple. The fortress is upstream, unaffected, and arguably benefits from NDC complexity (more integration middleware, more PSS value).</td></tr>
+<tr><td><strong>"Why at €68? Why now?"</strong></td><td>The blended multiple has compressed from 15–16× (2019) to ~13× — partly justified (COVID proved cyclicality) and partly mispricing (post-COVID franchise is stronger). At €68, the base case delivers 7–10% CAGR from compounding alone. A drawdown to €55–58 would offer a wider margin of safety and I'd be buying more aggressively there. <strong>The honest answer: this is a fair entry for a great franchise, not a screaming bargain.</strong> PFC at 0.37× P/B was a generational entry. Amadeus at 13× is a good one.</td></tr>
+<tr><td><strong>"How does this compare to PFC?"</strong></td><td>PFC was a stronger trade on every dimension except one. Higher ROE (17–20%), lower entry (0.37× P/B), higher return (6.32×, 22.7% CAGR), crisis-proof earnings. The one dimension where Amadeus is stronger: <strong>the SOTP gap is quantifiable and catalysable</strong>. PFC's mispricing was categorical (Indian PSU discount) — you had to wait for institutional re-discovery. Amadeus's mispricing is structural (conglomerate discount) — it can be addressed through analyst coverage, shareholder engagement, or management action. PFC was better returns; Amadeus has more levers to pull.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="sec">
+<div class="sl">§ 8.4 — Draft Email to Andrew</div>
+<h2>Pre-Meeting Summary (for Joe to send ahead of the discussion)</h2>
+
+<div class="email-block">
+  <div class="email-bar">Draft Email</div>
+  <div class="email-field"><div class="ef-l">To:</div><div class="ef-v">Andrew Lundstrom</div></div>
+  <div class="email-field"><div class="ef-l">From:</div><div class="ef-v">Joe Barry</div></div>
+  <div class="email-field"><div class="ef-l">Subject:</div><div class="ef-v">Amadeus IT — Initial Observations Ahead of Our Discussion</div></div>
+  <div class="email-body">Andrew,
+
+Thank you for suggesting I look at Amadeus. I've spent the past several weeks on it and wanted to share my initial observations ahead of our discussion.
+
+The core of the business is the Passenger Service System — reservations, ticketing, departure control, and revenue management for 150+ airlines. No carrier has ever been involuntarily removed from PSS in 35 years of operation. Switching requires 18–36 months of parallel running at a cost of $50–200m, while PSS fees represent less than 2% of airline revenue. The risk-reward of switching is so asymmetric that it functionally doesn't happen.
+
+The investment case rests on a segmentation problem. The market values Amadeus as a single travel-technology company at roughly 13× EV/EBITDA. A sum-of-parts analysis suggests the Air IT division — which includes the PSS monopoly and generates €850m EBIT — warrants a multiple of 27–33× on the near-monopoly PSS component, comparable to zero-churn mission-critical infrastructure software. At midpoint, the SOTP implies equity value of approximately €88 per share versus €68 today.
+
+The honest weakness is cyclicality. COVID took revenue down 61%. The franchise held structurally but the cash flows didn't. I've thought carefully about how this compares to PFC's crisis-proof earnings profile and where it falls short. I'd like to discuss this, along with the catalyst question, when we meet.
+
+I've prepared a more detailed breakdown and would be happy to walk through the SOTP and competitive analysis in person.
+
+Best regards,
+Joe</div>
+</div>
+</div>
+
+<!-- FOOTNOTES -->
+<div class="fn">
+  <p>SOURCES: Amadeus financials and SOTP from S&P Capital IQ (Mar 2026) and company filings. EBIT decomposition by sub-segment is estimated based on disclosed segment data and comparable margin analysis. IBM/PFC data from prior analysis workpapers. WindAcre data from SEC EDGAR (13F-HR CIK 0001599383, Form ADV #801-78978, 13D/A). TSR indexed from Yahoo Finance (AMS.MC, SABR). Air passengers: ICAO/World Bank. Tourist arrivals: UNWTO. TCI lineage from public reporting. Family wealth from forensic reconstruction (yfinance + BLS).</p>
+  <p>CORRECTIONS: Roper Technologies entered WindAcre Q4 2025 (after Andrew's departure) — excluded. Booking Holdings not confirmed in 13F — excluded. Expedia initiated Q2 2024 (Andrew's final quarter, not earlier).</p>
+  <p>NUMBER VERIFICATION: All SOTP figures cross-checked against index.html source model. Total EBIT (€1,919m) = Fortress (€850m) + Durable (€249m) + Exposed (€820m). EBITDA (~€2.45bn) = EBIT + estimated D&A (~€530m). EV/EBITDA = €32.5bn / €2.45bn = 13.3×. Equity per share = (SOTP EV − net debt) / ~443m shares. All sub-segment EBIT figures match source SOTP table.</p>
+  <p>PREPARED BY: G2G Advisory · March 2026 · Confidential · Not for external distribution</p>
+</div>
+
+</div></div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- JAVASCRIPT                                        -->
+<!-- ══════════════════════════════════════════════════ -->
+<script>
+function go(id){
+  document.querySelectorAll('.tp').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('t-'+id).classList.add('on');
+  event.target.classList.add('on');
+  if(id==='tsr')setTimeout(initC,80);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+let cI=false;
+function initC(){
+  if(cI)return;cI=true;
+  const cv=document.getElementById('tsrChart');if(!cv)return;
+  const L=["2016-01","2016-06","2016-12","2017-06","2017-12","2018-06","2018-12","2019-06","2019-12","2020-03","2020-06","2020-12","2021-06","2021-12","2022-06","2022-12","2023-06","2023-12","2024-06","2024-12","2025-06","2025-12","2026-03"];
+  const A=[101,107,120,150,174,201,183,213,226,136,146,188,187,188,168,153,220,209,203,229,249,219,180];
+  const S=[100,106,101,90,88,108,97,102,106,29,40,60,62,43,29,31,16,22,13,18,9,7,8];
+  const P=[107,107,107,115,115,125,125,131,131,52,52,66,66,98,98,129,129,143,143,147,147,150,150];
+  const T=[104,104,104,112,112,118,118,124,124,34,34,39,39,81,81,109,109,121,121,126,126,128,128];
+  new Chart(cv,{type:'line',data:{labels:L,datasets:[
+    {label:'Amadeus TSR',data:A,borderColor:'#34d399',borderWidth:2.5,pointRadius:0,tension:.2,fill:false},
+    {label:'Sabre TSR',data:S,borderColor:'#f87171',borderWidth:2.5,pointRadius:0,tension:.2,fill:false},
+    {label:'Air Passengers',data:P,borderColor:'#60a5fa',borderWidth:1.5,borderDash:[6,3],pointRadius:0,fill:false,tension:0},
+    {label:'Tourist Arrivals',data:T,borderColor:'#fbbf24',borderWidth:1.5,borderDash:[6,3],pointRadius:0,fill:false,tension:0}
+  ]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+    plugins:{legend:{display:false},tooltip:{backgroundColor:'#1e293b',titleColor:'#f8fafc',bodyColor:'#cbd5e1',borderColor:'#334155',borderWidth:1,padding:10,titleFont:{size:11,weight:'600'},bodyFont:{size:10},
+      callbacks:{label:function(c){const v=c.parsed.y.toFixed(0);const r=(c.parsed.y-100).toFixed(0);return c.dataset.label+': '+v+' ('+(r>=0?'+':'')+r+'%)';}}}},
+    scales:{
+      x:{grid:{color:'#1e293b'},ticks:{color:'#64748b',font:{size:9},maxRotation:0,callback:function(v){const l=this.getLabelForValue(v);return l.endsWith('-01')||l.endsWith('-06')?l.substring(0,7):null;},autoSkip:false},border:{color:'#334155'}},
+      y:{grid:{color:'#1e293b'},ticks:{color:'#64748b',font:{size:9},stepSize:25},border:{color:'#334155'},min:0,max:275,title:{display:true,text:'Indexed (Jan 2016 = 100)',color:'#64748b',font:{size:10}}}
+    },layout:{padding:{right:30,top:8}}}
+  });
+}
+</script>
+</body>
+</html>
