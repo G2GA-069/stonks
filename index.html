@@ -30,7 +30,74 @@ body::before{
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
   pointer-events:none;z-index:0;opacity:.4;
 }
+
+/* ─── LOGIN OVERLAY ─── */
+#lock-screen{
+  position:fixed;inset:0;z-index:9999;
+  background:#060810;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:24px;
+}
+#lock-screen.hidden{display:none}
+#lock-screen .lock-arches svg{width:80px;height:80px;filter:drop-shadow(0 0 30px rgba(218,41,28,.25))}
+#lock-screen h2{
+  font-family:'Playfair Display',serif;
+  font-size:24px;color:#f0f0ff;
+  margin:24px 0 6px;
+}
+#lock-screen .lock-sub{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9px;letter-spacing:.2em;
+  text-transform:uppercase;
+  color:#555568;
+  margin-bottom:32px;
+}
+#lock-screen .pw-wrap{
+  display:flex;gap:8px;
+  align-items:center;
+}
+#lock-screen input{
+  background:#0c0e18;
+  border:1px solid #2a2d45;
+  border-radius:6px;
+  padding:10px 16px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:13px;
+  color:#f0f0ff;
+  outline:none;
+  width:220px;
+  transition:border-color .3s;
+}
+#lock-screen input:focus{border-color:#c9a84c}
+#lock-screen input.err{border-color:#d44;animation:shake .3s}
+#lock-screen button{
+  background:#c9a84c;
+  border:none;border-radius:6px;
+  padding:10px 20px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;font-weight:600;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:#060810;
+  cursor:pointer;
+  transition:background .2s;
+}
+#lock-screen button:hover{background:#e8c96a}
+#lock-screen .lock-foot{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9px;color:#333345;
+  margin-top:32px;letter-spacing:.1em;
+}
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  25%{transform:translateX(-6px)}
+  75%{transform:translateX(6px)}
+}
+
+/* ─── MAIN CONTENT ─── */
 .wrap{position:relative;z-index:1;max-width:640px;width:100%;text-align:center}
+.wrap.hidden{display:none}
 
 .arches{margin:0 auto 32px}
 .arches svg{width:120px;height:120px;filter:drop-shadow(0 0 40px rgba(218,41,28,.3))}
@@ -166,7 +233,25 @@ h1 .gold{color:#c9a84c}
 </head>
 <body>
 
-<div class="wrap">
+<!-- ═══ PASSWORD GATE ═══ -->
+<div id="lock-screen">
+  <div class="lock-arches">
+    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+      <rect width="64" height="64" rx="12" fill="#DA291C"/>
+      <path d="M6 54 L6 22 C6 8 18 4 22 18 L28 38 L32 48 L36 38 L42 18 C46 4 58 8 58 22 L58 54 L50 54 L50 24 C50 18 48 16 46 20 L32 54 L18 20 C16 16 14 18 14 24 L14 54 Z" fill="#FFC72C"/>
+    </svg>
+  </div>
+  <h2>Restricted Access</h2>
+  <div class="lock-sub">Project Tintern · Confidential</div>
+  <div class="pw-wrap">
+    <input type="password" id="pw-input" placeholder="Password" autocomplete="off" autofocus>
+    <button onclick="tryUnlock()">Enter</button>
+  </div>
+  <div class="lock-foot">G2G Advisory</div>
+</div>
+
+<!-- ═══ MAIN CONTENT (hidden until auth) ═══ -->
+<div class="wrap hidden" id="main-content">
   <div class="arches">
     <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
       <rect width="64" height="64" rx="12" fill="#DA291C"/>
@@ -216,5 +301,20 @@ h1 .gold{color:#c9a84c}
   <div class="foot">G2G Advisory · Project Tintern · Confidential</div>
 </div>
 
+<script>
+const HASH='78e7771b8b46e11ddb34ba48887e1330525215f96d94778980d1186e6f09f6b4';
+async function sha256(m){const b=new TextEncoder().encode(m);const h=await crypto.subtle.digest('SHA-256',b);return Array.from(new Uint8Array(h)).map(x=>x.toString(16).padStart(2,'0')).join('')}
+function unlock(){document.getElementById('lock-screen').classList.add('hidden');document.getElementById('main-content').classList.remove('hidden');sessionStorage.setItem('stonks_auth','1')}
+async function tryUnlock(){
+  const inp=document.getElementById('pw-input');
+  const h=await sha256(inp.value);
+  if(h===HASH){unlock()}
+  else{inp.classList.add('err');inp.value='';setTimeout(()=>inp.classList.remove('err'),400)}
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  if(sessionStorage.getItem('stonks_auth')==='1'){unlock()}
+  document.getElementById('pw-input').addEventListener('keydown',e=>{if(e.key==='Enter')tryUnlock()});
+});
+</script>
 </body>
 </html>
